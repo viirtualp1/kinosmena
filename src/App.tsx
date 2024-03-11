@@ -1,4 +1,4 @@
-import { useTelegram } from './composables/useTelegram/useTelegram.ts'
+import { useTelegram } from './composables'
 
 function App() {
   const { toggleButton } = useTelegram()
