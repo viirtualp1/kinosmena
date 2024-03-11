@@ -5,7 +5,9 @@ function App() {
 
   return (
     <>
-      <button onClick={toggleButton}>Toggle main button</button>
+      <div className="container">
+        <button onClick={toggleButton}>Toggle main button</button>
+      </div>
     </>
   )
 }
