@@ -24,7 +24,7 @@ npm run build
   
   Это нужно, чтобы не писать длиннющий путь к каждому хуку.
   
-  После этого, импорт **useTelegram** выглядит так: `import { useTelegram } from './composables/useTelegram'`
+  После этого, импорт **useTelegram** выглядит так: `import { useTelegram } from './hooks/useTelegram'`
 
 - Перед выполенением задачи создаем новую ветку от ветки **master** (не забываем предварительно спулиться: `git pull`).
   
