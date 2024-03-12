@@ -1,4 +1,4 @@
-import { useTelegram } from './composables'
+import { useTelegram } from './hooks/useTelegram'
 
 function App() {
   const { toggleButton } = useTelegram()
