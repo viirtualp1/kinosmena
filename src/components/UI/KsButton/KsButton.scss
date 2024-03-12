@@ -1,0 +1,21 @@
+.ks-button {
+  display: inline-flex;
+  font-size: 1.15rem;
+  font-weight: 500;
+  border-radius: 12px;
+
+  &.accent {
+    background: #000;
+    color: #fff;
+  }
+
+  &.is-large {
+    font-size: 1.25rem;
+    padding: 16px 24px;
+  }
+
+  &.block {
+    width: 100%;
+    display: block;
+  }
+}

@@ -1,13 +1,9 @@
-import { useMainButton } from './hooks/useMainButton'
+import { MainPage } from './components/MainPage'
 
 function App() {
-  const { toggle } = useMainButton()
-
   return (
     <>
-      <div className="container">
-        <button onClick={toggle}>Toggle main button</button>
-      </div>
+      <MainPage />
     </>
   )
 }
