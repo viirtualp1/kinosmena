@@ -1,12 +1,12 @@
-import { useTelegram } from './hooks/useTelegram'
+import { useMainButton } from './hooks/useMainButton'
 
 function App() {
-  const { toggleButton } = useTelegram()
+  const { toggle } = useMainButton()
 
   return (
     <>
       <div className="container">
-        <button onClick={toggleButton}>Toggle main button</button>
+        <button onClick={toggle}>Toggle main button</button>
       </div>
     </>
   )
