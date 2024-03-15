@@ -1,10 +1,8 @@
-import { MainPage } from './components/MainPage'
-
+// import { MainPage } from './components/MainPage'
+import { ProjectCard } from '@/components/ProjectCard/ProjectCard.tsx'
 function App() {
   return (
-    <>
-      <MainPage />
-    </>
+        <ProjectCard />
   )
 }
 
