@@ -3,6 +3,14 @@
   font-size: 1.15rem;
   font-weight: 700;
   border-radius: 12px;
+  outline: none;
+  border: 0;
+  appearance: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
 
   &.accent {
     background: #000;
