@@ -1,4 +1,4 @@
-import { ShiftPage } from './components/ShiftPage'
+import { ShiftPage } from './components/shift/ShiftPage'
 import { useTheme } from './hooks/useTheme'
 
 function App() {
