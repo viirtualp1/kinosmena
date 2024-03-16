@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Card, Switch, Title } from '@mantine/core'
+import { Card, Title } from '@mantine/core'
 import { ShiftForm } from '@/components/shift'
 import './ShiftPage.scss'
 
 export function ShiftPage() {
-  const [isCreating, setIsCreating] = useState(true)
+  const [isCreating] = useState(true)
 
   return (
     <div className="shift-page">
@@ -20,13 +20,6 @@ export function ShiftPage() {
         >
           Название проекта
         </Card>
-
-        <Switch
-          label="Создание"
-          placeholder="Для дебага"
-          checked={isCreating}
-          onChange={(event) => setIsCreating(event.currentTarget.checked)}
-        />
 
         <ShiftForm isCreating={isCreating} />
       </div>
