@@ -1,4 +1,4 @@
-import { MainPage } from './components/MainPage'
+import { ShiftPage } from './components/ShiftPage'
 import { useTheme } from './hooks/useTheme'
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <MainPage />
+      <ShiftPage />
     </>
   )
 }
