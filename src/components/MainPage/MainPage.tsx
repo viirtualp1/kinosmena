@@ -1,4 +1,4 @@
-import { KsButton } from '@/components/UI'
+import { KsButton } from '@/components/ui'
 import { useMainButton } from '@/hooks/useMainButton'
 
 export function MainPage() {
