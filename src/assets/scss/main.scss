@@ -4,7 +4,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: $base-font-family;
+  background: var(--color-background);
+  font-family: var(--base-font-family);
 }
 
 .container {
