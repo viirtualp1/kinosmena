@@ -10,17 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mantine/colors-generator": "^7.6.2",
-    "@mantine/core": "^7.6.2",
-    "@mantine/dates": "^7.6.2",
-    "@mantine/form": "^7.6.2",
-    "@mantine/notifications": "^7.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-imask": "^7.5.0",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
+    "@mantine/colors-generator": "^7.6.2",
+    "@mantine/core": "^7.6.2",
+    "@mantine/dates": "^7.6.2",
+    "@mantine/form": "^7.6.2",
+    "@mantine/notifications": "^7.6.2",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "@types/telegram-web-app": "^7.1.0",
