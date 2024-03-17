@@ -13,7 +13,7 @@ export function ShiftPage() {
 
   useEffect(() => {
     setProject({
-      name: 'Тест',
+      name: 'Проект',
     })
   }, [])
 
