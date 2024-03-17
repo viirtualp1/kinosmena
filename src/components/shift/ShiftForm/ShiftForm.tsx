@@ -49,9 +49,9 @@ export const ShiftForm: FC<Props> = (props) => {
       >
         <DateTimePicker
           valueFormat="DD.MM.YYYY HH:mm"
-          placeholder="Начало"
+          label="Начало"
+          placeholder="17.03.2024 15:30"
           clearable
-          variant="filled"
           size="md"
           radius="md"
           disabled={!props.isCreating}
@@ -61,9 +61,9 @@ export const ShiftForm: FC<Props> = (props) => {
       <Card shadow="sm" padding="sm" radius="md" withBorder>
         <DateTimePicker
           valueFormat="DD.MM.YYYY HH:mm"
-          placeholder="Окончание"
+          label="Окончание"
+          placeholder="20.03.2024 20:00"
           clearable
-          variant="filled"
           size="md"
           radius="md"
           disabled={!props.isCreating}
@@ -107,8 +107,8 @@ export const ShiftForm: FC<Props> = (props) => {
           Часы переработки
           <NumberInput
             size="md"
-            variant="filled"
             rightSection="ч"
+            placeholder="2"
             min={0}
             clampBehavior="strict"
             radius="md"
@@ -120,8 +120,8 @@ export const ShiftForm: FC<Props> = (props) => {
           Часы недосыпа
           <NumberInput
             size="md"
-            variant="filled"
             rightSection="ч"
+            placeholder="5"
             min={0}
             radius="md"
             clampBehavior="strict"
@@ -135,10 +135,10 @@ export const ShiftForm: FC<Props> = (props) => {
             size="md"
             min={0}
             rightSection="₽"
+            placeholder="2000"
             thousandSeparator=" "
             radius="md"
             clampBehavior="strict"
-            variant="filled"
             disabled={!props.isCreating}
             {...form.getInputProps('additionalServices')}
           />
