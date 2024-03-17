@@ -1,4 +1,4 @@
-export function useValidation(fields: any) {
+export function useValidation(fields: unknown) {
   const fieldsForValidation = {}
 
   if (!fields) {
