@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { Button, Card, Group, NumberInput, Switch } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { useForm } from '@mantine/form'
-import './ShiftForm.scss'
 import { useValidation } from '@/hooks/useValidation'
+import './ShiftForm.scss'
 
 interface Props {
   isCreating: boolean
