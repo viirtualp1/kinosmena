@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { Button, Card, Group, NumberInput, Switch } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
-import { useForm } from '@mantine/form'
-import { useValidation } from '@/hooks/useValidation'
+import { isNotEmpty, useForm } from '@mantine/form'
 import './ShiftForm.scss'
 
 interface Props {
@@ -39,7 +38,10 @@ export const ShiftForm: FC<Props> = (props) => {
   const form = useForm<FormValues>({
     initialValues,
     validate: {
-      ...useValidation(initialValues),
+      start: isNotEmpty('Некорректная дата'),
+      end: isNotEmpty('Некорректная дата'),
+      overtimeHours: isNotEmpty('Поле обязательно к заполнению'),
+      deprivationHoursSleep: isNotEmpty('Поле обязательно к заполнению'),
     },
   })
 
