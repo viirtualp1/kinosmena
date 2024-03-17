@@ -3,6 +3,7 @@ import { Button, Card, Group, NumberInput, Switch } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { useForm } from '@mantine/form'
 import './ShiftForm.scss'
+import { useValidation } from '@/hooks/useValidation'
 
 interface Props {
   isCreating: boolean
@@ -19,17 +20,26 @@ interface FormValues {
   additionalServices: string
 }
 
+const getForm = (): FormValues => {
+  return {
+    start: null,
+    end: null,
+    wasCurrentLunch: false,
+    wasLatelyLunch: false,
+    dayOffShift: false,
+    overtimeHours: '',
+    deprivationHoursSleep: '',
+    additionalServices: '',
+  }
+}
+
 export const ShiftForm: FC<Props> = (props) => {
+  const initialValues = getForm()
+
   const form = useForm<FormValues>({
-    initialValues: {
-      start: null,
-      end: null,
-      wasCurrentLunch: false,
-      wasLatelyLunch: false,
-      dayOffShift: false,
-      overtimeHours: '',
-      deprivationHoursSleep: '',
-      additionalServices: '',
+    initialValues,
+    validate: {
+      ...useValidation(initialValues),
     },
   })
 
@@ -96,7 +106,11 @@ export const ShiftForm: FC<Props> = (props) => {
         </Group>
         <Group className="shift-form__field" justify="space-between">
           Смена в day-off?
-          <Switch size="md" disabled={!props.isCreating} />
+          <Switch
+            size="md"
+            disabled={!props.isCreating}
+            {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
+          />
         </Group>
         <Group
           className="shift-form__field"
