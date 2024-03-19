@@ -17,6 +17,7 @@
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
+    "@axios-use/react": "^6.6.0",
     "@mantine/colors-generator": "^7.6.2",
     "@mantine/core": "^7.6.2",
     "@mantine/dates": "^7.6.2",
@@ -29,6 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "axios": "^1.6.8",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",

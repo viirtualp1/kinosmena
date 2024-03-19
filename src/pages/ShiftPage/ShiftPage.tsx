@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Card, Title } from '@mantine/core'
+import { useResource } from '@axios-use/react'
 import { ShiftForm } from '@/components/Shift'
 import './ShiftPage.scss'
 
@@ -11,11 +12,20 @@ export function ShiftPage() {
   const [isCreating] = useState(true)
   const [project, setProject] = useState<ProjectData | null>(null)
 
+  const [{ data, error, isLoading }] = useResource(
+    () => ({ url: `/shifts` }),
+    [],
+  )
+
   useEffect(() => {
-    setProject({
-      name: 'Проект',
-    })
-  }, [])
+    if (error) {
+      console.error(error)
+    }
+
+    if (!isLoading && data) {
+      setProject(data)
+    }
+  }, [data, error, isLoading])
 
   return (
     <div className="shift-page">

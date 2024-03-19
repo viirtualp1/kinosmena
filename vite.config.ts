@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-// @ts-ignore
 import { fileURLToPath, URL } from 'url'
 import react from '@vitejs/plugin-react'
 
