@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Card, Title } from '@mantine/core'
-import { ShiftForm } from '@/components/shift'
+import { ShiftForm } from '@/components/Shift'
 import './ShiftPage.scss'
 
 interface ProjectData {
