@@ -14,9 +14,9 @@ interface FormValues {
   wasCurrentLunch: boolean
   wasLatelyLunch: boolean
   dayOffShift: boolean
-  overtimeHours: string
-  deprivationHoursSleep: string
-  additionalServices: string
+  overtimeHours: number
+  deprivationHoursSleep: number
+  additionalServices: number
 }
 
 const getForm = (): FormValues => {
@@ -26,9 +26,9 @@ const getForm = (): FormValues => {
     wasCurrentLunch: false,
     wasLatelyLunch: false,
     dayOffShift: false,
-    overtimeHours: '',
-    deprivationHoursSleep: '',
-    additionalServices: '',
+    overtimeHours: 0,
+    deprivationHoursSleep: 0,
+    additionalServices: 0,
   }
 }
 
@@ -126,7 +126,6 @@ export const ShiftForm: FC<Props> = (props) => {
             rightSection="ч"
             placeholder="2"
             min={0}
-            clampBehavior="strict"
             radius="md"
             disabled={!props.isCreating}
             {...form.getInputProps('overtimeHours')}
