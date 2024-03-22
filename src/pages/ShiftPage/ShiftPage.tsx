@@ -20,7 +20,7 @@ export function ShiftPage() {
   return (
     <div className="shift-page">
       <div className="container content">
-        <Title order={3} mb={24}>
+        <Title order={5} mb={24} fw={500}>
           Карточка смены
         </Title>
 

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Button, Card, Group, NumberInput, Switch } from '@mantine/core'
+import { Button, Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 import './ShiftForm.scss'
@@ -55,7 +55,7 @@ export const ShiftForm: FC<Props> = (props) => {
       <DateTimePicker
         valueFormat="DD.MM.YYYY HH:mm"
         label="Дата начала"
-        labelProps={{ mb: '12px' }}
+        labelProps={{ mb: '12px', fz: '14px' }}
         placeholder="17.03.2024 15:30"
         clearable
         size="md"
@@ -68,7 +68,7 @@ export const ShiftForm: FC<Props> = (props) => {
       <DateTimePicker
         valueFormat="DD.MM.YYYY HH:mm"
         label="Дата окончания"
-        labelProps={{ mb: '12px' }}
+        labelProps={{ mb: '12px', fz: '14px' }}
         placeholder="20.03.2024 20:00"
         clearable
         size="md"
@@ -86,7 +86,8 @@ export const ShiftForm: FC<Props> = (props) => {
         withBorder
       >
         <Group className="shift-form__field" justify="space-between">
-          Был текущий обед?
+          <Text fz={14}>Был текущий обед?</Text>
+
           <Switch
             size="md"
             disabled={!props.isCreating}
@@ -94,7 +95,8 @@ export const ShiftForm: FC<Props> = (props) => {
           />
         </Group>
         <Group className="shift-form__field" justify="space-between">
-          Был поздний обед?
+          <Text fz={14}>Был поздний обед?</Text>
+
           <Switch
             size="md"
             disabled={!props.isCreating}
@@ -102,46 +104,29 @@ export const ShiftForm: FC<Props> = (props) => {
           />
         </Group>
         <Group className="shift-form__field" justify="space-between">
-          Смена в day-off?
+          <Text fz={14}>Смена в day-off?</Text>
+
           <Switch
             size="md"
             disabled={!props.isCreating}
             {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
           />
         </Group>
-        <Group
-          className="shift-form__field"
-          justify="space-between"
-          grow
-          wrap="nowrap"
-        >
-          Часы переработки
-          <NumberInput
+        <Group className="shift-form__field" justify="space-between">
+          <Text fz={14}>Суточные</Text>
+
+          <Switch
             size="md"
-            rightSection="ч"
-            placeholder="2"
-            min={0}
-            radius="md"
             disabled={!props.isCreating}
-            {...form.getInputProps('overtimeHours')}
+            {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
           />
         </Group>
-        <Group className="shift-form__field" justify="space-between" grow>
-          Часы недосыпа
-          <NumberInput
-            size="md"
-            rightSection="ч"
-            placeholder="5"
-            min={0}
-            radius="md"
-            clampBehavior="strict"
-            disabled={!props.isCreating}
-            {...form.getInputProps('deprivationHoursSleep')}
-          />
-        </Group>
+
         <Group justify="space-between" grow>
-          Доп. услуги
+          <Text fz={14}>Доп. услуги</Text>
+
           <NumberInput
+            variant="unstyled"
             size="md"
             min={0}
             rightSection="₽"
