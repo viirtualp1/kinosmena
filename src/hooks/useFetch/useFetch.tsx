@@ -29,11 +29,11 @@ export function useFetch<T>(
     if (error) {
       console.error(error)
 
-      alert(
-        get(error, `data.${options?.errorKey}`, 'Ошибка при получении данных'),
-      )
+      // alert(
+      //   get(error, `data.${options?.errorKey}`, 'Ошибка при получении данных'),
+      // )
 
-      navigate('/')
+      // navigate('/')
     }
 
     if (!isLoading && data) {

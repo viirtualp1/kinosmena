@@ -52,36 +52,31 @@ export const ShiftForm: FC<Props> = (props) => {
 
   return (
     <form onSubmit={submitForm}>
-      <Card
-        shadow="sm"
-        padding="sm"
+      <DateTimePicker
+        valueFormat="DD.MM.YYYY HH:mm"
+        label="Дата начала"
+        labelProps={{ mb: '12px' }}
+        placeholder="17.03.2024 15:30"
+        clearable
+        size="md"
         radius="md"
-        withBorder
-        className="shift-form__section"
-      >
-        <DateTimePicker
-          valueFormat="DD.MM.YYYY HH:mm"
-          label="Начало"
-          placeholder="17.03.2024 15:30"
-          clearable
-          size="md"
-          radius="md"
-          disabled={!props.isCreating}
-          {...form.getInputProps('start')}
-        />
-      </Card>
-      <Card shadow="sm" padding="sm" radius="md" withBorder>
-        <DateTimePicker
-          valueFormat="DD.MM.YYYY HH:mm"
-          label="Окончание"
-          placeholder="20.03.2024 20:00"
-          clearable
-          size="md"
-          radius="md"
-          disabled={!props.isCreating}
-          {...form.getInputProps('end')}
-        />
-      </Card>
+        mb="24px"
+        disabled={!props.isCreating}
+        {...form.getInputProps('start')}
+      />
+
+      <DateTimePicker
+        valueFormat="DD.MM.YYYY HH:mm"
+        label="Дата окончания"
+        labelProps={{ mb: '12px' }}
+        placeholder="20.03.2024 20:00"
+        clearable
+        size="md"
+        radius="md"
+        mb="24px"
+        disabled={!props.isCreating}
+        {...form.getInputProps('end')}
+      />
 
       <Card
         className="shift-form__section"
