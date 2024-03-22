@@ -8,7 +8,7 @@ export const IndexPage: FC = () => {
 
   return (
     <div>
-      <Link to={`/shift/${testId}`}>Shift Page</Link>
+      <Link to={`/shift/${testId.current}`}>Shift Page</Link>
     </div>
   )
 }
