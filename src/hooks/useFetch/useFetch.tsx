@@ -29,17 +29,17 @@ export function useFetch<T>(
     if (error) {
       console.error(error)
 
-      // alert(
-      // get(error, `data.${options?.errorKey}`, 'Ошибка при получении данных'),
-      // )
+      alert(
+        get(error, `data.${options?.errorKey}`, 'Ошибка при получении данных'),
+      )
 
-      // navigate('/')
+      navigate('/')
     }
 
     if (!isLoading && data) {
       setData(_data)
     }
-  }, [_data, error, isLoading])
+  }, [_data, data, error, isLoading, navigate, options?.errorKey])
 
   return {
     data,
