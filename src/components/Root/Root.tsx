@@ -4,17 +4,26 @@ import axios from 'axios'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { setDebug } from '@tma.js/sdk'
 import { SDKProvider } from '@tma.js/sdk-react'
-import { MantineProvider } from '@mantine/core'
+import { createTheme, Input, MantineProvider, TextInput } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
 import { RequestProvider } from '@axios-use/react'
 
 import { IndexPage } from '@/pages/IndexPage'
 import { ShiftPage } from '@/pages/ShiftPage'
 
+import inputClasses from '@/assets/scss/vendors/_input.module.scss'
+
 const router = createBrowserRouter([
   { path: '/', Component: IndexPage },
   { path: '/shift/:id', Component: ShiftPage },
 ])
+
+const theme = createTheme({
+  components: {
+    Input: Input.extend({ classNames: inputClasses }),
+    TextInput: TextInput.extend({ classNames: inputClasses }),
+  },
+})
 
 export const Root: FC = () => {
   const axiosInstance = axios.create({
@@ -33,7 +42,7 @@ export const Root: FC = () => {
   return (
     <SDKProvider options={{ acceptCustomStyles: true, cssVars: true }}>
       <RequestProvider instance={axiosInstance}>
-        <MantineProvider>
+        <MantineProvider theme={theme}>
           <DatesProvider
             settings={{
               locale: 'ru',
