@@ -1,38 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Card, Title } from '@mantine/core'
-import { useResource } from '@axios-use/react'
+import { useFetch } from '@/hooks/useFetch'
+import { ShiftData } from '@/types/Shift'
 import { ShiftForm } from '@/components/Shift'
 import './ShiftPage.scss'
 
-interface ProjectData {
-  name: string
-}
-
 export function ShiftPage() {
+  const { id } = useParams()
   const [isCreating] = useState(true)
-  const [project, setProject] = useState<ProjectData | null>(null)
 
-  const [{ data, error, isLoading }] = useResource(
-    () => ({ url: `/shifts` }),
-    [],
-  )
-
-  useEffect(() => {
-    if (error) {
-      console.error(error)
-    }
-
-    if (!isLoading && data) {
-      setProject(data)
-    }
-  }, [data, error, isLoading])
+  const { data: shift } = useFetch<ShiftData | null>(`/shifts/${id}`, {
+    errorKey: 'detail',
+  })
 
   return (
     <div className="shift-page">
       <div className="container content">
         <Title order={3}>Карточка смены</Title>
 
-        {project && (
+        {shift && (
           <Card
             className="shift-page__section"
             shadow="sm"
@@ -40,7 +27,7 @@ export function ShiftPage() {
             radius="md"
             withBorder
           >
-            {project.name}
+            {shift.project}
           </Card>
         )}
 
