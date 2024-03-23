@@ -1,8 +1,8 @@
-import { CSSProperties } from 'react'
 import { CardStylesNames } from '@mantine/core'
+import { MantineStylesType } from '@/types'
 
 export function useShiftPageStyles() {
-  const cardStyles: Partial<Record<CardStylesNames, CSSProperties>> = {
+  const cardStyles: MantineStylesType<CardStylesNames> = {
     root: {
       flexDirection: 'row',
       alignItems: 'center',

@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 // import { useParams } from 'react-router-dom'
-import { Card, Title } from '@mantine/core'
+import { Card, Title, Container } from '@mantine/core'
 // import { useFetch } from '@/hooks/useFetch'
 // import { ShiftData } from '@/types/Shift'
 import { ShiftForm } from '@/components/Shift'
@@ -19,7 +19,7 @@ export function ShiftPage() {
 
   return (
     <div className="shift-page">
-      <div className="container content">
+      <Container>
         <Title order={5} mb={24} fw={500}>
           Карточка смены
         </Title>
@@ -44,7 +44,7 @@ export function ShiftPage() {
           <ShiftForm isCreating={isCreating.current} />
         </>
         {/*)}*/}
-      </div>
+      </Container>
     </div>
   )
 }
