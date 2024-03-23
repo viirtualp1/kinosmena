@@ -1,0 +1,123 @@
+body {
+  font-family: Inter;
+}
+.button__parent {
+  display: flex;
+  height: 172px;
+  width: 100%;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+  .column {
+    flex: 1;
+  }
+  button {
+    border: none;
+    color: white;
+    text-align: left;
+  }
+}
+
+.button__project {
+  height: 82px;
+  margin-bottom: 8px;
+  position: relative;
+  display: inline-block;
+  width: 160px;
+  background-color: rgb(5, 148, 250);
+  border-radius: 24px;
+  padding: 24px;  
+  text-align: left;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 31px;
+    left: 110px;
+    width: 20px;
+    height: 20px;
+    background-image: url('../../assets/images/icons/project.svg');
+    background-size: cover;
+  }
+  img {
+    position: relative;
+  }
+}
+
+.button__report {
+  width: 144px;
+  height: 172px;
+  position: relative;
+  display: inline-block;
+  background-color: rgb(54, 58, 67);
+  border-radius: 24px;
+  padding: 24px;  
+  text-align: left;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 24px;
+    left: 100px;
+    width: 20px;
+    height: 20px;
+    background-image: url('../../assets/images/icons/report.svg');
+    background-size: cover;
+  }
+  img {
+    position: relative;
+  }
+}
+.button__archiv {
+  height: 82px;
+  position: relative;
+  display: inline-block;
+  width: 160px;
+  background-color: rgb(54, 58, 67);
+  border-radius: 24px;
+  padding: 24px;  
+  text-align: left;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 31px;
+    left: 110px;
+    width: 20px;
+    height: 20px;
+    background-image: url('../../assets/images/icons/arсhiv.svg');
+    background-size: cover;
+  }
+  img {
+    position: relative;
+  }
+}
+.projects{
+  width: 312px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  button {
+    border: none;
+    color: white;
+    text-align: left;
+    background-color: rgb(54, 58, 67);
+    border-radius: 16px;
+    padding: 12px;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 14px;
+      right: 12px;
+      width: 20px;
+      height: 20px;
+      background-image: url('../../assets/images/icons/projectArrow.svg');
+      background-size: cover;
+    }
+    img {
+      position: relative;  
+  }
+}
+}
