@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import { Button, Card, Group, NumberInput, Switch, Text } from '@mantine/core'
+import { Box, Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
-import './ShiftForm.scss'
+// import { useMainButton } from '@tma.js/sdk-react'
 
 interface Props {
   isCreating: boolean
@@ -33,6 +33,7 @@ const getForm = (): FormValues => {
 }
 
 export const ShiftForm: FC<Props> = (props) => {
+  // const mainButton = useMainButton()
   const initialValues = getForm()
 
   const form = useForm<FormValues>({
@@ -78,14 +79,8 @@ export const ShiftForm: FC<Props> = (props) => {
         {...form.getInputProps('end')}
       />
 
-      <Card
-        className="shift-form__section"
-        shadow="sm"
-        padding="lg"
-        radius="md"
-        withBorder
-      >
-        <Group className="shift-form__field" justify="space-between">
+      <Card shadow="sm" padding="20px" radius="md" withBorder>
+        <Group h="33px" justify="space-between">
           <Text fz={14}>Был текущий обед?</Text>
 
           <Switch
@@ -94,42 +89,47 @@ export const ShiftForm: FC<Props> = (props) => {
             {...form.getInputProps('wasCurrentLunch', { type: 'checkbox' })}
           />
         </Group>
-        <Group className="shift-form__field" justify="space-between">
+        <Group h="33px" justify="space-between">
           <Text fz={14}>Был поздний обед?</Text>
 
           <Switch
             size="md"
+            h={16}
             disabled={!props.isCreating}
             {...form.getInputProps('wasLatelyLunch', { type: 'checkbox' })}
           />
         </Group>
-        <Group className="shift-form__field" justify="space-between">
+        <Group h="33px" justify="space-between">
           <Text fz={14}>Смена в day-off?</Text>
 
           <Switch
             size="md"
+            h={16}
             disabled={!props.isCreating}
             {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
           />
         </Group>
-        <Group className="shift-form__field" justify="space-between">
+        <Group h="33px" justify="space-between">
           <Text fz={14}>Суточные</Text>
 
           <Switch
             size="md"
+            h={16}
             disabled={!props.isCreating}
             {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
           />
         </Group>
 
-        <Group justify="space-between" grow>
+        <Group justify="space-between" h="33px" grow>
           <Text fz={14}>Доп. услуги</Text>
 
           <NumberInput
             variant="unstyled"
-            size="md"
+            size="sm"
+            maw={60}
             min={0}
             rightSection="₽"
+            rightSectionProps={{ color: '#0594FA' }}
             placeholder="2000"
             thousandSeparator=" "
             radius="md"
@@ -139,16 +139,43 @@ export const ShiftForm: FC<Props> = (props) => {
           />
         </Group>
 
-        {props.isCreating && (
-          <Button
-            type="submit"
-            className="shift-form__submit"
-            size="md"
+        <Group justify="space-between" h="33px" grow>
+          <Text fz={14}>Доп. услуги</Text>
+
+          <NumberInput
+            variant="unstyled"
+            size="sm"
+            maw={60}
+            min={0}
+            rightSection="₽"
+            rightSectionProps={{ color: '#0594FA' }}
+            placeholder="2000"
+            thousandSeparator=" "
             radius="md"
-          >
-            Сформировать отчет
-          </Button>
-        )}
+            clampBehavior="strict"
+            disabled={!props.isCreating}
+            {...form.getInputProps('additionalServices')}
+          />
+        </Group>
+
+        <Group justify="space-between" h="33px" grow>
+          <Text fz={14}>Доп. услуги</Text>
+
+          <NumberInput
+            variant="unstyled"
+            size="sm"
+            maw={60}
+            min={0}
+            rightSection="₽"
+            rightSectionProps={{ color: '#0594FA' }}
+            placeholder="2000"
+            thousandSeparator=" "
+            radius="md"
+            clampBehavior="strict"
+            disabled={!props.isCreating}
+            {...form.getInputProps('additionalServices')}
+          />
+        </Group>
       </Card>
     </form>
   )
