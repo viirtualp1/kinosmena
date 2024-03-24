@@ -27,9 +27,10 @@ const theme = createTheme({
 
 export const Root: FC = () => {
   const axiosInstance = axios.create({
+    // TODO: get base url from env
     baseURL: 'http://rbychin.ddns.net:6080/api/',
     params: {
-      // telegram user id
+      // TODO: get tid from TMA.js
       tid: 1,
     },
   })
