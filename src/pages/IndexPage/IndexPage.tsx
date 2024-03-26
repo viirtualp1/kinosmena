@@ -11,7 +11,15 @@ export const IndexPage: FC = () => {
   return (
     <Container mt="24px">
       <Link to={`/shift/${testId.current}?projectId=${testProjectId.current}`}>
-        Shift Page
+        Смена (просмотр)
+      </Link>
+      <Link to={`/shift/create?projectId=${testProjectId.current}`}>
+        Смена (создание)
+      </Link>
+      <Link
+        to={`/shift/${testId.current}/update?projectId=${testProjectId.current}`}
+      >
+        Смена (ред)
       </Link>
     </Container>
   )
