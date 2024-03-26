@@ -2,9 +2,9 @@ import { FC } from 'react'
 import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
+import { MainButton } from '@tma.js/sdk-react'
 import { useShiftFormStyles } from './useShiftFormStyles.ts'
 import { ShiftData } from '@/types/Shift'
-// import { useMainButton } from '@tma.js/sdk-react'
 
 interface Props {
   isView: boolean | undefined
@@ -26,8 +26,6 @@ interface FormValues {
 }
 
 export const ShiftForm: FC<Props> = ({ isView, shift }) => {
-  // const mainButton = useMainButton()
-
   const { cardStyles } = useShiftFormStyles()
 
   const form = useForm<FormValues>({
@@ -214,6 +212,8 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
             {...form.getInputProps('additionalServices')}
           />
         </Group>
+
+        <MainButton type="submit" />
       </Card>
     </form>
   )
