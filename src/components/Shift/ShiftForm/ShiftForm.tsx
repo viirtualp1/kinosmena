@@ -1,10 +1,12 @@
 import { FC, useEffect } from 'react'
 import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
-import { DateTimePicker } from '@mantine/dates'
+import { DateTimePicker, DateValue } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 import { useMainButton } from '@tma.js/sdk-react'
 import { useShiftFormStyles } from './useShiftFormStyles.ts'
 import { ShiftData } from '@/types/Shift'
+import { useConfig } from '@/hooks/useConfig/useConfig.ts'
+import { useDate } from '@/hooks/useDate/useDate.ts'
 
 interface Props {
   isView: boolean | undefined
@@ -14,8 +16,8 @@ interface Props {
 }
 
 interface FormValues {
-  start: string | null
-  end: string | null
+  start: DateValue | undefined
+  end: DateValue | undefined
   wasCurrentLunch: boolean
   wasLatelyLunch: boolean
   dailyAllowance: boolean
@@ -41,12 +43,15 @@ const MainButton = ({ submit }: any) => {
 }
 
 export const ShiftForm: FC<Props> = ({ isView, shift }) => {
+  const { isDev } = useConfig()
+
   const { cardStyles } = useShiftFormStyles()
+  const { formatDate } = useDate()
 
   const form = useForm<FormValues>({
     initialValues: {
-      start: shift.start_date,
-      end: shift.end_date,
+      start: formatDate(shift.start_date),
+      end: formatDate(shift.end_date),
       wasCurrentLunch: shift.is_current_lunch,
       wasLatelyLunch: shift.is_late_lunch,
       dailyAllowance: shift.is_per_diem,
@@ -103,8 +108,9 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
         clearable
         size="md"
         mb="24px"
+        defaultValue={form.values.start}
         disabled={isView}
-        {...form.getInputProps('start')}
+        onChange={(v) => (form.values.start = v)}
       />
 
       <DateTimePicker
@@ -115,8 +121,9 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
         clearable
         size="md"
         mb="24px"
+        defaultValue={form.values.end}
         disabled={isView}
-        {...form.getInputProps('end')}
+        onChange={(v) => (form.values.end = v)}
       />
     </>
   )
@@ -216,7 +223,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
           />
         </Group>
 
-        <MainButton submit={submitForm} />
+        {!isDev && <MainButton submit={submitForm} />}
       </Card>
     </form>
   )
