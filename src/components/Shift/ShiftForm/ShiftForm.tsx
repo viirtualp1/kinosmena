@@ -1,11 +1,12 @@
 import { FC } from 'react'
-import { Box, Card, Group, NumberInput, Switch, Text } from '@mantine/core'
+import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 // import { useMainButton } from '@tma.js/sdk-react'
 
 interface Props {
-  isCreating: boolean
+  isCreating: boolean | undefined
+  isEditing: boolean | undefined
 }
 
 interface FormValues {
@@ -46,7 +47,7 @@ export const ShiftForm: FC<Props> = (props) => {
     },
   })
 
-  const submitForm = form.onSubmit(() => {
+  const submitForm = form.onSubmit(async () => {
     console.log('submit')
     console.log(form.values)
   })

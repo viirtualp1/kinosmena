@@ -1,19 +1,28 @@
-import { useRef } from 'react'
-// import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Card, Title, Container } from '@mantine/core'
-// import { useFetch } from '@/hooks/useFetch'
-// import { ShiftData } from '@/types/Shift'
+import { ShiftData } from '@/types/Shift'
+import { useFetch } from '@/hooks/useFetch'
+import { useQuery } from '@/hooks/useQuery'
 import { ShiftForm } from '@/components/Shift'
-// import { ShiftPageSkeleton } from './ShiftPageSkeleton'
-
+import { ShiftPageSkeleton } from './ShiftPageSkeleton'
+import { useShiftPageStyles } from './useShiftPageStyles'
 import BookmarkIcon from '@/assets/images/icons/bookmark.svg'
-import { useShiftPageStyles } from '@/pages/ShiftPage/useShiftPageStyles.ts'
+import { useRef } from 'react'
 
-export function ShiftPage() {
-  // const { id } = useParams()
-  const isCreating = useRef(true)
+interface Props {
+  isCreating?: boolean
+  isEditing?: boolean
+}
 
-  // const { data: shift, isLoading } = useFetch<ShiftData | null>(`/shifts/${id}`)
+export function ShiftPage({ isCreating, isEditing }: Props) {
+  const { id } = useParams()
+  const query = useQuery()
+
+  const { data: shift, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
+    params: {
+      projectId: query.get('projectId'),
+    },
+  })
 
   const { cardStyles } = useShiftPageStyles()
 
@@ -24,26 +33,27 @@ export function ShiftPage() {
           Карточка смены
         </Title>
 
-        {/*<ShiftPageSkeleton visible={isLoading || !shift} />*/}
-        {/*{shift && (*/}
-        <>
-          <Card
-            className="shift-page__section"
-            shadow="sm"
-            padding="12px"
-            radius="12px"
-            styles={cardStyles}
-            bg="#363A43"
-            withBorder
-            mb="24px"
-          >
-            <img src={BookmarkIcon} alt="bookmark" width={20} height={20} />
-            Проект
-            {/*{shift.project}*/}
-          </Card>
-          <ShiftForm isCreating={isCreating.current} />
-        </>
-        {/*)}*/}
+        <ShiftPageSkeleton visible={isLoading?.current || !shift} />
+        {shift && (
+          <>
+            <Card
+              className="shift-page__section"
+              shadow="sm"
+              padding="12px"
+              radius="12px"
+              styles={cardStyles}
+              bg="#363A43"
+              withBorder
+              mb="24px"
+            >
+              <img src={BookmarkIcon} alt="bookmark" width={20} height={20} />
+              Проект
+              {shift.project}
+            </Card>
+
+            <ShiftForm isCreating={isCreating} isEditing={isEditing} />
+          </>
+        )}
       </Container>
     </div>
   )

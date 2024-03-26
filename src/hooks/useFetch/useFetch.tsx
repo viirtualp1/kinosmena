@@ -1,11 +1,17 @@
-import { useResource } from '@axios-use/react'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { get } from 'lodash'
+import { http } from '../useAxios'
 
 interface Options {
-  params?: Record<string, string | number>
-  errorKey?: string
+  params?: Record<string, string | number | null | undefined>
 }
 
 export function useFetch<T>(
@@ -14,32 +20,35 @@ export function useFetch<T>(
 ): {
   data: T | null
   error: unknown
-  isLoading?: boolean
+  isLoading: MutableRefObject<boolean>
   setData: Dispatch<SetStateAction<T | null>>
 } {
   const navigate = useNavigate()
   const [data, setData] = useState<T | null>(null)
-
-  const [{ data: _data, error, isLoading }] = useResource(
-    () => ({ url, params: options?.params }),
-    [],
-  )
+  const error = useRef<unknown>()
+  const isLoading = useRef(false)
 
   useEffect(() => {
-    if (error) {
-      console.error(error)
+    const fetchData = async () => {
+      isLoading.current = true
 
-      // alert(
-      //   get(error, `data.${options?.errorKey}`, 'Ошибка при получении данных'),
-      // )
+      try {
+        setData(
+          await http.get(url, {
+            params: options?.params,
+          }),
+        )
+      } catch (err) {
+        console.error(err)
 
-      // navigate('/')
+        alert(get(error, `data.response`, 'Ошибка при получении данных'))
+
+        navigate('/')
+      }
     }
 
-    if (!isLoading && data) {
-      setData(_data)
-    }
-  }, [_data, data, error, isLoading, navigate, options?.errorKey])
+    fetchData()
+  }, [navigate, options?.params, url])
 
   return {
     data,

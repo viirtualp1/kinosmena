@@ -5,10 +5,13 @@ import './IndexPage.scss'
 
 export const IndexPage: FC = () => {
   const testId = useRef(0)
+  const testProjectId = useRef(1)
 
   return (
     <div>
-      <Link to={`/shift/${testId.current}`}>Shift Page</Link>
+      <Link to={`/shift/${testId.current}?projectId=${testProjectId.current}`}>
+        Shift Page
+      </Link>
     </div>
   )
 }
