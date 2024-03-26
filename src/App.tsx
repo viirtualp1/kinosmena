@@ -1,9 +1,9 @@
-/*import React from 'react';*/
-import User from "@/components/User/User"
+import { MainPage } from '@/components/MainPage'
+
 function App() {
   return (
     <>
-    <User firstName={""} lastName={""} hasProjects={false} />    
+      <MainPage />
     </>
   )
 }
