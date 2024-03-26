@@ -4,18 +4,29 @@ import * as cl from './ProjectCard.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { useRef, useEffect } from 'react'
+
+interface BlockData {
+  label: string
+  value: string | null
+}
+
+
 export function ProjectCard() {
   const [opened, { toggle }] = useDisclosure(false)
 
-  const blocksData = [
+
+  const blocksData = useRef<BlockData[]>([
     {
       label: 'Продолжительность смены *',
+      value: null,
     },
     {
       label: 'Шаг смены',
     },
     {
       label: 'Стоимость смены *',
+      value: null,
     },
     {
       label: 'Стоимость переработки (час)',
@@ -26,7 +37,9 @@ export function ProjectCard() {
     {
       label: 'Стоимость текущего обеда',
     },
-  ]
+  ])
+
+
 
   return (
     <div className={cl.container}>
@@ -118,6 +131,8 @@ export function ProjectCard() {
           {/*Две нижние кнопки */}
           {/*Две нижние кнопки */}
 
+          {}
+
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <Button
               style={{ margin: '1rem 0' }}
@@ -139,12 +154,12 @@ export function ProjectCard() {
               Расчетать стоимость
             </Button>
             <Collapse in={opened}>
-              {blocksData.map((block, index) => (
+              {blocksData.current.map((block, index) => (
                 <div
                   key={index}
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
-                  <Text>{block.label}</Text>
+                  <Text>{block.label} {block.value}</Text>
                   <Textarea
                     variant="outlined"
                     style={{ width: '60px', marginBottom: '0.5rem'}}
@@ -155,7 +170,8 @@ export function ProjectCard() {
                     autosize
                     minRows={1}
                     maxRows={1}
-                    placeholder="Час"
+                    placeholder="₽"
+                    onChange={(e) => block.value = e.currentTarget.value}
                   />
                 </div>
               ))}
