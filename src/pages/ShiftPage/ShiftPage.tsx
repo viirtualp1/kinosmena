@@ -3,18 +3,18 @@ import { Card, Title, Container } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
 import { useFetch } from '@/hooks/useFetch'
 import { useQuery } from '@/hooks/useQuery'
-import { ShiftForm } from '@/components/Shift'
+import { ShiftForm, ShiftView } from '@/components/Shift'
 import { ShiftPageSkeleton } from './ShiftPageSkeleton'
 import { useShiftPageStyles } from './useShiftPageStyles'
 import BookmarkIcon from '@/assets/images/icons/bookmark.svg'
-import { useRef } from 'react'
 
 interface Props {
   isCreating?: boolean
   isEditing?: boolean
+  isView?: boolean
 }
 
-export function ShiftPage({ isCreating, isEditing }: Props) {
+export function ShiftPage({ isCreating, isEditing, isView }: Props) {
   const { id } = useParams()
   const query = useQuery()
 
@@ -29,15 +29,15 @@ export function ShiftPage({ isCreating, isEditing }: Props) {
   return (
     <div className="shift-page">
       <Container mt="24px">
-        <Title order={5} mb={24} fw={500}>
+        <Title order={5} mb="24px" fw={500}>
           Карточка смены
         </Title>
 
         <ShiftPageSkeleton visible={isLoading?.current || !shift} />
-        {shift && (
+        {isView && <ShiftView />}
+        {shift && !isView && (
           <>
             <Card
-              className="shift-page__section"
               shadow="sm"
               padding="12px"
               radius="12px"

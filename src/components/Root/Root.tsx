@@ -7,27 +7,16 @@ import { createTheme, Input, MantineProvider, TextInput } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
 
 import { IndexPage } from '@/pages/IndexPage'
-import { ShiftPage } from '@/pages/ShiftPage'
 
 import inputClasses from '@/assets/scss/vendors/_input.module.scss'
+import { getShiftRoutes } from '@/pages/ShiftPage/routes'
 
 const router = createBrowserRouter([
   {
     path: '/',
     Component: IndexPage,
   },
-  {
-    path: '/shift/:id',
-    Component: () => ShiftPage({ isCreating: false }),
-  },
-  {
-    path: '/shift/:id/update',
-    Component: () => ShiftPage({ isEditing: false }),
-  },
-  {
-    path: '/shift/create',
-    Component: () => ShiftPage({ isCreating: true }),
-  },
+  ...getShiftRoutes(),
 ])
 
 const theme = createTheme({
