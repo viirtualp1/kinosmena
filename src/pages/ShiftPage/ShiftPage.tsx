@@ -6,7 +6,8 @@ import { useQuery } from '@/hooks/useQuery'
 import { ShiftForm, ShiftView } from '@/components/Shift'
 import { ShiftPageSkeleton } from './ShiftPageSkeleton'
 import { useShiftPageStyles } from './useShiftPageStyles'
-import BookmarkIcon from '@/assets/images/icons/bookmark.svg'
+import { BookmarkIcon } from '@/components/Icons'
+import { useRef } from 'react'
 
 interface Props {
   isCreating?: boolean
@@ -15,14 +16,16 @@ interface Props {
 }
 
 export function ShiftPage({ isCreating, isEditing, isView }: Props) {
-  const { id } = useParams()
-  const query = useQuery()
+  // const { id } = useParams()
+  // const query = useQuery()
 
-  const { data: shift, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
-    params: {
-      projectId: query.get('projectId'),
-    },
-  })
+  // const { data: shift, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
+  //   params: {
+  //     projectId: query.get('projectId'),
+  //   },
+  // })
+  const shift = { project: 'Тест' }
+  const isLoading = useRef(false)
 
   const { cardStyles } = useShiftPageStyles()
 
@@ -33,27 +36,26 @@ export function ShiftPage({ isCreating, isEditing, isView }: Props) {
           Карточка смены
         </Title>
 
-        <ShiftPageSkeleton visible={isLoading?.current || !shift} />
-        {isView && <ShiftView />}
-        {shift && !isView && (
-          <>
-            <Card
-              shadow="sm"
-              padding="12px"
-              radius="12px"
-              styles={cardStyles}
-              bg="#363A43"
-              withBorder
-              mb="24px"
-            >
-              <img src={BookmarkIcon} alt="bookmark" width={20} height={20} />
-              Проект
-              {shift.project}
-            </Card>
+        {/*<ShiftPageSkeleton visible={isLoading?.current || !shift} />*/}
+        {/*{isView && <ShiftView />}*/}
+        {/*{shift && !isView && (*/}
+        <>
+          <Card
+            shadow="sm"
+            padding="12px"
+            radius="12px"
+            styles={cardStyles}
+            bg="#363A43"
+            withBorder
+            mb="24px"
+          >
+            <BookmarkIcon size={20} fill="#fff" />
+            {shift.project}
+          </Card>
 
-            <ShiftForm isCreating={isCreating} isEditing={isEditing} />
-          </>
-        )}
+          <ShiftForm isCreating={isCreating} isEditing={isEditing} />
+        </>
+        {/*)}*/}
       </Container>
     </div>
   )

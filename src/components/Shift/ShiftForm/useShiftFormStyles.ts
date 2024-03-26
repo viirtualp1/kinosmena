@@ -1,14 +1,10 @@
 import { CardStylesNames } from '@mantine/core'
 import { MantineStylesType } from '@/types'
 
-export function useShiftPageStyles() {
+export function useShiftFormStyles() {
   const cardStyles: MantineStylesType<CardStylesNames> = {
     root: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: '14px',
-      color: '#fff',
-      height: 48,
+      borderColor: '#060B18',
     },
   }
 
