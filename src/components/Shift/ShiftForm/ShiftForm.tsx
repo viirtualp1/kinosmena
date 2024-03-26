@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
-import { MainButton } from '@tma.js/sdk-react'
+import { useMainButton } from '@tma.js/sdk-react'
 import { useShiftFormStyles } from './useShiftFormStyles.ts'
 import { ShiftData } from '@/types/Shift'
 
@@ -23,6 +23,21 @@ interface FormValues {
   overtimeHours: number | null
   deprivationHoursSleep: number | null
   additionalServices: number | null
+}
+
+const MainButton = ({ submit }: any) => {
+  const mainButton = useMainButton()
+
+  useEffect(() => {
+    mainButton.setParams({
+      text: 'Сохранить',
+      textColor: '#0594FA',
+    })
+
+    return mainButton.on('click', submit)
+  }, [mainButton, submit])
+
+  return null
 }
 
 export const ShiftForm: FC<Props> = ({ isView, shift }) => {
@@ -116,7 +131,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
   )
 
   return (
-    <form onSubmit={submitForm}>
+    <form>
       {isView ? <Dates /> : <DatesFields />}
 
       <Card padding="12px 20px" radius="12px" withBorder styles={cardStyles}>
@@ -213,7 +228,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
           />
         </Group>
 
-        <MainButton type="submit" />
+        <MainButton submit={submitForm} />
       </Card>
     </form>
   )
