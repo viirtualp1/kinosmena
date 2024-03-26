@@ -2,17 +2,20 @@ import { FC } from 'react'
 import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
-import { useShiftFormStyles } from '@/components/Shift/ShiftForm/useShiftFormStyles.ts'
+import { useShiftFormStyles } from './useShiftFormStyles.ts'
+import { ShiftData } from '@/types/Shift'
 // import { useMainButton } from '@tma.js/sdk-react'
 
 interface Props {
+  isView: boolean | undefined
   isCreating: boolean | undefined
   isEditing: boolean | undefined
+  shift: ShiftData
 }
 
 interface FormValues {
-  start: Date | null
-  end: Date | null
+  start: string | null
+  end: string | null
   wasCurrentLunch: boolean
   wasLatelyLunch: boolean
   dailyAllowance: boolean
@@ -22,32 +25,25 @@ interface FormValues {
   additionalServices: number | null
 }
 
-const getForm = (): FormValues => {
-  return {
-    start: null,
-    end: null,
-    wasCurrentLunch: false,
-    wasLatelyLunch: false,
-    dailyAllowance: false,
-    dayOffShift: false,
-    overtimeHours: null,
-    deprivationHoursSleep: null,
-    additionalServices: null,
-  }
-}
-
-export const ShiftForm: FC<Props> = (props) => {
+export const ShiftForm: FC<Props> = ({ isView, shift }) => {
   // const mainButton = useMainButton()
-  const initialValues = getForm()
+
   const { cardStyles } = useShiftFormStyles()
 
   const form = useForm<FormValues>({
-    initialValues,
+    initialValues: {
+      start: shift.start_date,
+      end: shift.end_date,
+      wasCurrentLunch: shift.is_current_lunch,
+      wasLatelyLunch: shift.is_late_lunch,
+      dailyAllowance: shift.is_per_diem,
+      dayOffShift: shift.is_day_off,
+      overtimeHours: shift.overwork_hours,
+      deprivationHoursSleep: shift.non_sleep_hours,
+      additionalServices: shift.services,
+    },
     validate: {
       start: isNotEmpty('Некорректная дата'),
-      end: isNotEmpty('Некорректная дата'),
-      overtimeHours: isNotEmpty('Поле обязательно к заполнению'),
-      deprivationHoursSleep: isNotEmpty('Поле обязательно к заполнению'),
     },
   })
 
@@ -56,8 +52,43 @@ export const ShiftForm: FC<Props> = (props) => {
     console.log(form.values)
   })
 
-  return (
-    <form onSubmit={submitForm}>
+  const Dates = () => (
+    <Group grow gap="8px" ta="center">
+      {shift.start_date && (
+        <Card
+          padding="12px 8px"
+          h={66}
+          fz={14}
+          mb="24px"
+          radius="12px"
+          withBorder
+          styles={cardStyles}
+        >
+          Начало
+          <Text fz={14} opacity={0.7}>
+            {shift.start_date}
+          </Text>
+        </Card>
+      )}
+      {shift.end_date && (
+        <Card
+          padding="12px 20px"
+          fz={14}
+          radius="12px"
+          withBorder
+          styles={cardStyles}
+        >
+          Окончание
+          <Text fz={14} opacity={0.7}>
+            {shift.end_date}
+          </Text>
+        </Card>
+      )}
+    </Group>
+  )
+
+  const DatesFields = () => (
+    <>
       <DateTimePicker
         valueFormat="DD.MM.YYYY HH:mm"
         label="Начало"
@@ -67,6 +98,7 @@ export const ShiftForm: FC<Props> = (props) => {
         size="md"
         radius="12px"
         mb="24px"
+        disabled={isView}
         {...form.getInputProps('start')}
       />
 
@@ -79,8 +111,15 @@ export const ShiftForm: FC<Props> = (props) => {
         size="md"
         radius="12px"
         mb="24px"
+        disabled={isView}
         {...form.getInputProps('end')}
       />
+    </>
+  )
+
+  return (
+    <form onSubmit={submitForm}>
+      {isView ? <Dates /> : <DatesFields />}
 
       <Card padding="12px 20px" radius="12px" withBorder styles={cardStyles}>
         <Group h="33px" justify="space-between">
@@ -88,6 +127,7 @@ export const ShiftForm: FC<Props> = (props) => {
 
           <Switch
             h={16}
+            disabled={isView}
             {...form.getInputProps('wasCurrentLunch', { type: 'checkbox' })}
           />
         </Group>
@@ -96,6 +136,7 @@ export const ShiftForm: FC<Props> = (props) => {
 
           <Switch
             h={16}
+            disabled={isView}
             {...form.getInputProps('wasLatelyLunch', { type: 'checkbox' })}
           />
         </Group>
@@ -104,6 +145,7 @@ export const ShiftForm: FC<Props> = (props) => {
 
           <Switch
             h={16}
+            disabled={isView}
             {...form.getInputProps('dailyAllowance', { type: 'checkbox' })}
           />
         </Group>
@@ -111,6 +153,7 @@ export const ShiftForm: FC<Props> = (props) => {
           <Text fz={14}>Смена в day-off</Text>
 
           <Switch
+            disabled={isView}
             {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
           />
         </Group>
@@ -129,6 +172,7 @@ export const ShiftForm: FC<Props> = (props) => {
             thousandSeparator=" "
             radius="md"
             clampBehavior="strict"
+            readOnly={isView}
             {...form.getInputProps('overtimeHours')}
           />
         </Group>
@@ -147,6 +191,7 @@ export const ShiftForm: FC<Props> = (props) => {
             thousandSeparator=" "
             radius="md"
             clampBehavior="strict"
+            readOnly={isView}
             {...form.getInputProps('deprivationHoursSleep')}
           />
         </Group>
@@ -165,6 +210,7 @@ export const ShiftForm: FC<Props> = (props) => {
             thousandSeparator=" "
             radius="md"
             clampBehavior="strict"
+            readOnly={isView}
             {...form.getInputProps('additionalServices')}
           />
         </Group>

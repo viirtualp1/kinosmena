@@ -16,4 +16,7 @@ export interface ShiftData {
   is_per_diem: boolean
   per_diem: number
   total: number
+  is_day_off: boolean
+  day_off: boolean
+  services: number | null
 }
