@@ -5,11 +5,11 @@ import { setDebug } from '@tma.js/sdk'
 import { SDKProvider } from '@tma.js/sdk-react'
 import { createTheme, Input, MantineProvider, TextInput } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
+import { getShiftRoutes } from '@/pages/ShiftPage/routes'
 
 import { IndexPage } from '@/pages/IndexPage'
 
 import inputClasses from '@/assets/scss/vendors/_input.module.scss'
-import { getShiftRoutes } from '@/pages/ShiftPage/routes'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +20,7 @@ const router = createBrowserRouter([
 ])
 
 const theme = createTheme({
+  defaultRadius: '12px',
   components: {
     Input: Input.extend({ classNames: inputClasses }),
     TextInput: TextInput.extend({ classNames: inputClasses }),

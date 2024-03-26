@@ -73,7 +73,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
           h={66}
           fz={14}
           mb="24px"
-          radius="12px"
           withBorder
           styles={cardStyles}
         >
@@ -84,13 +83,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
         </Card>
       )}
       {shift.end_date && (
-        <Card
-          padding="12px 20px"
-          fz={14}
-          radius="12px"
-          withBorder
-          styles={cardStyles}
-        >
+        <Card padding="12px 20px" fz={14} withBorder styles={cardStyles}>
           Окончание
           <Text fz={14} opacity={0.7}>
             {shift.end_date}
@@ -109,7 +102,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
         placeholder="17.03.2024 15:30"
         clearable
         size="md"
-        radius="12px"
         mb="24px"
         disabled={isView}
         {...form.getInputProps('start')}
@@ -122,7 +114,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
         placeholder="20.03.2024 20:00"
         clearable
         size="md"
-        radius="12px"
         mb="24px"
         disabled={isView}
         {...form.getInputProps('end')}
@@ -134,7 +125,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
     <form>
       {isView ? <Dates /> : <DatesFields />}
 
-      <Card padding="12px 20px" radius="12px" withBorder styles={cardStyles}>
+      <Card padding="12px 20px" withBorder styles={cardStyles}>
         <Group h="33px" justify="space-between">
           <Text fz={14}>Был текущий обед</Text>
 
@@ -183,7 +174,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
             rightSectionWidth={10}
             placeholder="2000"
             thousandSeparator=" "
-            radius="md"
             clampBehavior="strict"
             readOnly={isView}
             {...form.getInputProps('overtimeHours')}
@@ -202,7 +192,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
             rightSectionWidth={10}
             placeholder="2000"
             thousandSeparator=" "
-            radius="md"
             clampBehavior="strict"
             readOnly={isView}
             {...form.getInputProps('deprivationHoursSleep')}
@@ -221,7 +210,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
             rightSectionWidth={10}
             placeholder="2000"
             thousandSeparator=" "
-            radius="md"
             clampBehavior="strict"
             readOnly={isView}
             {...form.getInputProps('additionalServices')}

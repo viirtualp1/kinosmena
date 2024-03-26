@@ -39,7 +39,6 @@ export function ShiftPage({ isCreating, isEditing, isView }: Props) {
             <Card
               shadow="sm"
               padding="12px"
-              radius="12px"
               styles={cardStyles}
               bg="#363A43"
               withBorder
