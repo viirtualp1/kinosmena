@@ -5,8 +5,8 @@ import {
   Text,
   Textarea,
   Collapse,
-  Box,
   TextInput,
+  Container,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import * as cl from './ProjectForm.module.scss'
@@ -54,7 +54,7 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
   ])
 
   return (
-    <Box>
+    <Container mt="24px">
       <div
         style={{
           minHeight: '85vh',
@@ -204,6 +204,6 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
           Сохранить
         </Button>
       </div>
-    </Box>
+    </Container>
   )
 }
