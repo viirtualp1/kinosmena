@@ -73,7 +73,6 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
             </Text>
             <TextInput
               className={cl.border}
-              withAsterisk
               size="md"
               radius="lg"
               placeholder="Мой проект"
