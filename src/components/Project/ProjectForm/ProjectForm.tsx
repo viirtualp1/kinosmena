@@ -9,8 +9,9 @@ import {
   Container,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import * as cl from './ProjectForm.module.scss'
 import { ProjectData } from '@/types/Project'
+import { ArrowDown, ArrowUp } from '@/components/Icons'
+import * as cl from './ProjectForm.module.scss'
 
 interface Props {
   project: ProjectData
@@ -156,18 +157,12 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
               onClick={toggle}
               justify="space-between"
               fullWidth
-              rightSection={
-                !opened ? (
-                  <FontAwesomeIcon icon={faArrowDown} />
-                ) : (
-                  <FontAwesomeIcon icon={faArrowUp} />
-                )
-              }
+              rightSection={!opened ? <ArrowDown /> : <ArrowUp />}
               color="gray"
               mt="md"
               className="cl.btn"
             >
-              Расчетать стоимость
+              Рассчитать стоимость
             </Button>
             <Collapse in={opened}>
               {blocksData.current.map((block, index) => (

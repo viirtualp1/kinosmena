@@ -1,4 +1,6 @@
 export { default as BookmarkIcon } from './BookmarkIcon.tsx'
 export { default as PlusIcon } from './PlusIcon.tsx'
 export { default as CloseIcon } from './CloseIcon.tsx'
+export { default as ArrowUp } from './ArrowUp.tsx'
+export { default as ArrowDown } from './ArrowDown.tsx'
 export * from './types.d'
