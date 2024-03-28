@@ -1,14 +1,12 @@
-import { useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 // import { useParams } from 'react-router-dom'
-import { Card, Title, Container } from '@mantine/core'
+import { Title, Container } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
 // import { useFetch } from '@/hooks/useFetch'
 // import { useQuery } from '@/hooks/useQuery'
 import { ShiftForm } from '@/components/Shift'
-import { BookmarkIcon } from '@/components/Icons'
-import { ShiftPageSkeleton } from './ShiftPageSkeleton'
-import { useShiftPageStyles } from './useShiftPageStyles'
-import { getShiftData } from '@/pages/ShiftPage/mock.ts'
+import { ShiftPageSkeleton, getShiftData } from './'
+import { ProjectName } from '@/components/Project/ProjectName/ProjectName.tsx'
 
 interface Props {
   isCreating?: boolean
@@ -16,7 +14,11 @@ interface Props {
   isView?: boolean
 }
 
-export function ShiftPage({ isCreating, isEditing, isView }: Props) {
+export const ShiftPage: FC<Props> = ({
+  isCreating,
+  isEditing,
+  isView,
+}: Props) => {
   // TODO: для тестирования пока тестовые данные, в проде раскомментировать
   // const { id } = useParams()
   // const query = useQuery()
@@ -29,8 +31,6 @@ export function ShiftPage({ isCreating, isEditing, isView }: Props) {
   const isLoading = useRef(false)
   const [shift] = useState<ShiftData | null>(getShiftData())
 
-  const { cardStyles } = useShiftPageStyles()
-
   return (
     <div className="shift-page">
       <Container mt="24px">
@@ -41,17 +41,7 @@ export function ShiftPage({ isCreating, isEditing, isView }: Props) {
         <ShiftPageSkeleton visible={isLoading?.current || !shift} />
         {shift && (
           <>
-            <Card
-              shadow="sm"
-              padding="12px"
-              styles={cardStyles}
-              bg="#363A43"
-              withBorder
-              mb="24px"
-            >
-              <BookmarkIcon size={20} fill="#fff" />
-              {shift.project}
-            </Card>
+            <ProjectName name={shift.project} />
 
             <ShiftForm
               shift={shift}

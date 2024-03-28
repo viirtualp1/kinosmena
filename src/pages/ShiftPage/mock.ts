@@ -1,4 +1,6 @@
-export function getShiftData() {
+import { ShiftData } from '@/types/Shift'
+
+export function getShiftData(): ShiftData {
   return {
     id: 0,
     project: 1,

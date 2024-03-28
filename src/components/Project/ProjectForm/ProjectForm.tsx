@@ -1,50 +1,61 @@
-import { Button, Title, Text, Input, Textarea, Collapse } from '@mantine/core'
+import { FC, useRef } from 'react'
+import {
+  Button,
+  Title,
+  Text,
+  Textarea,
+  Collapse,
+  Box,
+  TextInput,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import * as cl from './ProjectCard.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
-import { useRef, useEffect } from 'react'
+import * as cl from './ProjectForm.module.scss'
+import { ProjectData } from '@/types/Project'
+
+interface Props {
+  project: ProjectData
+  isCreating: boolean | undefined
+  isEditing: boolean | undefined
+}
 
 interface BlockData {
   label: string
   value: string | null
 }
 
-
-export function ProjectCard() {
+export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
   const [opened, { toggle }] = useDisclosure(false)
-
 
   const blocksData = useRef<BlockData[]>([
     {
-      label: 'Продолжительность смены *',
+      label: 'Продолжительность смены',
       value: null,
     },
     {
       label: 'Шаг смены',
+      value: null,
     },
     {
-      label: 'Стоимость смены *',
+      label: 'Стоимость смены',
       value: null,
     },
     {
       label: 'Стоимость переработки (час)',
+      value: null,
     },
     {
       label: 'Стоимость недосыпа (час)',
+      value: null,
     },
     {
       label: 'Стоимость текущего обеда',
+      value: null,
     },
   ])
 
-
-
   return (
-    <div className={cl.container}>
+    <Box>
       <div
-        className={cl.content}
         style={{
           minHeight: '85vh',
           display: 'flex',
@@ -60,7 +71,13 @@ export function ProjectCard() {
             <Text size="lg" fw={400}>
               Название
             </Text>
-            <Input className={cl.border} size="md" radius="lg" placeholder="Мой проект" />
+            <TextInput
+              className={cl.border}
+              withAsterisk
+              size="md"
+              radius="lg"
+              placeholder="Мой проект"
+            />
           </div>
           <div>
             <Text size="lg" fw={400}>
@@ -159,11 +176,14 @@ export function ProjectCard() {
                   key={index}
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
-                  <Text>{block.label} {block.value}</Text>
+                  <Text>
+                    {block.label} {block.value}
+                  </Text>
                   <Textarea
                     variant="outlined"
-                    style={{ width: '60px', marginBottom: '0.5rem'}}
+                    style={{ width: '60px', marginBottom: '0.5rem' }}
                     className={cl.border}
+                    withAsterisk={index === 0 || index === 2}
                     cols={3}
                     radius="lg"
                     maxLength={3}
@@ -171,7 +191,7 @@ export function ProjectCard() {
                     minRows={1}
                     maxRows={1}
                     placeholder="₽"
-                    onChange={(e) => block.value = e.currentTarget.value}
+                    onChange={(e) => (block.value = e.currentTarget.value)}
                   />
                 </div>
               ))}
@@ -184,6 +204,6 @@ export function ProjectCard() {
           Сохранить
         </Button>
       </div>
-    </div>
+    </Box>
   )
 }
