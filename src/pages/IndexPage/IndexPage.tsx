@@ -1,6 +1,6 @@
 import { useRef, type FC, useState } from 'react'
 import { Button, Container, Flex, Title } from '@mantine/core'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import './IndexPage.scss'
 
