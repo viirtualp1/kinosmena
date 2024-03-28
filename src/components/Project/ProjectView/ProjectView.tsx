@@ -10,6 +10,25 @@ interface Props {
   project: ProjectData
 }
 
+const shiftButtonStyles = {
+  label: {
+    marginLeft: '50%',
+    translate: '-50%',
+  },
+  rightSection: {
+    translate: '-100%',
+    marginLeft: '100%',
+  },
+}
+
+const shiftCardStyles = {
+  root: {
+    justifyContent: 'flex-end',
+    gap: 8,
+    borderColor: '#060B18',
+  },
+}
+
 export const ProjectView: FC<Props> = ({ project }) => {
   const { formatDate } = useDate()
 
@@ -24,25 +43,6 @@ export const ProjectView: FC<Props> = ({ project }) => {
     setStartDate(startDate)
     setEndDate(endDate)
   }, [project, formatDate])
-
-  const shiftButtonStyles = {
-    label: {
-      marginLeft: '50%',
-      translate: '-50%',
-    },
-    rightSection: {
-      translate: '-100%',
-      marginLeft: '100%',
-    },
-  }
-
-  const shiftCardStyles = {
-    root: {
-      justifyContent: 'flex-end',
-      gap: 8,
-      borderColor: '#060B18',
-    },
-  }
 
   const ShiftRightSection = firstShift.current ? <CloseIcon /> : <PlusIcon />
 
