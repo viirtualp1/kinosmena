@@ -1,7 +1,55 @@
-.input {
-  &[data-variant='default'] {
-    border: 1px solid #060B18;
-    background-color: #fff;
-    border-radius: 12px
+@use 'sass:math';
+
+$mantine-breakpoint-sm: '576px';
+$mantine-breakpoint-md: '768px';
+$mantine-breakpoint-lg: '992px';
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin media-sm-down() {
+  @media (max-width: $mantine-breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin media-sm-up() {
+  @media (min-width: $mantine-breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin media-md-down() {
+  @media (max-width: $mantine-breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin media-md-up() {
+  @media (min-width: $mantine-breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin media-lg-down() {
+  @media (max-width: $mantine-breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin media-lg-up() {
+  @media (min-width: $mantine-breakpoint-lg) {
+    @content;
   }
 }

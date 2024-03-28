@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-// @ts-ignore
 import { fileURLToPath, URL } from 'url'
 import react from '@vitejs/plugin-react'
 
@@ -13,5 +12,12 @@ export default defineConfig({
         replacement: fileURLToPath(new URL('./src', import.meta.url)),
       },
     ],
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "./src/assets/scss/vendors/_mantine";`,
+      },
+    },
   },
 })

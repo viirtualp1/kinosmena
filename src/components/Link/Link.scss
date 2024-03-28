@@ -1,0 +1,9 @@
+.link {
+  text-decoration: none;
+  color: var(--tg-theme-link-color, #3a86c4);
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: darken(#3a86c4, 5%);
+  }
+}
