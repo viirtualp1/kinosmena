@@ -1,7 +1,11 @@
 import { px } from '@mantine/core'
 import { IconProps } from './index.ts'
 
-export default function UserDefaultIcon({ size, style, ...others }: IconProps) {
+export default function UserDefaultIcon({
+  size = 24,
+  style,
+  ...others
+}: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +14,7 @@ export default function UserDefaultIcon({ size, style, ...others }: IconProps) {
       x="0px"
       y="0px"
       viewBox="0 0 256 256"
-      enable-background="new 0 0 256 256"
+      enableBackground="new 0 0 256 256"
       xmlSpace="preserve"
       style={{ width: px(size), height: px(size), ...style }}
       {...others}
