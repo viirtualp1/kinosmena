@@ -1,5 +1,5 @@
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
-import { Container, Group, Image, Text, Button, Box } from '@mantine/core'
+import { Container, Group, Text, Button, Box } from '@mantine/core'
 
 import {
   ProjectIcon,
