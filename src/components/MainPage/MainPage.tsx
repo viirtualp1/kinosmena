@@ -1,9 +1,11 @@
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Image, Text, Button, Box } from '@mantine/core'
+import { useNavigate } from 'react-router-dom'
 
 import ProjectIcon from '@/assets/images/icons/project.svg'
 import ReportIcon from '@/assets/images/icons/report.svg'
 import ArchiveIcon from '@/assets/images/icons/archive.svg'
+import ArrowIcon from '@/assets/images/icons/projectArrow.svg'
 import UserDefaultIcon from '@/assets/images/icons/user-default-icon.png'
 
 export const MainPage: FC = () => {
@@ -40,6 +42,8 @@ export const MainPage: FC = () => {
     textAlign: 'left',
   }
 
+  const navigate = useNavigate()
+
   return (
     <Container px="24px" mt="24px">
       <Group grow mb="24px">
@@ -61,7 +65,7 @@ export const MainPage: FC = () => {
               inner: { justifyContent: 'space-between' },
               label: labelStyles,
             }}
-            onClick={() => console.log('Button 1 clicked')}
+            onClick={() => navigate('/project/create')}
           >
             <Text maw={76} fw={500}>
               Создать проект
@@ -78,7 +82,7 @@ export const MainPage: FC = () => {
               inner: { justifyContent: 'space-between', gap: '4px' },
               label: labelStyles,
             }}
-            onClick={() => console.log('Button 2 clicked')}
+            onClick={() => navigate('/project/archive')}
           >
             <Text maw={76} fw={500}>
               Архивные проекты
@@ -106,7 +110,7 @@ export const MainPage: FC = () => {
             label: labelStyles,
           }}
           rightSection={<img src={ReportIcon} />}
-          onClick={() => console.log('Button 3 clicked')}
+          onClick={() => navigate('/report')}
         >
           <Text maw={96}>Получить отчет</Text>
         </Button>
@@ -115,10 +119,35 @@ export const MainPage: FC = () => {
       <Text my="24px">Активные проекты</Text>
       {user.current.hasProjects ? (
         <Box>
-          <Button w="100%" h="48px" bg="#363A43" mb={12} radius="16px">
+          <Button
+            w="100%"
+            h="48px"
+            bg="#363A43"
+            mb={12}
+            radius="16px"
+            styles={{
+              inner: {
+                justifyContent: 'space-between',
+              },
+              label: labelStyles,
+            }}
+            rightSection={<img src={ArrowIcon} />}            
+          >
             Проект
           </Button>
-          <Button w="100%" h="48px" bg="#363A43" radius="16px">
+          <Button
+            w="100%"
+            h="48px"
+            bg="#363A43"
+            radius="16px"
+            styles={{
+              inner: {
+                justifyContent: 'space-between',
+              },
+              label: labelStyles,
+            }}
+            rightSection={<img src={ArrowIcon} />}
+          >
             Проект
           </Button>
           {/* Здесь могут быть компоненты для отображения активных проектов */}
