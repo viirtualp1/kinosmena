@@ -1,14 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Text, Button, Box } from '@mantine/core'
-
+import { getProjects } from './mock'
 import {
   ProjectIcon,
   ReportIcon,
   ArchiveIcon,
   UserDefaultIcon,
 } from '@/components/Icons'
-import { getProjects } from './mock'
-import { useNavigate } from 'react-router-dom'
 
 export const IndexPage: FC = () => {
   const navigate = useNavigate()
@@ -24,6 +23,7 @@ export const IndexPage: FC = () => {
 
   useEffect(() => {
     if (!user.current) {
+      setFullName('Личный кабинет')
       return
     }
 
