@@ -49,9 +49,9 @@ export const IndexPage: FC = () => {
 
   return (
     <Container px="24px" mt="24px">
-      <Group grow mb="24px">
-        <Image src={UserDefaultIcon} alt="User Icon" maw={32} />
-        <Text>{fullName}</Text>
+      <Group gap={8} mb="24px">
+        <UserDefaultIcon width={32} height={32} />
+        <Text fw={500}>{fullName}</Text>
       </Group>
 
       <Group gap="8px" wrap="nowrap">
