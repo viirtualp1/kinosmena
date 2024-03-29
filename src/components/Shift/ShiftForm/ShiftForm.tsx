@@ -3,11 +3,11 @@ import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker, DateValue } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 import { useMainButton } from '@tma.js/sdk-react'
-import { useShiftFormStyles } from './useShiftFormStyles.ts'
 import { ShiftData } from '@/types/Shift'
-import { useConfig } from '@/hooks/useConfig/useConfig.ts'
-import { useDate } from '@/hooks/useDate/useDate.ts'
+import { useConfig } from '@/hooks/useConfig'
+import { useDate } from '@/hooks/useDate'
 import { http } from '@/hooks/useAxios'
+import { useShiftFormStyles } from './useShiftFormStyles.ts'
 
 interface Props {
   isView: boolean | undefined
