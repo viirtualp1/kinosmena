@@ -18,12 +18,11 @@ export const IndexPage: FC = () => {
     hasProjects: true,
   })
 
-  const [fullName, setFullName] = useState('Пользователь')
+  const [fullName, setFullName] = useState('Личный кабинет')
   const [projects] = useState(getProjects())
 
   useEffect(() => {
     if (!user.current) {
-      setFullName('Личный кабинет')
       return
     }
 
