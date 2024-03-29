@@ -1,2 +1,6 @@
 export { default as BookmarkIcon } from './BookmarkIcon.tsx'
+export { default as ProjectIcon } from './ProjectIcon.tsx'
+export { default as ArchiveIcon } from './ArchiveIcon.tsx'
+export { default as ReportIcon } from './ReportIcon.tsx'
+export { default as UserDefaultIcon } from './UserDefaultIcon.tsx'
 export * from './types.d'
