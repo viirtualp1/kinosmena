@@ -1,5 +1,5 @@
 # Kinosmena
-Project description
+[Документация](https://github.com/viirtualp1/kinosmena/wiki)
 
 ## Build Setup
 
