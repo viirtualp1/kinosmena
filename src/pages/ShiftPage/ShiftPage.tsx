@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function ShiftPage({ isCreating, isEditing, isView }: Props) {
-  // TODO: для тестирования пока тестовые данные, в проде раскомментировать
+  // TODO: для тестирования пока замоканные данные, в проде раскомментировать
   // const { id } = useParams()
   // const query = useQuery()
   // const { data: shift, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
