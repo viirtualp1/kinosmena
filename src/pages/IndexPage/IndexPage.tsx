@@ -8,8 +8,11 @@ import {
   UserDefaultIcon,
 } from '@/components/Icons'
 import { getProjects } from './mock'
+import { useNavigate } from 'react-router-dom'
 
 export const IndexPage: FC = () => {
+  const navigate = useNavigate()
+
   const user = useRef({
     firstName: 'Admin',
     lastName: 'Kinosmena',
@@ -127,6 +130,7 @@ export const IndexPage: FC = () => {
               bg="#363A43"
               mb={12}
               radius="16px"
+              onClick={() => navigate(`/project/${project.id}`)}
             >
               {project.name}
             </Button>
