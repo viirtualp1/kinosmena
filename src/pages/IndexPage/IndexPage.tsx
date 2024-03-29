@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Text, Button, Box } from '@mantine/core'
-import { getProjects } from './mock'
 import {
   ProjectIcon,
   ReportIcon,
   ArchiveIcon,
   UserDefaultIcon,
 } from '@/components/Icons'
+import { getProjects } from './mock'
 
 export const IndexPage: FC = () => {
   const navigate = useNavigate()

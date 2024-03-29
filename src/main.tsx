@@ -6,7 +6,6 @@ import { Root } from '@/components/Root'
 import '@mantine/core/styles.css'
 import '@mantine/dates/styles.css'
 import './assets/scss/globals.scss'
-import '@mantine/core/styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
