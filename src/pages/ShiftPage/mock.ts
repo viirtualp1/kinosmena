@@ -3,7 +3,7 @@ import { ShiftData } from '@/types/Shift'
 export function getShiftData(): ShiftData {
   return {
     id: 0,
-    project: 1,
+    project: 'Проект',
     user: 222,
     start_date: '2024-03-26T21:59:39.575Z',
     end_date: null,
