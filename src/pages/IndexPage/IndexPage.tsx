@@ -6,6 +6,7 @@ import {
   ReportIcon,
   ArchiveIcon,
   UserDefaultIcon,
+  ArrowIcon,
 } from '@/components/Icons'
 import { getProjects } from './mock'
 
@@ -67,7 +68,7 @@ export const IndexPage: FC = () => {
               inner: { justifyContent: 'space-between' },
               label: labelStyles,
             }}
-            onClick={() => console.log('Button 1 clicked')}
+            onClick={() => navigate('/project/create')}
           >
             <Text maw={76} fw={500}>
               Создать проект
@@ -84,7 +85,7 @@ export const IndexPage: FC = () => {
               inner: { justifyContent: 'space-between', gap: '4px' },
               label: labelStyles,
             }}
-            onClick={() => console.log('Button 2 clicked')}
+            onClick={() => navigate('/project/archive')}
           >
             <Text maw={76} fw={500}>
               Архивные проекты
@@ -112,7 +113,7 @@ export const IndexPage: FC = () => {
             label: labelStyles,
           }}
           rightSection={<ReportIcon />}
-          onClick={() => console.log('Button 3 clicked')}
+          onClick={() => navigate('/report')}
         >
           <Text maw={96}>Получить отчет</Text>
         </Button>
@@ -129,6 +130,13 @@ export const IndexPage: FC = () => {
               bg="#363A43"
               mb={12}
               radius="16px"
+              styles={{
+                inner: {
+                  justifyContent: 'space-between',
+                },
+                label: labelStyles,
+              }}
+              rightSection={<ArrowIcon />}
               onClick={() => navigate(`/project/${project.id}`)}
             >
               {project.name}
