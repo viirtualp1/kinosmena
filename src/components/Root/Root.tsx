@@ -11,18 +11,24 @@ import {
   Container,
 } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
-import { getShiftRoutes } from '@/pages/ShiftPage/routes'
 
+import { getShiftRoutes } from '@/pages/ShiftPage/routes'
 import { IndexPage } from '@/pages/IndexPage'
+import { ErrorPage } from '@/pages/ErrorPage'
 
 import inputClasses from '@/assets/scss/vendors/_input.module.scss'
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    Component: IndexPage,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/',
+        Component: IndexPage,
+      },
+      ...getShiftRoutes(),
+    ],
   },
-  ...getShiftRoutes(),
 ])
 
 const theme = createTheme({
