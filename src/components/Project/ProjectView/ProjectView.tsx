@@ -84,14 +84,10 @@ export const ProjectView: FC<Props> = ({ project }) => {
 
       <Group grow gap="8px" ta="center" mb="24px">
         {startDate && (
-          <Card
-            padding="12px 8px"
-            h={66}
-            fz={14}
-            withBorder
-            styles={shiftCardStyles}
-          >
-            <Text h={17}>Дата начала</Text>
+          <Card padding="12px 8px" h={66} withBorder styles={shiftCardStyles}>
+            <Text h={17} fz={14}>
+              Дата начала
+            </Text>
             <Text h={17} fz={14} opacity={0.7}>
               {startDate}
             </Text>
@@ -99,14 +95,10 @@ export const ProjectView: FC<Props> = ({ project }) => {
         )}
 
         {endDate && (
-          <Card
-            padding="12px 20px"
-            h={66}
-            fz={14}
-            withBorder
-            styles={shiftCardStyles}
-          >
-            <Text h={17}>Дата окончания</Text>
+          <Card padding="12px 20px" h={66} withBorder styles={shiftCardStyles}>
+            <Text h={17} fz={14}>
+              Дата окончания
+            </Text>
             <Text h={17} fz={14} opacity={0.7}>
               {endDate}
             </Text>
