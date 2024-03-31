@@ -1,8 +1,8 @@
 @use 'sass:math';
 
-$mantine-breakpoint-sm: '576px';
-$mantine-breakpoint-md: '768px';
-$mantine-breakpoint-lg: '992px';
+$breakpoint-sm: '576px';
+$breakpoint-md: '768px';
+$breakpoint-lg: '992px';
 
 @mixin hover {
   @media (hover: hover) {
@@ -19,37 +19,37 @@ $mantine-breakpoint-lg: '992px';
 }
 
 @mixin media-sm-down() {
-  @media (max-width: $mantine-breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     @content;
   }
 }
 
 @mixin media-sm-up() {
-  @media (min-width: $mantine-breakpoint-sm) {
+  @media (min-width: $breakpoint-sm) {
     @content;
   }
 }
 
 @mixin media-md-down() {
-  @media (max-width: $mantine-breakpoint-md) {
+  @media (max-width: $breakpoint-md) {
     @content;
   }
 }
 
 @mixin media-md-up() {
-  @media (min-width: $mantine-breakpoint-md) {
+  @media (min-width: $breakpoint-md) {
     @content;
   }
 }
 
 @mixin media-lg-down() {
-  @media (max-width: $mantine-breakpoint-lg) {
+  @media (max-width: $breakpoint-lg) {
     @content;
   }
 }
 
 @mixin media-lg-up() {
-  @media (min-width: $mantine-breakpoint-lg) {
+  @media (min-width: $breakpoint-lg) {
     @content;
   }
 }
