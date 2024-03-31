@@ -1,10 +1,10 @@
-import { FC, useEffect, useRef, useState } from 'react'
-import { ProjectData, ShiftShortData } from '@/types/Project'
-import { ShiftCard } from '@/components/Project/ShiftCard/ShiftCard.tsx'
+import { FC, useMemo, useRef, useState } from 'react'
 import { Button, Card, Group, Text } from '@mantine/core'
+import { ProjectData, ShiftShortData } from '@/types/Project'
+import { useDate } from '@/hooks/useDate'
 import { PlusIcon, CloseIcon } from '@/components/Icons'
 import { ProjectName } from '@/components/Project/ProjectName'
-import { useDate } from '@/hooks/useDate/useDate.ts'
+import { ShiftCard } from '@/components/Project/ShiftCard'
 
 interface Props {
   project: ProjectData
@@ -16,8 +16,8 @@ const shiftButtonStyles = {
     translate: '-50%',
   },
   rightSection: {
-    translate: '-100%',
     marginLeft: '100%',
+    translate: '-100%',
   },
 }
 
@@ -36,15 +36,15 @@ export const ProjectView: FC<Props> = ({ project }) => {
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
 
-  useEffect(() => {
-    const startDate = formatDate(project.start_date) || null
-    const endDate = formatDate(project.end_date) || null
+  useMemo(() => {
+    setStartDate(formatDate(project.start_date) || null)
+    setEndDate(formatDate(project.end_date) || null)
+  }, [formatDate, project])
 
-    setStartDate(startDate)
-    setEndDate(endDate)
-  }, [project, formatDate])
-
-  const ShiftRightSection = firstShift.current ? <CloseIcon /> : <PlusIcon />
+  const ShiftRightSection = useMemo(
+    () => (firstShift.current ? <CloseIcon /> : <PlusIcon />),
+    [firstShift],
+  )
 
   return (
     <>
