@@ -1,7 +1,11 @@
 import { px } from '@mantine/core'
 import { IconProps } from './index.ts'
 
-export default function BookmarkIcon({ size, style, ...others }: IconProps) {
+export default function BookmarkIcon({
+  size = 20,
+  style,
+  ...others
+}: IconProps) {
   return (
     <svg
       width="20"

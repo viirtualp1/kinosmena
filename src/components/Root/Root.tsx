@@ -20,7 +20,7 @@ import inputClasses from '@/assets/scss/vendors/_input.module.scss'
 
 const router = createBrowserRouter([
   {
-    errorElement: <ErrorPage />,
+    ErrorBoundary: ErrorPage,
     children: [
       {
         path: '/',
