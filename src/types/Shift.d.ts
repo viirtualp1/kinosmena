@@ -1,6 +1,6 @@
 export interface ShiftData {
   id: number
-  project: number
+  project: string
   user: number
   start_date: string
   end_date: string | null

@@ -11,8 +11,9 @@ import {
   Container,
 } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
+import { getShiftRoutes } from '@/pages/ShiftPage'
+import { getProjectRoutes } from '@/pages/ProjectPage'
 
-import { getShiftRoutes } from '@/pages/ShiftPage/routes'
 import { IndexPage } from '@/pages/IndexPage'
 import { ErrorPage } from '@/pages/ErrorPage'
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
         Component: IndexPage,
       },
       ...getShiftRoutes(),
+      ...getProjectRoutes(),
     ],
   },
 ])
