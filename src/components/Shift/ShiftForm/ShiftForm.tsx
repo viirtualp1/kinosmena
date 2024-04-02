@@ -1,10 +1,11 @@
-import { FC } from 'react'
+import { FC, useRef } from 'react'
 import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker, DateValue } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 import { ShiftData } from '@/types/Shift'
 import { useConfig } from '@/hooks/useConfig'
 import { useDate } from '@/hooks/useDate'
+import { http } from '@/hooks/useAxios'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
 import { useShiftFormStyles } from './useShiftFormStyles.ts'
 
@@ -27,11 +28,13 @@ interface FormValues {
   additionalServices: number | null
 }
 
-export const ShiftForm: FC<Props> = ({ isView, shift }) => {
+export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
   const { isDev } = useConfig()
 
   const { cardStyles } = useShiftFormStyles()
   const { formatDateForDateInput } = useDate()
+
+  const isLoading = useRef(false)
 
   const form = useForm<FormValues>({
     initialValues: {
@@ -51,8 +54,18 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
   })
 
   const submitForm = form.onSubmit(async () => {
-    console.log('submit')
-    console.log(form.values)
+    isLoading.current = true
+
+    try {
+      isCreating
+        ? await http.post(`/shifts/${shift.id}`, form.values)
+        : await http.put(`/shifts/${shift.id}`, form.values)
+    } catch (err) {
+      console.error(err)
+      alert('Ошибка')
+    } finally {
+      isLoading.current = false
+    }
   })
 
   const Dates = () => (
@@ -94,7 +107,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
         size="md"
         mb="24px"
         defaultValue={form.values.start}
-        disabled={isView}
+        disabled={isView || isLoading.current}
         onChange={(v) => (form.values.start = v)}
       />
 
@@ -107,7 +120,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
         size="md"
         mb="24px"
         defaultValue={form.values.end}
-        disabled={isView}
+        disabled={isView || isLoading.current}
         onChange={(v) => (form.values.end = v)}
       />
     </>
@@ -123,7 +136,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
 
           <Switch
             h={16}
-            disabled={isView}
+            disabled={isView || isLoading.current}
             {...form.getInputProps('wasCurrentLunch', { type: 'checkbox' })}
           />
         </Group>
@@ -132,7 +145,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
 
           <Switch
             h={16}
-            disabled={isView}
+            disabled={isView || isLoading.current}
             {...form.getInputProps('wasLatelyLunch', { type: 'checkbox' })}
           />
         </Group>
@@ -141,7 +154,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
 
           <Switch
             h={16}
-            disabled={isView}
+            disabled={isView || isLoading.current}
             {...form.getInputProps('dailyAllowance', { type: 'checkbox' })}
           />
         </Group>
@@ -149,7 +162,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
           <Text fz={14}>Смена в day-off</Text>
 
           <Switch
-            disabled={isView}
+            disabled={isView || isLoading.current}
             {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
           />
         </Group>
@@ -167,7 +180,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
             placeholder="2000"
             thousandSeparator=" "
             clampBehavior="strict"
-            readOnly={isView}
+            readOnly={isView || isLoading.current}
             {...form.getInputProps('overtimeHours')}
           />
         </Group>
@@ -185,7 +198,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
             placeholder="2000"
             thousandSeparator=" "
             clampBehavior="strict"
-            readOnly={isView}
+            readOnly={isView || isLoading.current}
             {...form.getInputProps('deprivationHoursSleep')}
           />
         </Group>
@@ -203,7 +216,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift }) => {
             placeholder="2000"
             thousandSeparator=" "
             clampBehavior="strict"
-            readOnly={isView}
+            readOnly={isView || isLoading.current}
             {...form.getInputProps('additionalServices')}
           />
         </Group>

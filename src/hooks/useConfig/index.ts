@@ -1,1 +1,1 @@
-export * from './useConfig.ts'
+export * from './useConfig'

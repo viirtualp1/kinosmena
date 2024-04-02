@@ -2,7 +2,7 @@ import { px } from '@mantine/core'
 import { IconProps } from './index.ts'
 
 export default function UserDefaultIcon({
-  size = 24,
+  size = 32,
   style,
   ...others
 }: IconProps) {
