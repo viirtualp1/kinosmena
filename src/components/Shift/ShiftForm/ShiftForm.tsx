@@ -81,7 +81,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
         >
           Начало
           <Text fz={14} opacity={0.7}>
-            {formatDate(shift.start_date)}
+            {formatDate(shift.start_date, { withTime: true })}
           </Text>
         </Card>
       )}
@@ -89,7 +89,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
         <Card padding="12px 20px" fz={14} withBorder styles={cardStyles}>
           Окончание
           <Text fz={14} opacity={0.7}>
-            {formatDate(shift.end_date)}
+            {formatDate(shift.end_date, { withTime: true })}
           </Text>
         </Card>
       )}

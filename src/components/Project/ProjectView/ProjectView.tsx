@@ -62,8 +62,11 @@ export const ProjectView: FC<Props> = ({ project }) => {
           }}
         >
           {project.shifts.map((shift, idx) => (
-            <SwiperSlide onClick={() => navigate(`/shift/${shift.id}`)}>
-              <ShiftCard shift={shift} key={idx} />
+            <SwiperSlide
+              key={idx}
+              onClick={() => navigate(`/shift/${shift.id}`)}
+            >
+              <ShiftCard shift={shift} />
             </SwiperSlide>
           ))}
         </Swiper>

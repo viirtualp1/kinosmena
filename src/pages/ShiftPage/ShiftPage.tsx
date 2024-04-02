@@ -1,12 +1,13 @@
 import { FC, useRef, useState } from 'react'
 // import { useParams } from 'react-router-dom'
-import { Title, Container } from '@mantine/core'
+import { Title, Container, Button } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
 // import { useFetch } from '@/hooks/useFetch'
 // import { useQuery } from '@/hooks/useQuery'
 import { ShiftForm } from '@/components/Shift'
 import { ShiftPageSkeleton, getShiftData } from './'
 import { ProjectName } from '@/components/Project/ProjectName/ProjectName.tsx'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   isCreating?: boolean
@@ -19,6 +20,7 @@ export const ShiftPage: FC<Props> = ({
   isEditing,
   isView,
 }: Props) => {
+  const navigate = useNavigate()
   // TODO: для тестирования пока тестовые данные, в проде раскомментировать
   // const { id } = useParams()
   // const query = useQuery()
@@ -34,6 +36,10 @@ export const ShiftPage: FC<Props> = ({
   return (
     <div className="shift-page">
       <Container mt="24px">
+        <Button mb={24} color="black" onClick={() => navigate('/')}>
+          Назад
+        </Button>
+
         <Title order={5} mb="24px" fw={500}>
           Карточка смены
         </Title>

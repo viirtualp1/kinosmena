@@ -1,14 +1,20 @@
 import { format, parseISO } from 'date-fns'
 
 export function useDate() {
-  function formatDate(date: string | null) {
+  function formatDate(date: string | null, options?: { withTime: boolean }) {
     if (!date) {
       return
     }
 
     const formattedDate = parseISO(date)
 
-    return format(formattedDate, 'dd.MM.yyyy HH:mm')
+    let formatStr = 'dd.MM.yyyy'
+
+    if (options?.withTime) {
+      formatStr += ' HH:mm'
+    }
+
+    return format(formattedDate, formatStr)
   }
 
   function formatDateForDateInput(date: string | null) {
