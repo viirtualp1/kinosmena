@@ -1,10 +1,12 @@
-import { FC, useMemo, useRef, useState } from 'react'
-import { Button, Card, Group, Text } from '@mantine/core'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { Box, Button, Card, Group, Text } from '@mantine/core'
 import { ProjectData, ShiftShortData } from '@/types/Project'
 import { useDate } from '@/hooks/useDate'
 import { PlusIcon, CloseIcon } from '@/components/Icons'
 import { ProjectName } from '@/components/Project/ProjectName'
 import { ShiftCard } from '@/components/Project/ShiftCard'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   project: ProjectData
@@ -31,12 +33,13 @@ const shiftCardStyles = {
 
 export const ProjectView: FC<Props> = ({ project }) => {
   const { formatDate } = useDate()
+  const navigate = useNavigate()
 
   const firstShift = useRef<ShiftShortData | undefined>(project.shifts[0])
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
 
-  useMemo(() => {
+  useEffect(() => {
     setStartDate(formatDate(project.start_date) || null)
     setEndDate(formatDate(project.end_date) || null)
   }, [formatDate, project])
@@ -48,11 +51,23 @@ export const ProjectView: FC<Props> = ({ project }) => {
 
   return (
     <>
-      <Group mb="24px">
-        {project.shifts.map((shift, idx) => (
-          <ShiftCard shift={shift} key={idx} />
-        ))}
-      </Group>
+      <Box mb={24}>
+        <Swiper
+          spaceBetween={8}
+          slidesPerView={4.2}
+          breakpoints={{
+            320: { slidesPerView: 3.5 },
+            400: { slidesPerView: 4.2 },
+            600: { slidesPerView: 5.5 },
+          }}
+        >
+          {project.shifts.map((shift, idx) => (
+            <SwiperSlide onClick={() => navigate(`/shift/${shift.id}`)}>
+              <ShiftCard shift={shift} key={idx} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Box>
 
       {firstShift.current && (
         <Button

@@ -26,6 +26,36 @@ export function getProjectData(): ProjectData {
         end_date: '2024-03-28T12:06:51.235Z',
         is_active: true,
       },
+      {
+        id: 1,
+        start_date: '2024-03-28T12:06:51.235Z',
+        end_date: '2024-03-28T12:06:51.235Z',
+        is_active: false,
+      },
+      {
+        id: 0,
+        start_date: '2024-03-28T12:06:51.235Z',
+        end_date: '2024-03-28T12:06:51.235Z',
+        is_active: false,
+      },
+      {
+        id: 1,
+        start_date: '2024-03-28T12:06:51.235Z',
+        end_date: '2024-03-28T12:06:51.235Z',
+        is_active: false,
+      },
+      {
+        id: 0,
+        start_date: '2024-03-28T12:06:51.235Z',
+        end_date: '2024-03-28T12:06:51.235Z',
+        is_active: false,
+      },
+      {
+        id: 1,
+        start_date: '2024-03-28T12:06:51.235Z',
+        end_date: '2024-03-28T12:06:51.235Z',
+        is_active: false,
+      },
     ],
   }
 }

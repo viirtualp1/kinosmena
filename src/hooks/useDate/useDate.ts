@@ -8,7 +8,7 @@ export function useDate() {
 
     const formattedDate = parseISO(date)
 
-    return format(formattedDate, 'dd.mm.yyyy')
+    return format(formattedDate, 'dd.MM.yyyy HH:mm')
   }
 
   function formatDateForDateInput(date: string | null) {
