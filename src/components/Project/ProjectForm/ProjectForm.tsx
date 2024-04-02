@@ -1,21 +1,11 @@
 import { FC, useRef } from 'react'
-import {
-  Button,
-  Text,
-  Textarea,
-  Collapse,
-  TextInput,
-  Container,
-} from '@mantine/core'
+import { Button, Text, Textarea, Collapse, TextInput } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 import { ProjectData } from '@/types/Project'
 import { useConfig } from '@/hooks/useConfig'
 import { ArrowDown, ArrowUp } from '@/components/Icons'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
-
-// TODO: Remove scss
-import * as cl from './ProjectForm.module.scss'
 
 interface Props {
   project: ProjectData
@@ -28,7 +18,8 @@ interface BlockData {
   value: string | null
 }
 
-export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
+// TODO: Добавить в пропсы (внутри скобок) для использования: { project, isEditing, isCreating }
+export const ProjectForm: FC<Props> = () => {
   const { isDev } = useConfig()
   const [opened, { toggle }] = useDisclosure(false)
 
@@ -74,19 +65,13 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
           <Text size="lg" fw={400}>
             Название
           </Text>
-          <TextInput
-            className={cl.border}
-            size="md"
-            radius="lg"
-            placeholder="Мой проект"
-          />
+          <TextInput size="md" radius="lg" placeholder="Мой проект" />
         </div>
         <div>
           <Text size="lg" fw={400}>
             Описание
           </Text>
           <Textarea
-            className={cl.border}
             size="md"
             radius="lg"
             rows={3}
@@ -115,7 +100,6 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
               Дата начала
             </p>
             <Textarea
-              className={cl.border}
               cols={10}
               radius="lg"
               maxLength={10}
@@ -136,7 +120,6 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
               Дата окончания
             </p>
             <Textarea
-              className={cl.border}
               cols={10}
               radius="lg"
               maxLength={10}
@@ -176,7 +159,6 @@ export const ProjectForm: FC<Props> = ({ project, isEditing, isCreating }) => {
                 <Textarea
                   variant="outlined"
                   style={{ width: '60px', marginBottom: '0.5rem' }}
-                  className={cl.border}
                   withAsterisk={index === 0 || index === 2}
                   cols={3}
                   radius="lg"
