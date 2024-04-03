@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Text, Button, Box } from '@mantine/core'
-import { getProjects } from './mock'
+/*import { getProjects } from './mock'*/
+import { useFetch } from '@/hooks/useFetch'
+import type { ProjectData } from '@/types/Project.d.ts'
 import {
   ProjectIcon,
   ReportIcon,
@@ -20,7 +22,7 @@ export const IndexPage: FC = () => {
   })
 
   const [fullName, setFullName] = useState('Личный кабинет')
-  const [projects] = useState(getProjects())
+  const { data: projects } = useFetch<ProjectData[]>('/projects')
 
   useEffect(() => {
     if (!user.current) {
@@ -122,7 +124,7 @@ export const IndexPage: FC = () => {
       <Text my="24px">Активные проекты</Text>
       {user.current.hasProjects ? (
         <Box>
-          {projects.map((project, idx) => (
+          {projects && projects.map((project, idx) => (
             <Button
               key={idx}
               w="100%"
