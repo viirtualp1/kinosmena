@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Text, Button, Box } from '@mantine/core'
-/*import { getProjects } from './mock'*/
 import { useFetch } from '@/hooks/useFetch'
 import type { ProjectData } from '@/types/Project.d.ts'
 import {
@@ -124,26 +123,27 @@ export const IndexPage: FC = () => {
       <Text my="24px">Активные проекты</Text>
       {user.current.hasProjects ? (
         <Box>
-          {projects && projects.map((project, idx) => (
-            <Button
-              key={idx}
-              w="100%"
-              h="48px"
-              bg="#363A43"
-              mb={12}
-              radius="16px"
-              styles={{
-                inner: {
-                  justifyContent: 'space-between',
-                },
-                label: labelStyles,
-              }}
-              rightSection={<ArrowIcon />}
-              onClick={() => navigate(`/project/${project.id}`)}
-            >
-              {project.name}
-            </Button>
-          ))}
+          {projects &&
+            projects.map((project, idx) => (
+              <Button
+                key={idx}
+                w="100%"
+                h="48px"
+                bg="#363A43"
+                mb={12}
+                radius="16px"
+                styles={{
+                  inner: {
+                    justifyContent: 'space-between',
+                  },
+                  label: labelStyles,
+                }}
+                rightSection={<ArrowIcon />}
+                onClick={() => navigate(`/project/${project.id}`)}
+              >
+                {project.name}
+              </Button>
+            ))}
 
           {/* Здесь могут быть компоненты для отображения активных проектов */}
         </Box>
