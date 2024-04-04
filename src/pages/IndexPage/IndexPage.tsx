@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Text, Button, Box } from '@mantine/core'
+import { useFetch } from '@/hooks/useFetch'
+import type { ProjectData } from '@/types/Project.d.ts'
 import {
   ProjectIcon,
   ReportIcon,
@@ -8,7 +10,6 @@ import {
   UserDefaultIcon,
   ArrowIcon,
 } from '@/components/Icons'
-import { getProjects } from './mock'
 import { useTheme } from '@/hooks/useTheme/useTheme.tsx'
 
 const labelStyles: CSSProperties = {
@@ -35,7 +36,7 @@ export const IndexPage: FC = () => {
   })
 
   const [fullName, setFullName] = useState('Личный кабинет')
-  const [projects] = useState(getProjects())
+  const { data: projects } = useFetch<ProjectData[]>('/projects')
 
   useEffect(() => {
     if (!user.current) {
@@ -123,29 +124,31 @@ export const IndexPage: FC = () => {
           Получить отчет
         </Button>
       </Group>
+
       <Text my="24px">Активные проекты</Text>
       {user.current.hasProjects ? (
         <Box>
-          {projects.map((project, idx) => (
-            <Button
-              key={idx}
-              w="100%"
-              h="48px"
-              variant="dark"
-              mb={12}
-              radius="16px"
-              styles={{
-                inner: {
-                  justifyContent: 'space-between',
-                },
-                label: { ...labelStyles, maxWidth: 'none' },
-              }}
-              rightSection={<ArrowIcon style={iconStyles} />}
-              onClick={() => navigate(`/project/${project.id}`)}
-            >
-              {project.name}
-            </Button>
-          ))}
+          {projects &&
+            projects.map((project, idx) => (
+              <Button
+                key={idx}
+                w="100%"
+                h="48px"
+                variant="dark"
+                mb={12}
+                radius="16px"
+                styles={{
+                  inner: {
+                    justifyContent: 'space-between',
+                  },
+                  label: { ...labelStyles, maxWidth: 'none' },
+                }}
+                rightSection={<ArrowIcon style={iconStyles} />}
+                onClick={() => navigate(`/project/${project.id}`)}
+              >
+                {project.name}
+              </Button>
+            ))}
 
           {/* Здесь могут быть компоненты для отображения активных проектов */}
         </Box>
