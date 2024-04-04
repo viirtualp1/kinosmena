@@ -1,8 +1,9 @@
 :root {
-  --base-font-family: 'Roboto', -apple-system, 'BlinkMacSystemFont', 'Segoe UI',
-    'Helvetica Neue', arial, 'Noto Sans', sans-serif;
+  --mantine-color-text: var(--tg-theme-text-color, #000);
+  --text-color: var(--tg-theme-text-color, #000);
+  --mantine-primary-color-filled: var(--tg-theme-button-color, #0594fa);
 
-  --mantine-spacing-md: 24px;
   --input-height-md: 42px;
+  --mantine-spacing-md: 24px;
   --mantine-line-height: 17px;
 }

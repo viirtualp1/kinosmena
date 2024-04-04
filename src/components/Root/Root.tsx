@@ -1,7 +1,5 @@
 import type { FC } from 'react'
-import { useEffect } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { setDebug } from '@tma.js/sdk'
 import { SDKProvider } from '@tma.js/sdk-react'
 import {
   createTheme,
@@ -9,24 +7,28 @@ import {
   MantineProvider,
   TextInput,
   Container,
+  Button,
 } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
+import { getShiftRoutes } from '@/pages/ShiftPage'
+import { getProjectRoutes } from '@/pages/ProjectPage'
 
-import { getShiftRoutes } from '@/pages/ShiftPage/routes'
 import { IndexPage } from '@/pages/IndexPage'
 import { ErrorPage } from '@/pages/ErrorPage'
 
 import inputClasses from '@/assets/scss/vendors/_input.module.scss'
+import buttonClasses from '@/assets/scss/vendors/_button.module.scss'
 
 const router = createBrowserRouter([
   {
-    errorElement: <ErrorPage />,
+    ErrorBoundary: ErrorPage,
     children: [
       {
         path: '/',
         Component: IndexPage,
       },
       ...getShiftRoutes(),
+      ...getProjectRoutes(),
     ],
   },
 ])
@@ -36,6 +38,7 @@ const theme = createTheme({
   components: {
     Input: Input.extend({ classNames: inputClasses }),
     TextInput: TextInput.extend({ classNames: inputClasses }),
+    Button: Button.extend({ classNames: buttonClasses }),
     Container: Container.extend({
       vars: () => ({
         root: {
@@ -47,10 +50,6 @@ const theme = createTheme({
 })
 
 export const Root: FC = () => {
-  useEffect(() => {
-    setDebug(true)
-  }, [])
-
   return (
     <SDKProvider options={{ acceptCustomStyles: true, cssVars: true }}>
       <MantineProvider theme={theme}>
