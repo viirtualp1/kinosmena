@@ -62,10 +62,12 @@ export const ProjectForm: FC<Props> = () => {
     <>
       <div style={{ padding: 'auto' }}>
         <div style={{ margin: '1rem 0' }}>
-          <Text size="lg" fw={400}>
-            Название
-          </Text>
-          <TextInput size="md" radius="lg" placeholder="Мой проект" />
+          <TextInput
+            size="md"
+            radius="lg"
+            placeholder="Мой проект"
+            {...form.getInputProps('name')}
+          />
         </div>
         <div>
           <Text size="lg" fw={400}>

@@ -9,8 +9,23 @@ import {
   ArrowIcon,
 } from '@/components/Icons'
 import { getProjects } from './mock'
+import { useTheme } from '@/hooks/useTheme/useTheme.tsx'
+
+const labelStyles: CSSProperties = {
+  whiteSpace: 'wrap',
+  textAlign: 'left',
+  maxWidth: 76,
+  fontWeight: 500,
+  lineHeight: 1.55,
+  fontSize: 15,
+}
+
+const iconStyles: CSSProperties = {
+  fill: '#fff',
+}
 
 export const IndexPage: FC = () => {
+  useTheme()
   const navigate = useNavigate()
 
   const user = useRef({
@@ -42,11 +57,6 @@ export const IndexPage: FC = () => {
     return setFullName(`${firstName} ${lastName}`)
   }, [])
 
-  const labelStyles: CSSProperties = {
-    whiteSpace: 'wrap',
-    textAlign: 'left',
-  }
-
   return (
     <Container px="24px" mt="24px">
       <Group gap={8} mb="24px">
@@ -57,12 +67,11 @@ export const IndexPage: FC = () => {
       <Group gap="8px" wrap="nowrap">
         <Box w="50%" flex="0 0 50%">
           <Button
-            bg="#0594FA"
             w="100%"
             h={82}
             mb={8}
             radius="24px"
-            rightSection={<ProjectIcon />}
+            rightSection={<ProjectIcon style={iconStyles} />}
             styles={{
               root: { paddingInline: '24px' },
               inner: { justifyContent: 'space-between' },
@@ -70,16 +79,14 @@ export const IndexPage: FC = () => {
             }}
             onClick={() => navigate('/project/create')}
           >
-            <Text maw={76} fw={500}>
-              Создать проект
-            </Text>
+            Создать проект
           </Button>
           <Button
-            bg="#363A43"
+            variant="dark"
             w="100%"
             h={82}
             radius="24px"
-            rightSection={<ArchiveIcon />}
+            rightSection={<ArchiveIcon style={iconStyles} />}
             styles={{
               root: { paddingInline: '24px' },
               inner: { justifyContent: 'space-between', gap: '4px' },
@@ -87,13 +94,11 @@ export const IndexPage: FC = () => {
             }}
             onClick={() => navigate('/project/archive')}
           >
-            <Text maw={76} fw={500}>
-              Архивные проекты
-            </Text>
+            Архивные проекты
           </Button>
         </Box>
         <Button
-          bg="#363A43"
+          variant="dark"
           w="100%"
           h="100%"
           miw="144px"
@@ -110,15 +115,14 @@ export const IndexPage: FC = () => {
             section: {
               alignSelf: 'flex-end',
             },
-            label: labelStyles,
+            label: { ...labelStyles, maxWidth: 96 },
           }}
-          rightSection={<ReportIcon />}
+          rightSection={<ReportIcon style={iconStyles} />}
           onClick={() => navigate('/report')}
         >
-          <Text maw={96}>Получить отчет</Text>
+          Получить отчет
         </Button>
       </Group>
-
       <Text my="24px">Активные проекты</Text>
       {user.current.hasProjects ? (
         <Box>
@@ -127,16 +131,16 @@ export const IndexPage: FC = () => {
               key={idx}
               w="100%"
               h="48px"
-              bg="#363A43"
+              variant="dark"
               mb={12}
               radius="16px"
               styles={{
                 inner: {
                   justifyContent: 'space-between',
                 },
-                label: labelStyles,
+                label: { ...labelStyles, maxWidth: 'none' },
               }}
-              rightSection={<ArrowIcon />}
+              rightSection={<ArrowIcon style={iconStyles} />}
               onClick={() => navigate(`/project/${project.id}`)}
             >
               {project.name}

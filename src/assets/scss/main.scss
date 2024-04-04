@@ -4,7 +4,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: var(--color-background);
+  background: var(--tg-theme-background-color, #fff);
 }
 
 #root {
@@ -13,4 +13,9 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--tg-theme-link-color);
+}
+
+svg {
+  fill: var(--tg-theme-text-color, #000);
 }

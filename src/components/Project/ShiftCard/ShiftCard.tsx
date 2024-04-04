@@ -8,11 +8,12 @@ interface Props {
   shift: ShiftShortData
 }
 
-const CardStyles = {
+const cardStyles = {
   root: {
     alignItems: 'center',
     justifyContent: 'space-between',
     borderColor: '#363A43',
+    cursor: 'pointer',
   },
 }
 
@@ -34,10 +35,10 @@ export const ShiftCard: FC<Props> = ({ shift }) => {
       c={color}
       w={84}
       h={76}
-      styles={CardStyles}
+      styles={cardStyles}
       padding={12}
     >
-      <CalendarIcon fill={color} />
+      <CalendarIcon style={{ fill: color }} />
 
       <Text fz={12}>{startDate}</Text>
     </Card>

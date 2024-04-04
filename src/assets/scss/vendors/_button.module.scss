@@ -1,0 +1,15 @@
+.root {
+  transition: background-color 0.3s ease;
+
+  .mantine-Text-root {
+    color: #fff;
+  }
+
+  &[data-variant='dark'] {
+    background-color: #363a43;
+
+    &:hover {
+      background-color: darken(#363a43, 5%);
+    }
+  }
+}
