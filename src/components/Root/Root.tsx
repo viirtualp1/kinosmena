@@ -10,8 +10,10 @@ import {
   Button,
 } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
+
 import { getShiftRoutes } from '@/pages/ShiftPage'
 import { getProjectRoutes } from '@/pages/ProjectPage'
+import { getReportRoutes } from '@/pages/ReportPage'
 
 import { IndexPage } from '@/pages/IndexPage'
 import { ErrorPage } from '@/pages/ErrorPage'
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
       },
       ...getShiftRoutes(),
       ...getProjectRoutes(),
+      ...getReportRoutes(),
     ],
   },
 ])
