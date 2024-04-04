@@ -28,7 +28,7 @@ export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
           Назад
         </Button>
 
-        <Title fz="16px" fw={500} mb="24px">
+        <Title fz="24px" fw={500} mb="24px">
           Карточка проекта
         </Title>
 

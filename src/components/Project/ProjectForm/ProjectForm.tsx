@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react'
-import { Button, Text, Textarea, Collapse, TextInput } from '@mantine/core'
+import { Button, Text, Textarea, Collapse, TextInput, Container, Grid, NumberInput, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 import { ProjectData } from '@/types/Project'
@@ -9,6 +9,7 @@ import { SubmitButton } from '@/components/Shared/SubmitButton'
 
 interface Props {
   project: ProjectData
+  isView: boolean | undefined
   isCreating: boolean | undefined
   isEditing: boolean | undefined
 }
@@ -19,10 +20,10 @@ interface BlockData {
 }
 
 // TODO: Добавить в пропсы (внутри скобок) для использования: { project, isEditing, isCreating }
-export const ProjectForm: FC<Props> = () => {
+export const ProjectForm: FC<Props> = ({isView}) => {
   const { isDev } = useConfig()
   const [opened, { toggle }] = useDisclosure(false)
-
+  const isLoading = useRef(false)
   // TODO: Form values, type (check ShiftForm for example)
   const form = useForm()
 
@@ -56,50 +57,51 @@ export const ProjectForm: FC<Props> = () => {
       label: 'Стоимость текущего обеда',
       value: null,
     },
+    {
+      label: 'Стоимость позднего обеда',
+      value: null,
+    },
+    {
+      label: 'Суточные',
+      value: null,
+    },
+    {
+      label: 'Стоимость Day off (час)',
+      value: null,
+    }
   ])
 
   return (
     <>
-      <div style={{ padding: 'auto' }}>
-        <div style={{ margin: '1rem 0' }}>
-          <Text size="lg" fw={400}>
-            Название
-          </Text>
-          <TextInput size="md" radius="lg" placeholder="Мой проект" />
-        </div>
-        <div>
-          <Text size="lg" fw={400}>
-            Описание
-          </Text>
+        <Container p="0">
+          <TextInput
+            labelProps={{ mb: '12px' }}
+            size="md"
+            radius="lg"
+            label="Название проекта"
+            withAsterisk
+            placeholder="Мой проект"
+          />
+        </Container>
+        <Container p="0" m="1rem 0">
           <Textarea
+            labelProps={{ mb: '12px' }}
+            label="Описание проекта"
             size="md"
             radius="lg"
             rows={3}
+            withAsterisk
             placeholder="Путешествие между временами..."
           />
-        </div>
+        </Container>
         {
           // TODO: use DateTimePicker for dates (check ShiftForm for example)
         }
-        <div
-          style={{
-            marginBottom: '1rem',
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}
-        >
-          <div
-            style={{
-              minWidth: '150px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <p style={{ display: 'flex', justifyContent: 'center' }}>
-              Дата начала
-            </p>
+        <Grid justify="space-around" align="flex-start">
+          <Grid.Col span="auto">
             <Textarea
+              labelProps={{ mb: '12px' }}
+              label="Дата начала"
               cols={10}
               radius="lg"
               maxLength={10}
@@ -108,18 +110,11 @@ export const ProjectForm: FC<Props> = () => {
               minRows={1}
               maxRows={1}
             />
-          </div>
-          <div
-            style={{
-              minWidth: '150px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <p style={{ display: 'flex', justifyContent: 'center' }}>
-              Дата окончания
-            </p>
+          </Grid.Col>
+          <Grid.Col span="auto">
             <Textarea
+              labelProps={{ mb: '12px' }}
+              label="Дата конца"
               cols={10}
               radius="lg"
               maxLength={10}
@@ -128,14 +123,14 @@ export const ProjectForm: FC<Props> = () => {
               minRows={1}
               maxRows={1}
             />
-          </div>
-        </div>
+          </Grid.Col>
+        </Grid>
         {/*Две нижние кнопки */}
         {/*Две нижние кнопки */}
         {/*Две нижние кнопки */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Container p="0">
           <Button
-            style={{ margin: '1rem 0' }}
+            h="2.5rem"
             radius="lg"
             onClick={toggle}
             justify="space-between"
@@ -148,32 +143,33 @@ export const ProjectForm: FC<Props> = () => {
             Рассчитать стоимость
           </Button>
           <Collapse in={opened}>
-            {blocksData.current.map((block, index) => (
-              <div
-                key={index}
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-              >
-                <Text>
-                  {block.label} {block.value}
-                </Text>
-                <Textarea
-                  variant="outlined"
-                  style={{ width: '60px', marginBottom: '0.5rem' }}
-                  withAsterisk={index === 0 || index === 2}
-                  cols={3}
-                  radius="lg"
-                  maxLength={3}
-                  autosize
-                  minRows={1}
-                  maxRows={1}
-                  placeholder="₽"
-                  onChange={(e) => (block.value = e.currentTarget.value)}
+            {blocksData.current.map((block) => (
+              <>
+              <Group justify="space-between" mb={6}>
+                <Text fz={14}>{block.label}</Text>
+
+                <NumberInput
+                  variant="unstyled"
+                  size="sm"
+                  maw={56}
+                  min={0}
+                  rightSection={<Text c="#0594FA">₽</Text>}
+                  rightSectionWidth={10}
+                  placeholder="2000"
+                  thousandSeparator=" "
+                  clampBehavior="strict"
+                  readOnly={isView || isLoading.current}
+                  {...form.getInputProps('имя поля')}
                 />
-              </div>
+              </Group>
+            {
+              form.errors.additionalSevives && (
+                <Text>{form.errors.additionalSevives}</Text>
+              )}
+              </>
             ))}
           </Collapse>
-        </div>
-      </div>
+        </Container>
 
       {!isDev && <SubmitButton submit={submitForm} />}
     </>
