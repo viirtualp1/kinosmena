@@ -11,12 +11,14 @@ import {
 } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
 
-import { getShiftRoutes } from '@/pages/ShiftPage'
-import { getProjectRoutes } from '@/pages/ProjectPage'
-import { getReportRoutes } from '@/pages/ReportPage'
-
-import { IndexPage } from '@/pages/IndexPage'
-import { ErrorPage } from '@/pages/ErrorPage'
+import {
+  getShiftRoutes,
+  getProjectRoutes,
+  getReportRoutes,
+  getArchiveRoutes,
+  IndexPage,
+  ErrorPage,
+} from '@/pages'
 
 import inputClasses from '@/assets/scss/vendors/_input.module.scss'
 import buttonClasses from '@/assets/scss/vendors/_button.module.scss'
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
       },
       ...getShiftRoutes(),
       ...getProjectRoutes(),
+      ...getArchiveRoutes(),
       ...getReportRoutes(),
     ],
   },

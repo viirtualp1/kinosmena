@@ -41,7 +41,7 @@ export const ErrorPage: FC = () => {
   )
 
   useEffect(() => {
-    if (!error || error.status === 503) {
+    if (error.status !== 404) {
       return
     }
 

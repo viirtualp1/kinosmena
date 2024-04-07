@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Text, Button, Box } from '@mantine/core'
 import { useFetch } from '@/hooks/useFetch'
+import { useTheme } from '@/hooks/useTheme'
 import type { ProjectData } from '@/types/Project.d.ts'
 import {
   ProjectIcon,
@@ -10,7 +11,6 @@ import {
   UserDefaultIcon,
   ArrowIcon,
 } from '@/components/Icons'
-import { useTheme } from '@/hooks/useTheme/useTheme.tsx'
 
 const labelStyles: CSSProperties = {
   whiteSpace: 'wrap',
@@ -26,7 +26,7 @@ const iconStyles: CSSProperties = {
 }
 
 export const IndexPage: FC = () => {
-  useTheme()
+  // useTheme()
   const navigate = useNavigate()
 
   const user = useRef({
@@ -93,7 +93,7 @@ export const IndexPage: FC = () => {
               inner: { justifyContent: 'space-between', gap: '4px' },
               label: labelStyles,
             }}
-            onClick={() => navigate('/project/archive')}
+            onClick={() => navigate('/archive')}
           >
             Архивные проекты
           </Button>

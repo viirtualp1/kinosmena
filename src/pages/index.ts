@@ -1,0 +1,6 @@
+export * from './ArchivePage'
+export * from './IndexPage'
+export * from './ProjectPage'
+export * from './ShiftPage'
+export * from './ErrorPage'
+export * from './ReportPage'

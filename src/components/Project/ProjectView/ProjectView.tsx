@@ -1,13 +1,13 @@
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { Box, Button, Card, Group, Text } from '@mantine/core'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { useNavigate } from 'react-router-dom'
 import { ProjectData, ShiftShortData } from '@/types/Project'
 import { useDate } from '@/hooks/useDate'
+import { useTheme } from '@/hooks/useTheme'
 import { PlusIcon, CloseIcon } from '@/components/Icons'
 import { ProjectName } from '@/components/Project/ProjectName'
 import { ShiftCard } from '@/components/Project/ShiftCard'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { useNavigate } from 'react-router-dom'
-import { useTheme } from '@/hooks/useTheme/useTheme.tsx'
 
 interface Props {
   project: ProjectData
@@ -33,7 +33,7 @@ const shiftCardStyles = {
 }
 
 export const ProjectView: FC<Props> = ({ project }) => {
-  useTheme()
+  // useTheme()
   const { formatDate } = useDate()
   const navigate = useNavigate()
 

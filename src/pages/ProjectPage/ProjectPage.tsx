@@ -9,6 +9,7 @@ interface Props {
   isCreating?: boolean
   isEditing?: boolean
   isView?: boolean
+  isArchive?: boolean
 }
 
 export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
