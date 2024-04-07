@@ -19,7 +19,8 @@ export function getShiftData(): ShiftData {
     is_per_diem: true,
     per_diem: 9,
     total: 100,
-    is_day_off: false,
+    is_today_day_off: false,
+    is_yesterday_day_off: false,
     day_off: true,
     services: 200,
   }
