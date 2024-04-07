@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react'
-import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
+import { Button, Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker, DateValue } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 import { ShiftData } from '@/types/Shift'
@@ -50,8 +50,11 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
     },
     validate: {
       start: isNotEmpty('Некорректная дата'),
+      additionalServices: isNotEmpty('Поле обязательно к заполеннию'),
     },
   })
+
+  console.log(form.errors)
 
   const submitForm = form.onSubmit(async () => {
     isLoading.current = true
@@ -131,7 +134,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
       {isView ? <Dates /> : <DatesFields />}
 
       <Card padding="12px 20px" withBorder styles={cardStyles}>
-        <Group h="33px" justify="space-between">
+        <Group justify="space-between" mb={12}>
           <Text fz={14}>Был текущий обед</Text>
 
           <Switch
@@ -140,7 +143,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
             {...form.getInputProps('wasCurrentLunch', { type: 'checkbox' })}
           />
         </Group>
-        <Group h="33px" justify="space-between">
+        <Group justify="space-between" mb={12}>
           <Text fz={14}>Был поздний обед</Text>
 
           <Switch
@@ -149,7 +152,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
             {...form.getInputProps('wasLatelyLunch', { type: 'checkbox' })}
           />
         </Group>
-        <Group h="33px" justify="space-between">
+        <Group justify="space-between" mb={12}>
           <Text fz={14}>Суточные</Text>
 
           <Switch
@@ -158,7 +161,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
             {...form.getInputProps('dailyAllowance', { type: 'checkbox' })}
           />
         </Group>
-        <Group h="33px" justify="space-between">
+        <Group justify="space-between" mb={12}>
           <Text fz={14}>Смена в day-off</Text>
 
           <Switch
@@ -167,7 +170,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
           />
         </Group>
 
-        <Group justify="space-between" h="33px">
+        <Group justify="space-between" mb={6}>
           <Text fz={14}>Часы переработки</Text>
 
           <NumberInput
@@ -185,7 +188,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
           />
         </Group>
 
-        <Group justify="space-between" h="33px">
+        <Group justify="space-between" mb={6}>
           <Text fz={14}>Часы недосыпа</Text>
 
           <NumberInput
@@ -203,23 +206,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
           />
         </Group>
 
-        <Group justify="space-between" h="33px">
-          <Text fz={14}>Доп. услуги</Text>
-
-          <NumberInput
-            variant="unstyled"
-            size="sm"
-            maw={56}
-            min={0}
-            rightSection={<Text c="#0594FA">₽</Text>}
-            rightSectionWidth={10}
-            placeholder="2000"
-            thousandSeparator=" "
-            clampBehavior="strict"
-            readOnly={isView || isLoading.current}
-            {...form.getInputProps('additionalServices')}
-          />
-        </Group>
+        <Button onClick={() => submitForm()}>asd</Button>
 
         {!isDev && <SubmitButton submit={submitForm} />}
       </Card>
