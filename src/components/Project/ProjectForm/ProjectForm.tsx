@@ -56,6 +56,18 @@ export const ProjectForm: FC<Props> = () => {
       label: 'Стоимость текущего обеда',
       value: null,
     },
+    {
+      label: 'Стоимость позднего обеда',
+      value: null,
+    },
+    {
+      label: 'Суточные',
+      value: null,
+    },
+    {
+      label: 'Стоимость Day off (час)',
+      value: null,
+    },
   ])
 
   return (

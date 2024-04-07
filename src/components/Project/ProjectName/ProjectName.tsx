@@ -24,7 +24,7 @@ export const ProjectName: FC<{ name: string }> = ({ name }) => {
       mb="24px"
       fz={14}
     >
-      <BookmarkIcon size={20} fill="#fff" />
+      <BookmarkIcon size={20} style={{ fill: '#fff' }} />
       {name}
     </Card>
   )

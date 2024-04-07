@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react'
-import { Button, Card, Group, NumberInput, Switch, Text } from '@mantine/core'
+import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
 import { DateTimePicker, DateValue } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 import { ShiftData } from '@/types/Shift'
@@ -22,7 +22,8 @@ interface FormValues {
   wasCurrentLunch: boolean
   wasLatelyLunch: boolean
   dailyAllowance: boolean
-  dayOffShift: boolean
+  isTodayDayOffShift: boolean
+  isYesterdayDayOffShift: boolean
   overtimeHours: number | null
   deprivationHoursSleep: number | null
   additionalServices: number | null
@@ -43,7 +44,8 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
       wasCurrentLunch: shift.is_current_lunch,
       wasLatelyLunch: shift.is_late_lunch,
       dailyAllowance: shift.is_per_diem,
-      dayOffShift: shift.is_day_off,
+      isTodayDayOffShift: shift.is_today_day_off,
+      isYesterdayDayOffShift: shift.is_yesterday_day_off,
       overtimeHours: shift.overwork_hours,
       deprivationHoursSleep: shift.non_sleep_hours,
       additionalServices: shift.services,
@@ -53,8 +55,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
       additionalServices: isNotEmpty('Поле обязательно к заполеннию'),
     },
   })
-
-  console.log(form.errors)
 
   const submitForm = form.onSubmit(async () => {
     isLoading.current = true
@@ -162,15 +162,31 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
           />
         </Group>
         <Group justify="space-between" mb={12}>
-          <Text fz={14}>Смена в day-off</Text>
+          <Text fz={14}>Вчера был Day off?</Text>
 
           <Switch
             disabled={isView || isLoading.current}
-            {...form.getInputProps('dayOffShift', { type: 'checkbox' })}
+            {...form.getInputProps('isYesterdayDayOffShift', {
+              type: 'checkbox',
+            })}
           />
         </Group>
+        <Group justify="space-between">
+          <Text fz={14}>Сегодня смена Day off?</Text>
 
-        <Group justify="space-between" mb={6}>
+          <Switch
+            disabled={isView || isLoading.current}
+            placeholder="test"
+            {...form.getInputProps('isTodayDayOffShift', { type: 'checkbox' })}
+          />
+        </Group>
+        {form.values.isTodayDayOffShift && (
+          <Text mt={4} fz={12} c="grey">
+            При работе в выходной день, все показатели рассчитываются х2
+          </Text>
+        )}
+
+        <Group justify="space-between" my={6}>
           <Text fz={14}>Часы переработки</Text>
 
           <NumberInput
@@ -187,7 +203,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
             {...form.getInputProps('overtimeHours')}
           />
         </Group>
-
         <Group justify="space-between" mb={6}>
           <Text fz={14}>Часы недосыпа</Text>
 
@@ -205,8 +220,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
             {...form.getInputProps('deprivationHoursSleep')}
           />
         </Group>
-
-        <Button onClick={() => submitForm()}>asd</Button>
 
         {!isDev && <SubmitButton submit={submitForm} />}
       </Card>

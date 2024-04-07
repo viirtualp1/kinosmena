@@ -127,6 +127,8 @@ export const IndexPage: FC = () => {
         </Button>
       </Group>
 
+      <Button onClick={() => navigate('/shift/create')}>Шифт</Button>
+
       <Text my="24px">Активные проекты</Text>
       {user.current.hasProjects ? (
         <Box>

@@ -1,13 +1,14 @@
 import { FC, useRef, useState } from 'react'
 // import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Title, Container, Button } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
 // import { useFetch } from '@/hooks/useFetch'
 // import { useQuery } from '@/hooks/useQuery'
+import { useTheme } from '@/hooks/useTheme'
 import { ShiftForm } from '@/components/Shift'
+import { ProjectName } from '@/components/Project/ProjectName'
 import { ShiftPageSkeleton, getShiftData } from './'
-import { ProjectName } from '@/components/Project/ProjectName/ProjectName.tsx'
-import { useNavigate } from 'react-router-dom'
 
 interface Props {
   isCreating?: boolean
@@ -20,6 +21,8 @@ export const ShiftPage: FC<Props> = ({
   isEditing,
   isView,
 }: Props) => {
+  // useTheme()
+
   const navigate = useNavigate()
   // TODO: для тестирования пока тестовые данные, в проде раскомментировать
   // const { id } = useParams()
