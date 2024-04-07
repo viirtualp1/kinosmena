@@ -26,7 +26,7 @@ const iconStyles: CSSProperties = {
 }
 
 export const IndexPage: FC = () => {
-  // useTheme()
+  useTheme()
   const navigate = useNavigate()
 
   const user = useRef({
@@ -36,7 +36,9 @@ export const IndexPage: FC = () => {
   })
 
   const [fullName, setFullName] = useState('Личный кабинет')
-  const { data: projects } = useFetch<ProjectData[]>('/projects')
+  const { data: projects } = useFetch<ProjectData[]>('/projects', {
+    withRedirect: false,
+  })
 
   useEffect(() => {
     if (!user.current) {
@@ -129,6 +131,7 @@ export const IndexPage: FC = () => {
       {user.current.hasProjects ? (
         <Box>
           {projects &&
+            projects.length > 0 &&
             projects.map((project, idx) => (
               <Button
                 key={idx}

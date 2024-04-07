@@ -12,6 +12,7 @@ import { http } from '../useAxios'
 
 interface Options {
   params?: Record<string, string | number | null | undefined>
+  withRedirect?: boolean
 }
 
 export function useFetch<T>(
@@ -43,7 +44,9 @@ export function useFetch<T>(
 
         alert(get(error, `data.response`, 'Ошибка при получении данных'))
 
-        navigate('/')
+        if (options?.withRedirect) {
+          navigate('/')
+        }
       }
     }
 
