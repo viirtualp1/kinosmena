@@ -8,10 +8,9 @@ export function useTheme() {
     miniApp.ready()
 
     const theme = miniApp.isDark ? 'dark' : 'light'
-    console.log(theme)
 
     document
       .querySelector('html')
       ?.setAttribute('data-mantine-color-scheme', theme)
-  }, [miniApp, miniApp.isDark])
+  }, [miniApp])
 }
