@@ -1,5 +1,5 @@
 import { FC, useRef } from 'react'
-import { Card, Group, NumberInput, Switch, Text } from '@mantine/core'
+import { Card, Group, Switch, Text } from '@mantine/core'
 import { DateTimePicker, DateValue } from '@mantine/dates'
 import { isNotEmpty, useForm } from '@mantine/form'
 import { ShiftData } from '@/types/Shift'
