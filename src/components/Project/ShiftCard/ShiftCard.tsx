@@ -3,6 +3,7 @@ import { ShiftShortData } from '@/types/Project'
 import { Card, Text } from '@mantine/core'
 import { CalendarIcon } from '@/components/Icons'
 import { useDate } from '@/hooks/useDate'
+import { useMiniApp } from '@tma.js/sdk-react'
 
 interface Props {
   shift: ShiftShortData
@@ -19,14 +20,18 @@ const cardStyles = {
 
 export const ShiftCard: FC<Props> = ({ shift }) => {
   const { formatDate } = useDate()
+  const { isDark } = useMiniApp()
 
   const [startDate, setStartDate] = useState('')
   const [color, setColor] = useState('#fff')
 
   useEffect(() => {
     setStartDate(formatDate(shift.start_date) || '')
-    setColor(shift.is_active ? '#000' : '#fff')
-  }, [shift, formatDate])
+
+    if (shift.is_active) {
+      setColor(isDark ? '#fff' : '#000')
+    }
+  }, [shift, formatDate, isDark])
 
   return (
     <Card
