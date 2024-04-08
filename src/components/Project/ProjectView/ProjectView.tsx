@@ -33,7 +33,7 @@ const shiftCardStyles = {
 }
 
 export const ProjectView: FC<Props> = ({ project }) => {
-  useTheme()
+  // useTheme()
   const { formatDate } = useDate()
   const navigate = useNavigate()
 
@@ -47,7 +47,7 @@ export const ProjectView: FC<Props> = ({ project }) => {
   }, [formatDate, project])
 
   const ShiftRightSection = useMemo(
-    () => (firstShift.current ? <CloseIcon /> : <PlusIcon />),
+    () => (firstShift.current ? CloseIcon : PlusIcon),
     [firstShift],
   )
 
@@ -79,7 +79,7 @@ export const ProjectView: FC<Props> = ({ project }) => {
           fullWidth
           h={48}
           mb="24px"
-          rightSection={ShiftRightSection}
+          rightSection={<ShiftRightSection style={{ fill: '#fff' }} />}
           styles={shiftButtonStyles}
           justify="space-between"
         >

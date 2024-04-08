@@ -40,7 +40,9 @@ export const ShiftCard: FC<Props> = ({ shift }) => {
     >
       <CalendarIcon style={{ fill: color }} />
 
-      <Text fz={12}>{startDate}</Text>
+      <Text fz={12} c={color}>
+        {startDate}
+      </Text>
     </Card>
   )
 }
