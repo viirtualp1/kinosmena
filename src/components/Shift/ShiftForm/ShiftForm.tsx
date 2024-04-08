@@ -186,41 +186,6 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
           </Text>
         )}
 
-        <Group justify="space-between" my={6}>
-          <Text fz={14}>Часы переработки</Text>
-
-          <NumberInput
-            variant="unstyled"
-            size="sm"
-            maw={56}
-            min={0}
-            rightSection={<Text c="#0594FA">ч</Text>}
-            rightSectionWidth={10}
-            placeholder="2000"
-            thousandSeparator=" "
-            clampBehavior="strict"
-            readOnly={isView || isLoading.current}
-            {...form.getInputProps('overtimeHours')}
-          />
-        </Group>
-        <Group justify="space-between" mb={6}>
-          <Text fz={14}>Часы недосыпа</Text>
-
-          <NumberInput
-            variant="unstyled"
-            size="sm"
-            maw={56}
-            min={0}
-            rightSection={<Text c="#0594FA">ч</Text>}
-            rightSectionWidth={10}
-            placeholder="2000"
-            thousandSeparator=" "
-            clampBehavior="strict"
-            readOnly={isView || isLoading.current}
-            {...form.getInputProps('deprivationHoursSleep')}
-          />
-        </Group>
-
         {!isDev && <SubmitButton submit={submitForm} />}
       </Card>
     </form>
