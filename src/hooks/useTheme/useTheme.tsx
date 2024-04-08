@@ -7,10 +7,10 @@ export function useTheme() {
   useEffect(() => {
     miniApp.ready()
 
-    if (miniApp.isDark) {
-      document
-        .querySelector('html')
-        ?.setAttribute('data-mantine-color-scheme', 'dark')
-    }
+    const theme = miniApp.isDark ? 'dark' : 'light'
+
+    document
+      .querySelector('html')
+      ?.setAttribute('data-mantine-color-scheme', theme)
   }, [miniApp])
 }
