@@ -1,9 +1,10 @@
 import { FC, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Container, Title } from '@mantine/core'
 import { ProjectData } from '@/types/Project'
 import { getProjectData, ProjectPageSkeleton } from './'
 import { ProjectView, ProjectForm } from '@/components/Project'
-import { useNavigate } from 'react-router-dom'
+import { useTheme } from '@/hooks/useTheme'
 
 interface Props {
   isCreating?: boolean
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
+  // useTheme()
+
   const navigate = useNavigate()
 
   // TODO: для тестирования пока тестовые данные, в проде раскомментировать

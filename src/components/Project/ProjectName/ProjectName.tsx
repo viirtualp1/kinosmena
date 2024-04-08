@@ -3,17 +3,17 @@ import { Card, CardStylesNames } from '@mantine/core'
 import { MantineStylesType } from '@/types'
 import { BookmarkIcon } from '@/components/Icons'
 
-export const ProjectName: FC<{ name: string }> = ({ name }) => {
-  const cardStyles: MantineStylesType<CardStylesNames> = {
-    root: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: '14px',
-      color: '#fff',
-      height: 48,
-    },
-  }
+const cardStyles: MantineStylesType<CardStylesNames> = {
+  root: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '14px',
+    color: '#fff',
+    height: 48,
+  },
+}
 
+export const ProjectName: FC<{ name: string }> = ({ name }) => {
   return (
     <Card
       shadow="sm"

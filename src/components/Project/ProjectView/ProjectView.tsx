@@ -2,25 +2,28 @@ import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { Box, Button, Card, Group, Text } from '@mantine/core'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useNavigate } from 'react-router-dom'
-import { ProjectData, ShiftShortData } from '@/types/Project'
+import { BlockData, ProjectData, ShiftShortData } from '@/types/Project'
 import { useDate } from '@/hooks/useDate'
 import { useTheme } from '@/hooks/useTheme'
 import { PlusIcon, CloseIcon } from '@/components/Icons'
 import { ProjectName } from '@/components/Project/ProjectName'
 import { ShiftCard } from '@/components/Project/ShiftCard'
+import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
 
 interface Props {
   project: ProjectData
 }
 
 const shiftButtonStyles = {
-  label: {
-    marginLeft: '50%',
-    translate: '-50%',
+  inner: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 24px',
   },
-  rightSection: {
-    marginLeft: '100%',
-    translate: '-100%',
+  label: {
+    justifySelf: 'center',
+  },
+  section: {
+    marginInlineStart: 0,
   },
 }
 
@@ -33,7 +36,7 @@ const shiftCardStyles = {
 }
 
 export const ProjectView: FC<Props> = ({ project }) => {
-  useTheme()
+  // useTheme()
   const { formatDate } = useDate()
   const navigate = useNavigate()
 
@@ -50,6 +53,45 @@ export const ProjectView: FC<Props> = ({ project }) => {
     () => (firstShift.current ? CloseIcon : PlusIcon),
     [firstShift],
   )
+
+  const blocksData = useRef<BlockData[]>([
+    {
+      label: 'Продолжительность смены *',
+      value: null,
+    },
+    {
+      label: 'Шаг смены',
+      value: null,
+    },
+    {
+      label: 'Стоимость смены *',
+      value: null,
+    },
+    {
+      label: 'Стоимость переработки (час)',
+      value: null,
+    },
+    {
+      label: 'Стоимость недосыпа (час)',
+      value: null,
+    },
+    {
+      label: 'Стоимость текущего обеда',
+      value: null,
+    },
+    {
+      label: 'Стоимость позднего обеда',
+      value: null,
+    },
+    {
+      label: 'Суточные',
+      value: null,
+    },
+    {
+      label: 'Стоимость Day off (час)',
+      value: null,
+    },
+  ])
 
   return (
     <>
@@ -125,6 +167,8 @@ export const ProjectView: FC<Props> = ({ project }) => {
           </Card>
         )}
       </Group>
+
+      <ProjectCalculatedIndicators readonly indicators={blocksData} />
     </>
   )
 }

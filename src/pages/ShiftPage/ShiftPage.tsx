@@ -21,7 +21,7 @@ export const ShiftPage: FC<Props> = ({
   isEditing,
   isView,
 }: Props) => {
-  useTheme()
+  // useTheme()
 
   const navigate = useNavigate()
   // TODO: для тестирования пока тестовые данные, в проде раскомментировать

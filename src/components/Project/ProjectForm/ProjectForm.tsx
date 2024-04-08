@@ -1,11 +1,10 @@
 import { FC, useRef } from 'react'
-import { Button, Text, Textarea, Collapse, TextInput } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { Text, Textarea, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { ProjectData } from '@/types/Project'
+import { BlockData, ProjectData } from '@/types/Project'
 import { useConfig } from '@/hooks/useConfig'
-import { ArrowDown, ArrowUp } from '@/components/Icons'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
+import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
 
 interface Props {
   project: ProjectData
@@ -13,27 +12,16 @@ interface Props {
   isEditing: boolean | undefined
 }
 
-interface BlockData {
-  label: string
-  value: string | null
-}
-
 // TODO: Добавить в пропсы (внутри скобок) для использования: { project, isEditing, isCreating }
 export const ProjectForm: FC<Props> = () => {
   const { isDev } = useConfig()
-  const [opened, { toggle }] = useDisclosure(false)
 
   // TODO: Form values, type (check ShiftForm for example)
   const form = useForm()
 
-  const submitForm = form.onSubmit(() => {
-    console.log('submit')
-    console.log(form.values)
-  })
-
   const blocksData = useRef<BlockData[]>([
     {
-      label: 'Продолжительность смены',
+      label: 'Продолжительность смены *',
       value: null,
     },
     {
@@ -41,7 +29,7 @@ export const ProjectForm: FC<Props> = () => {
       value: null,
     },
     {
-      label: 'Стоимость смены',
+      label: 'Стоимость смены *',
       value: null,
     },
     {
@@ -69,6 +57,11 @@ export const ProjectForm: FC<Props> = () => {
       value: null,
     },
   ])
+
+  const submitForm = form.onSubmit(() => {
+    console.log('submit')
+    console.log(form.values)
+  })
 
   return (
     <>
@@ -147,46 +140,7 @@ export const ProjectForm: FC<Props> = () => {
         {/*Две нижние кнопки */}
         {/*Две нижние кнопки */}
         {/*Две нижние кнопки */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Button
-            style={{ margin: '1rem 0' }}
-            radius="lg"
-            onClick={toggle}
-            justify="space-between"
-            fullWidth
-            rightSection={!opened ? <ArrowDown /> : <ArrowUp />}
-            color="gray"
-            mt="md"
-            className="cl.btn"
-          >
-            Рассчитать стоимость
-          </Button>
-          <Collapse in={opened}>
-            {blocksData.current.map((block, index) => (
-              <div
-                key={index}
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-              >
-                <Text>
-                  {block.label} {block.value}
-                </Text>
-                <Textarea
-                  variant="outlined"
-                  style={{ width: '60px', marginBottom: '0.5rem' }}
-                  withAsterisk={index === 0 || index === 2}
-                  cols={3}
-                  radius="lg"
-                  maxLength={3}
-                  autosize
-                  minRows={1}
-                  maxRows={1}
-                  placeholder="₽"
-                  onChange={(e) => (block.value = e.currentTarget.value)}
-                />
-              </div>
-            ))}
-          </Collapse>
-        </div>
+        <ProjectCalculatedIndicators indicators={blocksData} />
       </div>
 
       {!isDev && <SubmitButton submit={submitForm} />}

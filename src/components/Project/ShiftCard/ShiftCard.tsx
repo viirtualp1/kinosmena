@@ -20,7 +20,7 @@ const cardStyles = {
 
 export const ShiftCard: FC<Props> = ({ shift }) => {
   const { formatDate } = useDate()
-  const { isDark } = useMiniApp()
+  // const { isDark } = useMiniApp()
 
   const [startDate, setStartDate] = useState('')
   const [color, setColor] = useState('#fff')
@@ -28,10 +28,10 @@ export const ShiftCard: FC<Props> = ({ shift }) => {
   useEffect(() => {
     setStartDate(formatDate(shift.start_date) || '')
 
-    if (shift.is_active) {
-      setColor(isDark ? '#fff' : '#000')
-    }
-  }, [shift, formatDate, isDark])
+    // if (shift.is_active) {
+    // setColor(isDark ? '#fff' : '#000')
+    // }
+  }, [shift, formatDate])
 
   return (
     <Card

@@ -26,7 +26,7 @@ const iconStyles: CSSProperties = {
 }
 
 export const IndexPage: FC = () => {
-  useTheme()
+  // useTheme()
   const navigate = useNavigate()
 
   const user = useRef({
