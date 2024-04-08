@@ -36,7 +36,7 @@ const shiftCardStyles = {
 }
 
 export const ProjectView: FC<Props> = ({ project }) => {
-  // useTheme()
+  useTheme()
   const { formatDate } = useDate()
   const navigate = useNavigate()
 

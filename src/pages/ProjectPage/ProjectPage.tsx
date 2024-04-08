@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
-  // useTheme()
+  useTheme()
 
   const navigate = useNavigate()
 
