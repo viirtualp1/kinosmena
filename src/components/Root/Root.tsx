@@ -1,6 +1,5 @@
 import type { FC } from 'react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { SDKProvider } from '@tma.js/sdk-react'
 import {
   createTheme,
@@ -11,34 +10,10 @@ import {
   Button,
 } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
-
-import {
-  getShiftRoutes,
-  getProjectRoutes,
-  getReportRoutes,
-  getArchiveRoutes,
-  IndexPage,
-  ErrorPage,
-} from '@/pages'
+import { App } from '../App'
 
 import inputClasses from '@/assets/scss/vendors/_input.module.scss'
 import buttonClasses from '@/assets/scss/vendors/_button.module.scss'
-
-const router = createBrowserRouter([
-  {
-    ErrorBoundary: ErrorPage,
-    children: [
-      {
-        path: '/',
-        Component: IndexPage,
-      },
-      ...getShiftRoutes(),
-      ...getProjectRoutes(),
-      ...getArchiveRoutes(),
-      ...getReportRoutes(),
-    ],
-  },
-])
 
 const theme = createTheme({
   defaultRadius: '12px',
@@ -68,7 +43,7 @@ export const Root: FC = () => {
             timezone: 'UTC',
           }}
         >
-          <RouterProvider router={router} />
+          <App />
 
           <SpeedInsights />
         </DatesProvider>

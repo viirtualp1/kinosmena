@@ -5,6 +5,7 @@ import { ProjectData } from '@/types/Project'
 import { getProjectData, ProjectPageSkeleton } from './'
 import { ProjectView, ProjectForm } from '@/components/Project'
 import { useTheme } from '@/hooks/useTheme'
+import { useRouterBack } from '@/hooks/useRouterBack'
 
 interface Props {
   isCreating?: boolean
@@ -15,6 +16,7 @@ interface Props {
 
 export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
   useTheme()
+  useRouterBack()
 
   const navigate = useNavigate()
 

@@ -6,6 +6,7 @@ import { ShiftData } from '@/types/Shift'
 // import { useFetch } from '@/hooks/useFetch'
 // import { useQuery } from '@/hooks/useQuery'
 import { useTheme } from '@/hooks/useTheme'
+import { useRouterBack } from '@/hooks/useRouterBack'
 import { ShiftForm } from '@/components/Shift'
 import { ProjectName } from '@/components/Project/ProjectName'
 import { ShiftPageSkeleton, getShiftData } from './'
@@ -22,6 +23,7 @@ export const ShiftPage: FC<Props> = ({
   isView,
 }: Props) => {
   useTheme()
+  useRouterBack()
 
   const navigate = useNavigate()
   // TODO: для тестирования пока тестовые данные, в проде раскомментировать
