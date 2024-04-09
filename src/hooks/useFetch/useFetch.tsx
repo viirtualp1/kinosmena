@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { get } from 'lodash'
+// import { get } from 'lodash'
 import { http } from '../useAxios'
 
 interface Options {
@@ -42,7 +42,7 @@ export function useFetch<T>(
       } catch (err) {
         console.error(err)
 
-        alert(get(error, `data.response`, 'Ошибка при получении данных'))
+        // alert(get(error, `data.response`, 'Ошибка при получении данных'))
 
         if (options?.withRedirect) {
           navigate('/')
