@@ -51,7 +51,7 @@ export function useFetch<T>(
     }
 
     fetchData()
-  }, [navigate, options?.params, url])
+  }, [navigate, options?.params, url, options?.withRedirect])
 
   return {
     data,
