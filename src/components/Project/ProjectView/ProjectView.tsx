@@ -27,7 +27,7 @@ const shiftButtonStyles = {
   },
 }
 
-const shiftCardStyles = {
+ const shiftCardStyles = {
   root: {
     justifyContent: 'flex-end',
     gap: 8,
