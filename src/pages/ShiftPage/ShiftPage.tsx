@@ -1,14 +1,15 @@
-import { FC, useRef, useState } from 'react'
-// import { useParams } from 'react-router-dom'
+import { FC } from 'react'
+import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { Title, Container, Button } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
-// import { useFetch } from '@/hooks/useFetch'
-// import { useQuery } from '@/hooks/useQuery'
+import { useFetch } from '@/hooks/useFetch'
+import { useQuery } from '@/hooks/useQuery'
 import { useTheme } from '@/hooks/useTheme'
+import { useConfig } from '@/hooks/useConfig'
 import { ShiftForm } from '@/components/Shift'
 import { ProjectName } from '@/components/Project/ProjectName'
-import { ShiftPageSkeleton, getShiftData } from './'
+import { ShiftPageSkeleton } from './'
 
 interface Props {
   isCreating?: boolean
@@ -21,20 +22,18 @@ export const ShiftPage: FC<Props> = ({
   isEditing,
   isView,
 }: Props) => {
-  useTheme()
-
+  const { isDev } = useConfig()
   const navigate = useNavigate()
-  // TODO: для тестирования пока тестовые данные, в проде раскомментировать
-  // const { id } = useParams()
-  // const query = useQuery()
-  // const { data: shift, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
-  //   params: {
-  //     projectId: query.get('projectId'),
-  //   },
-  // })
-  // TODO: убрать на релизе MVP
-  const isLoading = useRef(false)
-  const [shift] = useState<ShiftData | null>(getShiftData())
+  const { id } = useParams()
+  const query = useQuery()
+
+  !isDev && useTheme()
+
+  const { data: shift, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
+    params: {
+      projectId: query.get('projectId'),
+    },
+  })
 
   return (
     <div className="shift-page">

@@ -1,11 +1,11 @@
 import { FC, MutableRefObject, useMemo, useState } from 'react'
 import { Box, Button, Collapse, Group, NumberInput, Text } from '@mantine/core'
-import { BlockData } from '@/types/Project'
+import { IndicatorData } from '@/types/Project'
 import { ArrowDown, ArrowUp } from '@/components/Icons'
 
 interface Props {
   readonly?: boolean
-  indicators: MutableRefObject<BlockData[]>
+  indicators: MutableRefObject<IndicatorData[]>
 }
 
 const buttonStyles = {

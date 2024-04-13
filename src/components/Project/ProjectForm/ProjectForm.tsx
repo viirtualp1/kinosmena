@@ -1,62 +1,28 @@
-import { FC, useRef } from 'react'
+import { FC } from 'react'
 import { Text, Textarea, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { BlockData, ProjectData } from '@/types/Project'
+import { ProjectData } from '@/types/Project'
 import { useConfig } from '@/hooks/useConfig'
+import { useProjectIndicators } from '@/hooks/useProjectIndicators'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
 
 interface Props {
-  project: ProjectData
+  project: ProjectData | null
   isCreating: boolean | undefined
   isEditing: boolean | undefined
 }
 
-// TODO: Добавить в пропсы (внутри скобок) для использования: { project, isEditing, isCreating }
+interface FormValues {}
+
 export const ProjectForm: FC<Props> = () => {
   const { isDev } = useConfig()
 
-  // TODO: Form values, type (check ShiftForm for example)
-  const form = useForm()
-
-  const blocksData = useRef<BlockData[]>([
-    {
-      label: 'Продолжительность смены *',
-      value: null,
-    },
-    {
-      label: 'Шаг смены',
-      value: null,
-    },
-    {
-      label: 'Стоимость смены *',
-      value: null,
-    },
-    {
-      label: 'Стоимость переработки (час)',
-      value: null,
-    },
-    {
-      label: 'Стоимость недосыпа (час)',
-      value: null,
-    },
-    {
-      label: 'Стоимость текущего обеда',
-      value: null,
-    },
-    {
-      label: 'Стоимость позднего обеда',
-      value: null,
-    },
-    {
-      label: 'Суточные',
-      value: null,
-    },
-    {
-      label: 'Стоимость Day off (час)',
-      value: null,
-    },
-  ])
+  const indicatorsData = useProjectIndicators()
+  const form = useForm<FormValues>({
+    initialValues: {},
+    validate: {},
+  })
 
   const submitForm = form.onSubmit(() => {
     console.log('submit')
@@ -137,10 +103,8 @@ export const ProjectForm: FC<Props> = () => {
             />
           </div>
         </div>
-        {/*Две нижние кнопки */}
-        {/*Две нижние кнопки */}
-        {/*Две нижние кнопки */}
-        <ProjectCalculatedIndicators indicators={blocksData} />
+
+        <ProjectCalculatedIndicators indicators={indicatorsData} />
       </div>
 
       {!isDev && <SubmitButton submit={submitForm} />}

@@ -1,10 +1,12 @@
-import { FC, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FC, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button, Container, Title } from '@mantine/core'
 import { ProjectData } from '@/types/Project'
-import { getProjectData, ProjectPageSkeleton } from './'
-import { ProjectView, ProjectForm } from '@/components/Project'
 import { useTheme } from '@/hooks/useTheme'
+import { useConfig } from '@/hooks/useConfig'
+import { useFetch } from '@/hooks/useFetch'
+import { ProjectPageSkeleton } from './'
+import { ProjectView, ProjectForm } from '@/components/Project'
 
 interface Props {
   isCreating?: boolean
@@ -14,16 +16,13 @@ interface Props {
 }
 
 export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
-  useTheme()
-
+  const { isDev } = useConfig()
   const navigate = useNavigate()
+  const { id } = useParams()
 
-  // TODO: для тестирования пока тестовые данные, в проде раскомментировать
-  // const { id } = useParams()
-  // const { data: project, isLoading } = useFetch<ProjectData>(`/projects/${id}`)
-  // TODO: убрать на релизе MVP
-  const isLoading = useRef(false)
-  const [project] = useState<ProjectData | null>(getProjectData())
+  !isDev && useTheme()
+
+  const { data: project, isLoading } = useFetch<ProjectData>(`/projects/${id}`)
 
   return (
     <div className="project-page">
@@ -36,19 +35,15 @@ export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
           Карточка проекта
         </Title>
 
-        <ProjectPageSkeleton visible={isLoading.current || !project} />
-        {project && (
-          <>
-            {isView ? (
-              <ProjectView project={project} />
-            ) : (
-              <ProjectForm
-                project={project}
-                isEditing={isEditing}
-                isCreating={isCreating}
-              />
-            )}
-          </>
+        <ProjectPageSkeleton visible={isLoading.current} />
+        {isView ? (
+          project && <ProjectView project={project} />
+        ) : (
+          <ProjectForm
+            project={project}
+            isEditing={isEditing}
+            isCreating={isCreating}
+          />
         )}
       </Container>
     </div>

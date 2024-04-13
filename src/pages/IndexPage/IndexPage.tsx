@@ -11,6 +11,7 @@ import {
   UserDefaultIcon,
   ArrowIcon,
 } from '@/components/Icons'
+import { useConfig } from '@/hooks/useConfig'
 
 const labelStyles: CSSProperties = {
   whiteSpace: 'wrap',
@@ -26,7 +27,9 @@ const iconStyles: CSSProperties = {
 }
 
 export const IndexPage: FC = () => {
-  useTheme()
+  const { isDev } = useConfig()
+
+  !isDev && useTheme()
   const navigate = useNavigate()
 
   const user = useRef({
