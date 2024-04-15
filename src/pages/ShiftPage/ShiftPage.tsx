@@ -38,10 +38,6 @@ export const ShiftPage: FC<Props> = ({
   return (
     <div className="shift-page">
       <Container mt="24px">
-        <Button mb={24} color="black" onClick={() => navigate('/')}>
-          Назад
-        </Button>
-
         <Title order={5} mb="24px" fw={500}>
           Карточка смены
         </Title>

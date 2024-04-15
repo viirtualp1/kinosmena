@@ -1,111 +1,134 @@
-import { FC } from 'react'
-import { Text, Textarea, TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { FC, useRef } from 'react'
+import { Group, Textarea, TextInput } from '@mantine/core'
+import { isNotEmpty, useForm } from '@mantine/form'
+import { DateTimePicker, DateValue } from '@mantine/dates'
 import { ProjectData } from '@/types/Project'
 import { useConfig } from '@/hooks/useConfig'
 import { useProjectIndicators } from '@/hooks/useProjectIndicators'
+import { http } from '@/hooks/useAxios'
+import { useDate } from '@/hooks/useDate'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
 
 interface Props {
   project: ProjectData | null
+  isView: boolean | undefined
   isCreating: boolean | undefined
   isEditing: boolean | undefined
 }
 
-interface FormValues {}
+interface FormValues {
+  name: string
+  description: string
+  start_date: DateValue | undefined
+  end_date: DateValue | undefined
+  shift_duration: number | null
+  rest_duration: number | null
+  shift_rate: number | null
+  overtime_rate: number | null
+  non_sleep_rate: number | null
+  current_lunch_rate: number | null
+  late_lunch_rate: number | null
+  per_diem: number | null
+}
 
-export const ProjectForm: FC<Props> = () => {
+const textareaStyles = {
+  input: {
+    padding: 12,
+  },
+}
+
+export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
   const { isDev } = useConfig()
+  const { formatDateForDateInput } = useDate()
 
   const indicatorsData = useProjectIndicators()
+  const isLoading = useRef(false)
   const form = useForm<FormValues>({
-    initialValues: {},
-    validate: {},
+    initialValues: {
+      name: project?.name || '',
+      description: project?.description || '',
+      start_date: formatDateForDateInput(project?.start_date || ''),
+      end_date: formatDateForDateInput(project?.end_date || ''),
+      shift_duration: project?.shift_duration || null,
+      rest_duration: project?.rest_duration || null,
+      shift_rate: project?.shift_rate || null,
+      overtime_rate: project?.overtime_rate || null,
+      non_sleep_rate: project?.non_sleep_rate || null,
+      current_lunch_rate: project?.current_lunch_rate || null,
+      late_lunch_rate: project?.late_lunch_rate || null,
+      per_diem: project?.per_diem || null,
+    },
+    validate: {
+      name: isNotEmpty('Заполните поле'),
+      shift_duration: isNotEmpty('Заполните поле'),
+      shift_rate: isNotEmpty('Заполните поле'),
+    },
   })
 
-  const submitForm = form.onSubmit(() => {
-    console.log('submit')
-    console.log(form.values)
+  const submitForm = form.onSubmit(async () => {
+    isLoading.current = true
+
+    try {
+      isCreating
+        ? await http.post(`/projects`, form.values)
+        : await http.put(`/projects/${project?.id}`, form.values)
+    } catch (err) {
+      console.error(err)
+      alert('Ошибка')
+    } finally {
+      isLoading.current = false
+    }
   })
 
   return (
     <>
-      <div style={{ padding: 'auto' }}>
-        <div style={{ margin: '1rem 0' }}>
-          <TextInput
-            size="md"
-            radius="lg"
-            placeholder="Мой проект"
-            {...form.getInputProps('name')}
-          />
-        </div>
-        <div>
-          <Text size="lg" fw={400}>
-            Описание
-          </Text>
-          <Textarea
-            size="md"
-            radius="lg"
-            rows={3}
-            placeholder="Путешествие между временами..."
-          />
-        </div>
-        {
-          // TODO: use DateTimePicker for dates (check ShiftForm for example)
-        }
-        <div
-          style={{
-            marginBottom: '1rem',
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}
-        >
-          <div
-            style={{
-              minWidth: '150px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <p style={{ display: 'flex', justifyContent: 'center' }}>
-              Дата начала
-            </p>
-            <Textarea
-              cols={10}
-              radius="lg"
-              maxLength={10}
-              placeholder="дд.мм.гггг"
-              autosize
-              minRows={1}
-              maxRows={1}
-            />
-          </div>
-          <div
-            style={{
-              minWidth: '150px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <p style={{ display: 'flex', justifyContent: 'center' }}>
-              Дата окончания
-            </p>
-            <Textarea
-              cols={10}
-              radius="lg"
-              maxLength={10}
-              placeholder="дд.мм.гггг"
-              autosize
-              minRows={1}
-              maxRows={1}
-            />
-          </div>
-        </div>
+      <TextInput
+        label="Название"
+        labelProps={{ mb: 8 }}
+        placeholder="Мой проект"
+        mb={24}
+      />
 
-        <ProjectCalculatedIndicators indicators={indicatorsData} />
-      </div>
+      <Textarea
+        label="Описание"
+        labelProps={{ mb: 8 }}
+        mb={24}
+        placeholder="Путешествуйте между временем и жанрами, чтобы создавать свои собственные кинематографические истории в этом захватывающем приложении для смены жанров и персонажей в фильмах"
+        rows={4}
+        fz={14}
+        styles={textareaStyles}
+      />
+
+      <Group grow>
+        <DateTimePicker
+          valueFormat="DD.MM.YYYY HH:mm"
+          label="Дата начала"
+          labelProps={{ mb: '12px', fz: '14px' }}
+          placeholder="17.03.2024 15:30"
+          clearable
+          size="md"
+          mb="24px"
+          defaultValue={form.values.start_date}
+          disabled={isView || isLoading.current}
+          onChange={(v) => (form.values.start_date = v)}
+        />
+
+        <DateTimePicker
+          valueFormat="DD.MM.YYYY HH:mm"
+          label="Дата окончания"
+          labelProps={{ mb: '12px', fz: '14px' }}
+          placeholder="20.03.2024 20:00"
+          clearable
+          size="md"
+          mb="24px"
+          defaultValue={form.values.end_date}
+          disabled={isView || isLoading.current}
+          onChange={(v) => (form.values.end_date = v)}
+        />
+      </Group>
+
+      <ProjectCalculatedIndicators indicators={indicatorsData} />
 
       {!isDev && <SubmitButton submit={submitForm} />}
     </>

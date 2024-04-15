@@ -130,7 +130,12 @@ export const IndexPage: FC = () => {
         </Button>
       </Group>
 
-      <Button onClick={() => navigate('/project/5')}>Test project view</Button>
+      <Button mt={24} mr={24} onClick={() => navigate('/project/5')}>
+        Test project view
+      </Button>
+      <Button mt={24} onClick={() => navigate('/project/5/update')}>
+        Test project form
+      </Button>
 
       <Text my="24px">Активные проекты</Text>
       {user.current.hasProjects ? (
