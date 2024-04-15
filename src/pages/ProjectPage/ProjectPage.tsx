@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Button, Container, Title } from '@mantine/core'
+import { useParams } from 'react-router-dom'
+import { Container, Title } from '@mantine/core'
 import { ProjectData } from '@/types/Project'
 import { useTheme } from '@/hooks/useTheme'
 import { useConfig } from '@/hooks/useConfig'
@@ -17,7 +17,6 @@ interface Props {
 
 export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
   const { isDev } = useConfig()
-  const navigate = useNavigate()
   const { id } = useParams()
 
   !isDev && useTheme()
@@ -26,7 +25,7 @@ export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
 
   return (
     <div className="project-page">
-      <Container mt={24}>
+      <Container mt={24} pb={24}>
         <Title fz="16px" fw={500} mb="24px">
           Карточка проекта
         </Title>

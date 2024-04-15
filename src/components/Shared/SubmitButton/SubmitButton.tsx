@@ -11,8 +11,9 @@ export function SubmitButton({ submit }: Props) {
   useEffect(() => {
     mainButton.setParams({
       text: 'Сохранить',
-      textColor: '#0594FA',
     })
+
+    mainButton.show()
 
     return mainButton.on('click', submit)
   }, [mainButton, submit])

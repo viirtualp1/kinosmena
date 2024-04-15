@@ -95,7 +95,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         labelProps={{ mb: 8 }}
         mb={24}
         placeholder="Путешествуйте между временем и жанрами, чтобы создавать свои собственные кинематографические истории в этом захватывающем приложении для смены жанров и персонажей в фильмах"
-        rows={4}
+        rows={5}
         fz={14}
         styles={textareaStyles}
       />

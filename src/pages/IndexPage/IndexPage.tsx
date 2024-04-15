@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
-import { Container, Group, Text, Button, Box } from '@mantine/core'
+import { Container, Group, Text, Button, Box, Image } from '@mantine/core'
 import { useFetch } from '@/hooks/useFetch'
 import { useTheme } from '@/hooks/useTheme'
 import type { ProjectData } from '@/types/Project.d.ts'
@@ -12,6 +12,8 @@ import {
   ArrowIcon,
 } from '@/components/Icons'
 import { useConfig } from '@/hooks/useConfig'
+import { useInitData } from '@tma.js/sdk-react'
+import { useFullName } from '@/hooks/useFullName'
 
 const labelStyles: CSSProperties = {
   whiteSpace: 'wrap',
@@ -28,45 +30,37 @@ const iconStyles: CSSProperties = {
 
 export const IndexPage: FC = () => {
   const { isDev } = useConfig()
-
-  !isDev && useTheme()
   const navigate = useNavigate()
 
+  !isDev && useTheme()
+  const initData = useInitData()
+
   const user = useRef({
-    firstName: 'Admin',
-    lastName: 'Kinosmena',
-    hasProjects: true,
+    firstName: initData?.user?.firstName,
+    lastName: initData?.user?.lastName,
+    username: initData?.user?.username,
+    avatar: initData?.user?.photoUrl,
   })
 
-  const [fullName, setFullName] = useState('Личный кабинет')
+  const { fullName } = useFullName({
+    firstName: user.current.firstName,
+    lastName: user.current.lastName,
+    username: user.current.username,
+  })
+
   const { data: projects } = useFetch<ProjectData[]>('/projects', {
     withRedirect: false,
   })
 
-  useEffect(() => {
-    if (!user.current) {
-      return
-    }
-
-    const { firstName, lastName } = user.current
-
-    if (!firstName) {
-      return
-    }
-
-    if (!lastName) {
-      setFullName(firstName)
-
-      return
-    }
-
-    return setFullName(`${firstName} ${lastName}`)
-  }, [])
-
   return (
     <Container px="24px" mt="24px">
       <Group gap={8} mb="24px">
-        <UserDefaultIcon width={32} height={32} />
+        {user.current.avatar ? (
+          <Image src={user.current.avatar} width={32} height={32} />
+        ) : (
+          <UserDefaultIcon width={32} height={32} />
+        )}
+
         <Text fw={500}>{fullName}</Text>
       </Group>
 
@@ -138,7 +132,7 @@ export const IndexPage: FC = () => {
       </Button>
 
       <Text my="24px">Активные проекты</Text>
-      {user.current.hasProjects ? (
+      {projects && projects.length > 0 ? (
         <Box>
           {projects &&
             projects.length > 0 &&
@@ -162,11 +156,9 @@ export const IndexPage: FC = () => {
                 {project.name}
               </Button>
             ))}
-
-          {/* Здесь могут быть компоненты для отображения активных проектов */}
         </Box>
       ) : (
-        <Text c="#060B18" opacity={0.7}>
+        <Text c="#060B18" opacity={0.7} fz={14}>
           Здесь пока пусто, создайте проект
         </Text>
       )}

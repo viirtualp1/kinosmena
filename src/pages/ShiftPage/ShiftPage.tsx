@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-import { Title, Container, Button } from '@mantine/core'
+import { Title, Container } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
 import { useFetch } from '@/hooks/useFetch'
 import { useQuery } from '@/hooks/useQuery'
@@ -23,7 +22,6 @@ export const ShiftPage: FC<Props> = ({
   isView,
 }: Props) => {
   const { isDev } = useConfig()
-  const navigate = useNavigate()
   const { id } = useParams()
   const query = useQuery()
 
@@ -37,7 +35,7 @@ export const ShiftPage: FC<Props> = ({
 
   return (
     <div className="shift-page">
-      <Container mt="24px">
+      <Container mt="24px" pb={24}>
         <Title order={5} mb="24px" fw={500}>
           Карточка смены
         </Title>
