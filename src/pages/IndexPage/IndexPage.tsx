@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
+import { FC, CSSProperties, useRef } from 'react'
 import { Container, Group, Text, Button, Box, Image } from '@mantine/core'
+import { useInitData } from '@tma.js/sdk-react'
 import { useFetch } from '@/hooks/useFetch'
 import { useTheme } from '@/hooks/useTheme'
 import type { ProjectData } from '@/types/Project.d.ts'
@@ -12,8 +13,8 @@ import {
   ArrowIcon,
 } from '@/components/Icons'
 import { useConfig } from '@/hooks/useConfig'
-import { useInitData } from '@tma.js/sdk-react'
 import { useFullName } from '@/hooks/useFullName'
+import { useTelegramInfo } from '@/hooks/useTelegramInfo'
 
 const labelStyles: CSSProperties = {
   whiteSpace: 'wrap',
@@ -30,10 +31,11 @@ const iconStyles: CSSProperties = {
 
 export const IndexPage: FC = () => {
   const { isDev } = useConfig()
+  const initData = useInitData()
   const navigate = useNavigate()
 
   !isDev && useTheme()
-  const initData = useInitData()
+  !isDev && useTelegramInfo()
 
   const user = useRef({
     firstName: initData?.user?.firstName,
@@ -123,13 +125,6 @@ export const IndexPage: FC = () => {
           Получить отчет
         </Button>
       </Group>
-
-      <Button mt={24} mr={24} onClick={() => navigate('/project/5')}>
-        Test project view
-      </Button>
-      <Button mt={24} onClick={() => navigate('/project/5/update')}>
-        Test project form
-      </Button>
 
       <Text my="24px">Активные проекты</Text>
       {projects && projects.length > 0 ? (
