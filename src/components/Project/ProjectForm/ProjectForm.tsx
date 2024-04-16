@@ -66,7 +66,14 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
     },
   })
 
-  const submitForm = form.onSubmit(async () => {
+  const submitForm = async () => {
+    const { errors, hasErrors } = form.validate()
+
+    if (hasErrors) {
+      form.setErrors(errors)
+      return
+    }
+
     isLoading.current = true
 
     try {
@@ -79,7 +86,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
     } finally {
       isLoading.current = false
     }
-  })
+  }
 
   return (
     <>

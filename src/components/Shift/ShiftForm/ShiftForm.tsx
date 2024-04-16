@@ -56,7 +56,14 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
     },
   })
 
-  const submitForm = form.onSubmit(async () => {
+  const submitForm = async () => {
+    const { errors, hasErrors } = form.validate()
+
+    if (hasErrors) {
+      form.setErrors(errors)
+      return
+    }
+
     isLoading.current = true
 
     try {
@@ -69,7 +76,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
     } finally {
       isLoading.current = false
     }
-  })
+  }
 
   const Dates = () => (
     <Group grow gap="8px" ta="center">
