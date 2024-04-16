@@ -26,7 +26,8 @@ export interface ProjectData {
   shifts: ShiftShortData[]
 }
 
-interface BlockData {
+interface IndicatorData {
   label: string
+  field: string
   value: number | null
 }

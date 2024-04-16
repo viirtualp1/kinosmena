@@ -11,10 +11,13 @@ export function SubmitButton({ submit }: Props) {
   useEffect(() => {
     mainButton.setParams({
       text: 'Сохранить',
-      textColor: '#0594FA',
     })
 
-    return mainButton.on('click', submit)
+    mainButton.show()
+    mainButton.enable()
+
+    mainButton.on('change', submit)
+    mainButton.on('click', submit)
   }, [mainButton, submit])
 
   return null

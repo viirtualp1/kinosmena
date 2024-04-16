@@ -1,11 +1,12 @@
 import { FC, MutableRefObject, useMemo, useState } from 'react'
 import { Box, Button, Collapse, Group, NumberInput, Text } from '@mantine/core'
-import { BlockData } from '@/types/Project'
+import { IndicatorData } from '@/types/Project'
 import { ArrowDown, ArrowUp } from '@/components/Icons'
 
 interface Props {
   readonly?: boolean
-  indicators: MutableRefObject<BlockData[]>
+  form?: any
+  indicators: MutableRefObject<IndicatorData[]>
 }
 
 const buttonStyles = {
@@ -30,6 +31,7 @@ const boxStyles = {
 export const ProjectCalculatedIndicators: FC<Props> = ({
   readonly,
   indicators,
+  form,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -74,7 +76,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
                 thousandSeparator=" "
                 clampBehavior="strict"
                 readOnly={readonly}
-                onChange={(v) => (indicator.value = Number(v || 0))}
+                {...form.getInputProps(indicator.field)}
               />
             </Group>
           ))}
