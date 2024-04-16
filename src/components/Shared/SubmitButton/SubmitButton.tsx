@@ -14,8 +14,10 @@ export function SubmitButton({ submit }: Props) {
     })
 
     mainButton.show()
+    mainButton.enable()
 
     mainButton.on('change', submit)
+    mainButton.on('click', submit)
   }, [mainButton, submit])
 
   return null

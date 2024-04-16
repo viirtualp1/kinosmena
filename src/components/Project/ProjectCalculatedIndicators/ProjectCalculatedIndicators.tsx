@@ -5,6 +5,7 @@ import { ArrowDown, ArrowUp } from '@/components/Icons'
 
 interface Props {
   readonly?: boolean
+  form?: any
   indicators: MutableRefObject<IndicatorData[]>
 }
 
@@ -30,6 +31,7 @@ const boxStyles = {
 export const ProjectCalculatedIndicators: FC<Props> = ({
   readonly,
   indicators,
+  form,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -74,7 +76,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
                 thousandSeparator=" "
                 clampBehavior="strict"
                 readOnly={readonly}
-                onChange={(v) => (indicator.value = Number(v || 0))}
+                {...form.getInputProps(indicator.field)}
               />
             </Group>
           ))}

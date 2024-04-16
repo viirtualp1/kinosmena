@@ -28,5 +28,6 @@ export interface ProjectData {
 
 interface IndicatorData {
   label: string
+  field: string
   value: number | null
 }

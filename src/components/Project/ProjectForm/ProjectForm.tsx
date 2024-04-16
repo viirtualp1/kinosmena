@@ -95,6 +95,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         labelProps={{ mb: 8 }}
         placeholder="Мой проект"
         mb={24}
+        {...form.getInputProps('name')}
       />
 
       <Textarea
@@ -105,6 +106,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         rows={5}
         fz={14}
         styles={textareaStyles}
+        {...form.getInputProps('description')}
       />
 
       <Group grow>
@@ -135,7 +137,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         />
       </Group>
 
-      <ProjectCalculatedIndicators indicators={indicatorsData} />
+      <ProjectCalculatedIndicators form={form} indicators={indicatorsData} />
 
       {!isDev && <SubmitButton submit={submitForm} />}
     </>
