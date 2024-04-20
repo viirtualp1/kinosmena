@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
 import { Container, Group, Text, Button, Box } from '@mantine/core'
 import { useFetch } from '@/hooks/useFetch'
-/*import { useTheme } from '@/hooks/useTheme'*/
+import { useTheme } from '@/hooks/useTheme'
 import type { ProjectData } from '@/types/Project.d.ts'
 import {
   ProjectIcon,
@@ -26,7 +26,7 @@ const iconStyles: CSSProperties = {
 }
 
 export const IndexPage: FC = () => {
-  /*useTheme()*/
+ useTheme()
   const navigate = useNavigate()
 
   const user = useRef({
