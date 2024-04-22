@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { FC, CSSProperties, useRef } from 'react'
+import { FC, useRef } from 'react'
 import { Container, Group, Text, Button, Box, Image } from '@mantine/core'
 import { useInitData } from '@tma.js/sdk-react'
 import type { ProjectData } from '@/types/Project.d.ts'
@@ -7,6 +7,7 @@ import { useFetch } from '@/hooks/useFetch'
 import { useTheme } from '@/hooks/useTheme'
 import { useFullName } from '@/hooks/useFullName'
 import { useTelegramInfo } from '@/hooks/useTelegramInfo'
+import { useColors } from '@/hooks/useColors'
 import {
   ProjectIcon,
   ReportIcon,
@@ -14,20 +15,7 @@ import {
   UserDefaultIcon,
   ArrowIcon,
 } from '@/components/Icons'
-import { useColors } from '@/hooks/useColors'
-
-const labelStyles: CSSProperties = {
-  whiteSpace: 'wrap',
-  textAlign: 'left',
-  maxWidth: 76,
-  fontWeight: 500,
-  lineHeight: 1.55,
-  fontSize: 15,
-}
-
-const iconStyles: CSSProperties = {
-  fill: '#fff',
-}
+import { useIndexPageStyles } from './useIndexPageStyles.ts'
 
 export const IndexPage: FC = () => {
   useTheme()
@@ -36,6 +24,8 @@ export const IndexPage: FC = () => {
   const navigate = useNavigate()
   const initData = useInitData()
   const { subtitleTextColor } = useColors()
+
+  const { labelStyles, iconStyles } = useIndexPageStyles()
 
   const user = useRef({
     firstName: initData?.user?.firstName,
