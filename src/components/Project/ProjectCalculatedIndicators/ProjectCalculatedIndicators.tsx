@@ -2,44 +2,32 @@ import { FC, useMemo, useState } from 'react'
 import { Box, Button, Collapse, Group, NumberInput, Text } from '@mantine/core'
 import { IndicatorData } from '@/types/Project'
 import { ArrowDown, ArrowUp } from '@/components/Icons'
+import { useProjectIndicatorsStyles } from './useProjectIndicatorsStyles.ts'
 
 interface Props {
   readonly?: boolean
   form?: any
   indicators: IndicatorData[]
-  updateIndicatorValue: (field: string, newValue: number) => void
-}
-
-const buttonStyles = {
-  inner: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 24px',
-  },
-  label: {
-    justifySelf: 'center',
-  },
-  section: {
-    marginInlineStart: 0,
-  },
-}
-
-const boxStyles = {
-  padding: '8px 12px',
-  border: '1px solid rgb(6, 11, 24)',
-  borderRadius: '12px',
+  updateIndicatorValue?: (field: string, newValue: number) => void
 }
 
 export const ProjectCalculatedIndicators: FC<Props> = ({
   readonly,
   indicators,
   updateIndicatorValue,
+  form,
 }) => {
+  const { buttonStyles, boxStyles } = useProjectIndicatorsStyles()
   const [isOpen, setIsOpen] = useState(false)
 
   const ButtonRightSection = useMemo(
     () => (isOpen ? ArrowUp : ArrowDown),
     [isOpen],
   )
+
+  const handleIndicatorValue = (field: string, value: number) => {
+    updateIndicatorValue && updateIndicatorValue(field, value)
+  }
 
   return (
     <>
@@ -58,30 +46,42 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
       <Collapse in={isOpen}>
         <Box style={boxStyles}>
           {indicators.map((indicator, index) => (
-            <Group
-              key={index}
-              justify="space-between"
-              h={40}
-              mb={index !== indicators.length - 1 ? 6 : 0}
-            >
-              <Text fz={14}>{indicator.label}</Text>
+            <>
+              <Group key={index} justify="space-between" h={40} mb={0}>
+                <Text fz={14}>{indicator.label}</Text>
 
-              <NumberInput
-                variant="unstyled"
-                size="sm"
-                maw={56}
-                min={0}
-                rightSection={<Text c="#0594FA">₽</Text>}
-                rightSectionWidth={10}
-                placeholder="0"
-                thousandSeparator=" "
-                clampBehavior="strict"
-                readOnly={readonly}
-                onInput={(e) =>
-                  updateIndicatorValue(indicator.field, (e.target as any).value)
-                }
-              />
-            </Group>
+                <NumberInput
+                  variant="unstyled"
+                  size="sm"
+                  maw={56}
+                  min={0}
+                  rightSection={<Text c="#0594FA">₽</Text>}
+                  rightSectionWidth={10}
+                  placeholder="0"
+                  thousandSeparator=" "
+                  clampBehavior="strict"
+                  readOnly={readonly}
+                  errorProps={{ style: { display: 'none' } }}
+                  onInput={(e) =>
+                    handleIndicatorValue(
+                      indicator.field,
+                      (e.target as any).value,
+                    )
+                  }
+                />
+              </Group>
+
+              {form.errors[indicator.field] && (
+                <Text
+                  fz={12}
+                  c="red"
+                  style={{ textAlign: 'right' }}
+                  mb={index !== indicators.length - 1 ? 6 : 0}
+                >
+                  {form.errors[indicator.field]}
+                </Text>
+              )}
+            </>
           ))}
         </Box>
       </Collapse>

@@ -9,6 +9,8 @@ import { http } from '@/hooks/useAxios'
 import { useDate } from '@/hooks/useDate'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
+import { useErrorModal } from '@/components/Modals/ErrorModal/useErrorModal.ts'
+import { ErrorModal } from '@/components/Modals/ErrorModal/ErrorModal.tsx'
 
 interface Props {
   project: ProjectData | null
@@ -43,6 +45,12 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
   const { formatDateForDateInput } = useDate()
 
   const { indicators, updateIndicatorValue } = useProjectIndicators()
+  const {
+    isOpen: isErrorModalOpen,
+    open: openErrorModal,
+    close: closeErrorModal,
+  } = useErrorModal()
+
   const isLoading = useRef(false)
   const form = useForm<FormValues>({
     initialValues: {
@@ -82,7 +90,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         : await http.put(`/projects/${project?.id}`, form.values)
     } catch (err) {
       console.error(err)
-      alert('Ошибка')
+      openErrorModal()
     } finally {
       isLoading.current = false
     }
@@ -144,6 +152,8 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
       />
 
       {!isDev && <SubmitButton submit={submitForm} />}
+
+      <ErrorModal isOpen={isErrorModalOpen} close={closeErrorModal} />
     </>
   )
 }

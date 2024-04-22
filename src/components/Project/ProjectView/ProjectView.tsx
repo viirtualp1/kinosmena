@@ -24,7 +24,7 @@ export const ProjectView: FC<Props> = ({ project }) => {
   const navigate = useNavigate()
   const { formatDate } = useDate()
 
-  const indicatorsData = useProjectIndicators()
+  const { indicators } = useProjectIndicators()
   const { shiftButtonStyles, shiftCardStyles } = useProjectStyles()
 
   const firstShift = useRef<ShiftShortData | null>(project.shifts[0] || null)
@@ -111,7 +111,7 @@ export const ProjectView: FC<Props> = ({ project }) => {
         {endDate && <Date name="Дата окончания" date={endDate} />}
       </Group>
 
-      <ProjectCalculatedIndicators indicators={indicatorsData} readonly />
+      <ProjectCalculatedIndicators indicators={indicators} readonly />
     </>
   )
 }
