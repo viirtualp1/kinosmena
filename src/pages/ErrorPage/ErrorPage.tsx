@@ -11,6 +11,8 @@ import {
 import { MantineStylesType } from '@/types'
 import SpaceshipIcon from '@/assets/images/spaceship.png'
 
+import './ErrorPage.scss'
+
 interface ErrorData {
   data: string
   error: {
