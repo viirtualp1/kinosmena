@@ -35,7 +35,7 @@ export const IndexPage: FC = () => {
 
   const navigate = useNavigate()
   const initData = useInitData()
-  const { accentTextColor } = useColors()
+  const { subtitleTextColor } = useColors()
 
   const user = useRef({
     firstName: initData?.user?.firstName,
@@ -153,7 +153,7 @@ export const IndexPage: FC = () => {
             ))}
         </Box>
       ) : (
-        <Text c={accentTextColor} opacity={0.7} fz={14}>
+        <Text c={subtitleTextColor} opacity={0.7} fz={14}>
           Здесь пока пусто, создайте проект
         </Text>
       )}
