@@ -153,7 +153,7 @@ export const IndexPage: FC = () => {
             ))}
         </Box>
       ) : (
-        <Text c={subtitleTextColor} opacity={0.7} fz={14}>
+        <Text c={subtitleTextColor} fz={14}>
           Здесь пока пусто, создайте проект
         </Text>
       )}
