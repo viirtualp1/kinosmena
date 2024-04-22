@@ -10,6 +10,7 @@ import { useDate } from '@/hooks/useDate'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
 import { ErrorModal, useErrorModal } from '@/components/Modals/ErrorModal'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
+import { useProjectFormStyles } from '@/components/Project/ProjectForm/useProjectFormStyles.ts'
 
 interface Props {
   project: ProjectData | null
@@ -18,25 +19,21 @@ interface Props {
   isEditing: boolean | undefined
 }
 
-const textareaStyles = {
-  input: {
-    padding: 12,
-  },
-}
-
 export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
   const { isDev } = useConfig()
   const { formatDateForDateInput } = useDate()
 
+  const { textareaStyles, dateTimeStyles } = useProjectFormStyles()
   const { indicators, updateIndicatorValue } = useProjectIndicators()
   const {
     isOpen: isErrorModalOpen,
     open: openErrorModal,
     close: closeErrorModal,
   } = useErrorModal()
-  const [error, setError] = useState('')
 
+  const [error, setError] = useState('')
   const isLoading = useRef(false)
+
   const form = useForm<FormValues>({
     initialValues: {
       name: project?.name || '',
@@ -116,6 +113,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
           clearable
           size="md"
           mb="24px"
+          styles={dateTimeStyles}
           defaultValue={form.values.start_date}
           disabled={isView || isLoading.current}
           onChange={(v) => (form.values.start_date = v)}
@@ -126,6 +124,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
           label="Дата окончания"
           labelProps={{ mb: '12px', fz: '14px' }}
           placeholder="20.03.2024 20:00"
+          styles={dateTimeStyles}
           clearable
           size="md"
           mb="24px"
