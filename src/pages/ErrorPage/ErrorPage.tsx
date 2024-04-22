@@ -9,9 +9,14 @@ import {
   Title,
 } from '@mantine/core'
 import { MantineStylesType } from '@/types'
-import SpaceshipIcon from '@/assets/images/spaceship.png'
-
+import { useColors } from '@/hooks/useColors'
 import './ErrorPage.scss'
+
+import SpaceshipIcon from '@/assets/images/spaceship.svg'
+import SpaceshipWhiteIcon from '@/assets/images/spaceship-white.svg'
+
+import LoadingIcon from '@/assets/images/loading.svg'
+import LoadingWhiteIcon from '@/assets/images/loading-white.svg'
 
 interface ErrorData {
   data: string
@@ -37,22 +42,26 @@ const containerStyles: MantineStylesType<ContainerStylesNames> = {
 export const ErrorPage: FC = () => {
   const error = useRouteError() as ErrorData
   const navigate = useNavigate()
+  const { isDark } = useColors()
+  const [icon, setIcon] = useState('')
 
-  const [errorMessage, setErrorMessage] = useState(
-    'Упс! Что-то сломалось, но мы уже чиним.',
-  )
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    if (error.status !== 404) {
+    if (error.status === 404) {
+      setErrorMessage('Страница не найдена')
+      setIcon(isDark ? SpaceshipWhiteIcon : SpaceshipIcon)
+
       return
     }
 
-    setErrorMessage('Страница не найдена')
-  }, [error])
+    setIcon(isDark ? LoadingWhiteIcon : LoadingIcon)
+    setErrorMessage('Упс! Что-то сломалось, но мы уже чиним.')
+  }, [error, isDark])
 
   return (
     <Container role="alert" styles={containerStyles}>
-      <Image src={SpaceshipIcon} w={128} />
+      <Image src={icon} w={128} />
 
       <Title order={1} mt={24} mb={12}>
         Ошибка {error.status || 503}

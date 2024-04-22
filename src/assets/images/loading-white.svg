@@ -1,0 +1,10 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <clipPath id="clip467_1919">
+            <rect id="Linear / Astronomy / Star" width="128.000000" height="128.000000" fill-opacity="0"/>
+        </clipPath>
+    </defs>
+    <g clip-path="url(#clip467_1919)">
+        <path id="Vector" d="M64 106.66L64 93.86M64 34.13L64 21.33M106.66 64L93.86 64M34.13 64L21.33 64M94.16 33.83L85.11 42.88M42.88 85.11L33.83 94.16M33.82 33.83L42.87 42.88M85.11 85.11L94.16 94.17" stroke="#fff" stroke-opacity="1.000000" stroke-width="8.000000"/>
+    </g>
+</svg>
