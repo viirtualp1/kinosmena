@@ -75,7 +75,7 @@ export const IndexPage: FC = () => {
             radius="24px"
             rightSection={<ProjectIcon style={iconStyles} />}
             styles={{
-              root: { paddingInline: '24px' },
+              root: { paddingInline: 24 },
               inner: { justifyContent: 'space-between' },
               label: labelStyles,
             }}
@@ -90,8 +90,8 @@ export const IndexPage: FC = () => {
             radius="24px"
             rightSection={<ArchiveIcon style={iconStyles} />}
             styles={{
-              root: { paddingInline: '24px' },
-              inner: { justifyContent: 'space-between', gap: '4px' },
+              root: { paddingInline: 24 },
+              inner: { justifyContent: 'space-between', gap: 4 },
               label: labelStyles,
             }}
             onClick={() => navigate('/archive')}
@@ -107,12 +107,12 @@ export const IndexPage: FC = () => {
           mih="172px"
           radius="24px"
           styles={{
-            root: { paddingInline: '24px' },
+            root: { paddingInline: 24 },
             inner: {
               flexDirection: 'column',
               justifyContent: 'space-between',
               alignItems: 'flex-start',
-              minHeight: '116px',
+              minHeight: 116,
             },
             section: {
               alignSelf: 'flex-end',

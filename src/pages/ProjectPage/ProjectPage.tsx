@@ -5,8 +5,8 @@ import { ProjectData } from '@/types/Project'
 import { useTheme } from '@/hooks/useTheme'
 import { useConfig } from '@/hooks/useConfig'
 import { useFetch } from '@/hooks/useFetch'
-import { ProjectPageSkeleton } from './'
 import { ProjectView, ProjectForm } from '@/components/Project'
+import { ProjectPageSkeleton } from './'
 
 interface Props {
   isCreating?: boolean

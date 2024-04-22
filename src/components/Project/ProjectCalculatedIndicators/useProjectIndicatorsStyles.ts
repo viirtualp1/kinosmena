@@ -18,7 +18,7 @@ export function useProjectIndicatorsStyles() {
   const boxStyles: MantineStylesType<any> = {
     padding: '8px 12px',
     border: '1px solid rgb(6, 11, 24)',
-    borderRadius: '12px',
+    borderRadius: 12,
   }
 
   return {

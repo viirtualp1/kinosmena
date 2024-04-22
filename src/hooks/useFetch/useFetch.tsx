@@ -9,6 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 // import { get } from 'lodash'
 import { http } from '../useAxios'
+import { get } from 'lodash'
 
 interface Options {
   params?: Record<string, string | number | null | undefined>
@@ -26,7 +27,7 @@ export function useFetch<T>(
 } {
   const navigate = useNavigate()
   const [data, setData] = useState<T | null>(null)
-  const error = useRef<unknown>()
+  const [error, setError] = useState<unknown>()
   const isLoading = useRef(false)
 
   useEffect(() => {
@@ -42,11 +43,13 @@ export function useFetch<T>(
       } catch (err) {
         console.error(err)
 
-        // alert(get(error, `data.response`, 'Ошибка при получении данных'))
+        setError(get(err, 'response.data'))
 
         if (options?.withRedirect) {
           navigate('/')
         }
+      } finally {
+        isLoading.current = false
       }
     }
 

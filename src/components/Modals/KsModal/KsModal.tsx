@@ -11,7 +11,7 @@ interface Props {
 
 export const KsModal: FC<Props> = ({ children, isOpen, close, title }) => {
   return (
-    <Modal.Root opened={isOpen} onClose={close}>
+    <Modal.Root opened={isOpen} onClose={close} centered lockScroll>
       <Modal.Overlay />
       <Modal.Content>
         <Modal.Header>

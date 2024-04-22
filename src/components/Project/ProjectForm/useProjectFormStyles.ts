@@ -5,6 +5,12 @@ export function useProjectFormStyles() {
     },
   }
 
+  const inputStyles = {
+    input: {
+      height: 42,
+    },
+  }
+
   const dateTimeStyles = {
     input: {
       fontSize: 14,
@@ -14,5 +20,6 @@ export function useProjectFormStyles() {
   return {
     textareaStyles,
     dateTimeStyles,
+    inputStyles,
   }
 }

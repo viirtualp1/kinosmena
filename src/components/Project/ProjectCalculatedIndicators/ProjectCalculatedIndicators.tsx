@@ -1,7 +1,8 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, Fragment, useMemo, useState } from 'react'
 import { Box, Button, Collapse, Group, NumberInput, Text } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
 import { FormValues, IndicatorData } from '@/types/Project'
+import { useColors } from '@/hooks/useColors'
 import { ArrowDown, ArrowUp } from '@/components/Icons'
 import { useProjectIndicatorsStyles } from './useProjectIndicatorsStyles.ts'
 
@@ -18,6 +19,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
   updateIndicatorValue,
   form,
 }) => {
+  const { accentTextColor } = useColors()
   const { buttonStyles, boxStyles } = useProjectIndicatorsStyles()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -48,8 +50,8 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
       <Collapse in={isOpen}>
         <Box style={boxStyles}>
           {indicators.map((indicator, index) => (
-            <>
-              <Group key={index} justify="space-between" h={40} mb={0}>
+            <Fragment key={index}>
+              <Group justify="space-between" h={40} mb={0}>
                 <Text fz={14}>{indicator.label}</Text>
 
                 <NumberInput
@@ -57,7 +59,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
                   size="sm"
                   maw={56}
                   min={0}
-                  rightSection={<Text c="#0594FA">₽</Text>}
+                  rightSection={<Text c={accentTextColor}>₽</Text>}
                   rightSectionWidth={10}
                   placeholder="0"
                   thousandSeparator=" "
@@ -83,7 +85,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
                   {form?.errors[indicator.field]}
                 </Text>
               )}
-            </>
+            </Fragment>
           ))}
         </Box>
       </Collapse>

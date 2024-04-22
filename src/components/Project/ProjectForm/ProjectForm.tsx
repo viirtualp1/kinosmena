@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react'
+import { FC, useCallback, useRef, useState } from 'react'
 import { Group, Text, Textarea, TextInput } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
 import { DateTimePicker } from '@mantine/dates'
@@ -10,7 +10,7 @@ import { useDate } from '@/hooks/useDate'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
 import { ErrorModal, useErrorModal } from '@/components/Modals/ErrorModal'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
-import { useProjectFormStyles } from '@/components/Project/ProjectForm/useProjectFormStyles.ts'
+import { useProjectFormStyles } from './useProjectFormStyles.ts'
 
 interface Props {
   project: ProjectData | null
@@ -23,7 +23,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
   const { isDev } = useConfig()
   const { formatDateForDateInput } = useDate()
 
-  const { textareaStyles, dateTimeStyles } = useProjectFormStyles()
+  const { textareaStyles, dateTimeStyles, inputStyles } = useProjectFormStyles()
   const { indicators, updateIndicatorValue } = useProjectIndicators()
   const {
     isOpen: isErrorModalOpen,
@@ -56,7 +56,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
     },
   })
 
-  const submitForm = async () => {
+  const handleSubmit = useCallback(async () => {
     const { errors, hasErrors } = form.validate()
 
     if (hasErrors) {
@@ -81,7 +81,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
     } finally {
       isLoading.current = false
     }
-  }
+  }, [isCreating, openErrorModal, form, project?.id])
 
   return (
     <>
@@ -89,6 +89,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         label="Название"
         labelProps={{ mb: 8 }}
         placeholder="Мой проект"
+        styles={inputStyles}
         mb={24}
         {...form.getInputProps('name')}
       />
@@ -108,7 +109,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         <DateTimePicker
           valueFormat="DD.MM.YYYY HH:mm"
           label="Дата начала"
-          labelProps={{ mb: '12px', fz: '14px' }}
+          labelProps={{ mb: 12, fz: 14 }}
           placeholder="17.03.2024 15:30"
           clearable
           size="md"
@@ -122,12 +123,12 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         <DateTimePicker
           valueFormat="DD.MM.YYYY HH:mm"
           label="Дата окончания"
-          labelProps={{ mb: '12px', fz: '14px' }}
+          labelProps={{ mb: 12, fz: 14 }}
           placeholder="20.03.2024 20:00"
           styles={dateTimeStyles}
           clearable
           size="md"
-          mb="24px"
+          mb={24}
           defaultValue={form.values.end_date}
           disabled={isView || isLoading.current}
           onChange={(v) => (form.values.end_date = v)}
@@ -140,7 +141,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         updateIndicatorValue={updateIndicatorValue}
       />
 
-      {!isDev && <SubmitButton submit={submitForm} />}
+      {!isDev && <SubmitButton submit={handleSubmit} />}
 
       <ErrorModal isOpen={isErrorModalOpen} close={closeErrorModal}>
         <Text>{error}</Text>

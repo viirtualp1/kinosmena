@@ -7,7 +7,7 @@ const cardStyles: MantineStylesType<CardStylesNames> = {
   root: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: '14px',
+    gap: 14,
     color: '#fff',
     height: 48,
   },

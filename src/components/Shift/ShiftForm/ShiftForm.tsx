@@ -111,7 +111,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
       <DateTimePicker
         valueFormat="DD.MM.YYYY HH:mm"
         label="Начало"
-        labelProps={{ mb: '12px', fz: '14px' }}
+        labelProps={{ mb: 12, fz: 14 }}
         placeholder="17.03.2024 15:30"
         clearable
         size="md"
@@ -124,7 +124,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
       <DateTimePicker
         valueFormat="DD.MM.YYYY HH:mm"
         label="Окончание"
-        labelProps={{ mb: '12px', fz: '14px' }}
+        labelProps={{ mb: 12, fz: 14 }}
         placeholder="20.03.2024 20:00"
         clearable
         size="md"
