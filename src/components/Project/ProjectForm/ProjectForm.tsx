@@ -1,37 +1,21 @@
-import { FC, useRef } from 'react'
-import { Group, Textarea, TextInput } from '@mantine/core'
+import { FC, useRef, useState } from 'react'
+import { Group, Text, Textarea, TextInput } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
-import { DateTimePicker, DateValue } from '@mantine/dates'
-import { ProjectData } from '@/types/Project'
+import { DateTimePicker } from '@mantine/dates'
+import { FormValues, ProjectData } from '@/types/Project'
 import { useConfig } from '@/hooks/useConfig'
 import { useProjectIndicators } from '@/hooks/useProjectIndicators'
 import { http } from '@/hooks/useAxios'
 import { useDate } from '@/hooks/useDate'
 import { SubmitButton } from '@/components/Shared/SubmitButton'
+import { ErrorModal, useErrorModal } from '@/components/Modals/ErrorModal'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
-import { useErrorModal } from '@/components/Modals/ErrorModal/useErrorModal.ts'
-import { ErrorModal } from '@/components/Modals/ErrorModal/ErrorModal.tsx'
 
 interface Props {
   project: ProjectData | null
   isView: boolean | undefined
   isCreating: boolean | undefined
   isEditing: boolean | undefined
-}
-
-interface FormValues {
-  name: string
-  description: string
-  start_date: DateValue | undefined
-  end_date: DateValue | undefined
-  shift_duration: number | null
-  rest_duration: number | null
-  shift_rate: number | null
-  overtime_rate: number | null
-  non_sleep_rate: number | null
-  current_lunch_rate: number | null
-  late_lunch_rate: number | null
-  per_diem: number | null
 }
 
 const textareaStyles = {
@@ -50,6 +34,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
     open: openErrorModal,
     close: closeErrorModal,
   } = useErrorModal()
+  const [error, setError] = useState('')
 
   const isLoading = useRef(false)
   const form = useForm<FormValues>({
@@ -90,7 +75,12 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         : await http.put(`/projects/${project?.id}`, form.values)
     } catch (err) {
       console.error(err)
+      form.setErrors((err as any).response.data)
+
       openErrorModal()
+      setError(
+        `Ошибка при ${isCreating ? 'создании' : 'редактировании'} проекта`,
+      )
     } finally {
       isLoading.current = false
     }
@@ -153,7 +143,9 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
 
       {!isDev && <SubmitButton submit={submitForm} />}
 
-      <ErrorModal isOpen={isErrorModalOpen} close={closeErrorModal} />
+      <ErrorModal isOpen={isErrorModalOpen} close={closeErrorModal}>
+        <Text>{error}</Text>
+      </ErrorModal>
     </>
   )
 }

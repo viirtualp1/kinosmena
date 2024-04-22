@@ -1,12 +1,13 @@
 import { FC, useMemo, useState } from 'react'
 import { Box, Button, Collapse, Group, NumberInput, Text } from '@mantine/core'
-import { IndicatorData } from '@/types/Project'
+import { UseFormReturnType } from '@mantine/form'
+import { FormValues, IndicatorData } from '@/types/Project'
 import { ArrowDown, ArrowUp } from '@/components/Icons'
 import { useProjectIndicatorsStyles } from './useProjectIndicatorsStyles.ts'
 
 interface Props {
   readonly?: boolean
-  form?: any
+  form?: UseFormReturnType<FormValues, (values: FormValues) => FormValues>
   indicators: IndicatorData[]
   updateIndicatorValue?: (field: string, newValue: number) => void
 }
@@ -27,6 +28,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
 
   const handleIndicatorValue = (field: string, value: number) => {
     updateIndicatorValue && updateIndicatorValue(field, value)
+    form?.setFieldValue(field, value)
   }
 
   return (
@@ -71,14 +73,14 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
                 />
               </Group>
 
-              {form.errors[indicator.field] && (
+              {form?.errors[indicator.field] && (
                 <Text
                   fz={12}
                   c="red"
                   style={{ textAlign: 'right' }}
                   mb={index !== indicators.length - 1 ? 6 : 0}
                 >
-                  {form.errors[indicator.field]}
+                  {form?.errors[indicator.field]}
                 </Text>
               )}
             </>
