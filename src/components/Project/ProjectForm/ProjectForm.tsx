@@ -42,7 +42,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
   const { isDev } = useConfig()
   const { formatDateForDateInput } = useDate()
 
-  const indicatorsData = useProjectIndicators()
+  const { indicators, updateIndicatorValue } = useProjectIndicators()
   const isLoading = useRef(false)
   const form = useForm<FormValues>({
     initialValues: {
@@ -137,7 +137,11 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         />
       </Group>
 
-      <ProjectCalculatedIndicators form={form} indicators={indicatorsData} />
+      <ProjectCalculatedIndicators
+        form={form}
+        indicators={indicators}
+        updateIndicatorValue={updateIndicatorValue}
+      />
 
       {!isDev && <SubmitButton submit={submitForm} />}
     </>

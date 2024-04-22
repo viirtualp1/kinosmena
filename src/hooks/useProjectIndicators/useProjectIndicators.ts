@@ -1,8 +1,8 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 import { IndicatorData } from '@/types/Project'
 
 export function useProjectIndicators() {
-  return useRef<IndicatorData[]>([
+  const [indicators, setIndicators] = useState<IndicatorData[]>([
     {
       label: 'Продолжительность смены *',
       field: 'shift_duration',
@@ -44,4 +44,24 @@ export function useProjectIndicators() {
       value: null,
     },
   ])
+
+  const updateIndicatorValue = (field: string, newValue: number) => {
+    setIndicators((prevIndicators) => {
+      return prevIndicators.map((indicator) => {
+        if (indicator.field === field) {
+          return {
+            ...indicator,
+            value: newValue,
+          }
+        }
+
+        return indicator
+      })
+    })
+  }
+
+  return {
+    indicators,
+    updateIndicatorValue,
+  }
 }

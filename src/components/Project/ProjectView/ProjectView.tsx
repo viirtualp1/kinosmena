@@ -11,42 +11,23 @@ import { PlusIcon, CloseIcon } from '@/components/Icons'
 import { ProjectName } from '@/components/Project/ProjectName'
 import { ShiftCard } from '@/components/Project/ShiftCard'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
+import { useProjectStyles } from './useProjectStyles.ts'
 
 interface Props {
   project: ProjectData
 }
 
-const shiftButtonStyles = {
-  inner: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 24px',
-  },
-  label: {
-    justifySelf: 'center',
-  },
-  section: {
-    marginInlineStart: 0,
-  },
-}
-
-const shiftCardStyles = {
-  root: {
-    justifyContent: 'flex-end',
-    gap: 8,
-    borderColor: '#060B18',
-  },
-}
-
 export const ProjectView: FC<Props> = ({ project }) => {
   const { isDev } = useConfig()
-
   !isDev && useTheme()
 
-  const { formatDate } = useDate()
   const navigate = useNavigate()
+  const { formatDate } = useDate()
 
   const indicatorsData = useProjectIndicators()
-  const firstShift = useRef<ShiftShortData | undefined>(project.shifts[0])
+  const { shiftButtonStyles, shiftCardStyles } = useProjectStyles()
+
+  const firstShift = useRef<ShiftShortData | null>(project.shifts[0] || null)
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
 
@@ -59,6 +40,19 @@ export const ProjectView: FC<Props> = ({ project }) => {
     () => (firstShift.current ? CloseIcon : PlusIcon),
     [firstShift],
   )
+
+  const Date = ({ name, date }: { name: string; date: string }) => {
+    return (
+      <Card padding="12px 8px" h={66} withBorder styles={shiftCardStyles}>
+        <Text h={17} fz={14}>
+          {name}
+        </Text>
+        <Text h={17} fz={14} opacity={0.7}>
+          {date}
+        </Text>
+      </Card>
+    )
+  }
 
   return (
     <>
@@ -112,30 +106,12 @@ export const ProjectView: FC<Props> = ({ project }) => {
       </Card>
 
       <Group grow gap="8px" ta="center" mb="24px">
-        {startDate && (
-          <Card padding="12px 8px" h={66} withBorder styles={shiftCardStyles}>
-            <Text h={17} fz={14}>
-              Дата начала
-            </Text>
-            <Text h={17} fz={14} opacity={0.7}>
-              {startDate}
-            </Text>
-          </Card>
-        )}
+        {startDate && <Date name="Дата начала" date={startDate} />}
 
-        {endDate && (
-          <Card padding="12px 20px" h={66} withBorder styles={shiftCardStyles}>
-            <Text h={17} fz={14}>
-              Дата окончания
-            </Text>
-            <Text h={17} fz={14} opacity={0.7}>
-              {endDate}
-            </Text>
-          </Card>
-        )}
+        {endDate && <Date name="Дата окончания" date={endDate} />}
       </Group>
 
-      <ProjectCalculatedIndicators readonly indicators={indicatorsData} />
+      <ProjectCalculatedIndicators indicators={indicatorsData} readonly />
     </>
   )
 }
