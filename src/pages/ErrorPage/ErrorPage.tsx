@@ -42,7 +42,7 @@ const containerStyles: MantineStylesType<ContainerStylesNames> = {
 export const ErrorPage: FC = () => {
   const error = useRouteError() as ErrorData
   const navigate = useNavigate()
-  const { isDark } = useColors()
+  const { isDark, textColor } = useColors()
   const [icon, setIcon] = useState('')
 
   const [errorMessage, setErrorMessage] = useState('')
@@ -63,7 +63,7 @@ export const ErrorPage: FC = () => {
     <Container role="alert" styles={containerStyles}>
       <Image src={icon} w={128} />
 
-      <Title order={1} mt={24} mb={12}>
+      <Title order={1} mt={24} mb={12} c={textColor}>
         Ошибка {error.status || 503}
       </Title>
       <Text mb={24}>{errorMessage}</Text>
