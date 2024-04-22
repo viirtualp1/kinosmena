@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import { FC, CSSProperties, useRef } from 'react'
 import { Container, Group, Text, Button, Box, Image } from '@mantine/core'
 import { useInitData } from '@tma.js/sdk-react'
+import type { ProjectData } from '@/types/Project.d.ts'
 import { useFetch } from '@/hooks/useFetch'
 import { useTheme } from '@/hooks/useTheme'
-import type { ProjectData } from '@/types/Project.d.ts'
+import { useFullName } from '@/hooks/useFullName'
+import { useTelegramInfo } from '@/hooks/useTelegramInfo'
 import {
   ProjectIcon,
   ReportIcon,
@@ -12,9 +14,7 @@ import {
   UserDefaultIcon,
   ArrowIcon,
 } from '@/components/Icons'
-import { useConfig } from '@/hooks/useConfig'
-import { useFullName } from '@/hooks/useFullName'
-import { useTelegramInfo } from '@/hooks/useTelegramInfo'
+import { useColors } from '@/hooks/useColors'
 
 const labelStyles: CSSProperties = {
   whiteSpace: 'wrap',
@@ -30,12 +30,12 @@ const iconStyles: CSSProperties = {
 }
 
 export const IndexPage: FC = () => {
-  const { isDev } = useConfig()
-  const initData = useInitData()
-  const navigate = useNavigate()
+  useTheme()
+  useTelegramInfo()
 
-  !isDev && useTheme()
-  !isDev && useTelegramInfo()
+  const navigate = useNavigate()
+  const initData = useInitData()
+  const { accentTextColor } = useColors()
 
   const user = useRef({
     firstName: initData?.user?.firstName,
@@ -153,7 +153,7 @@ export const IndexPage: FC = () => {
             ))}
         </Box>
       ) : (
-        <Text c="#060B18" opacity={0.7} fz={14}>
+        <Text c={accentTextColor} opacity={0.7} fz={14}>
           Здесь пока пусто, создайте проект
         </Text>
       )}
