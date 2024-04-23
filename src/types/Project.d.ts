@@ -32,6 +32,7 @@ interface IndicatorData {
   label: string
   field: string
   value: number | null
+  symbol: '₽' | 'ч'
 }
 
 export interface FormValues {

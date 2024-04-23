@@ -19,7 +19,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
   updateIndicatorValue,
   form,
 }) => {
-  const { accentTextColor } = useColors()
+  const { accentTextColor, buttonColor } = useColors()
   const { buttonStyles, boxStyles } = useProjectIndicatorsStyles()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -39,7 +39,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
         fullWidth
         h={48}
         mb={4}
-        bg="#363A43"
+        bg={buttonColor}
         styles={buttonStyles}
         rightSection={<ButtonRightSection style={{ fill: '#fff' }} />}
         onClick={() => setIsOpen(!isOpen)}
@@ -59,7 +59,9 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
                   size="sm"
                   maw={56}
                   min={0}
-                  rightSection={<Text c={accentTextColor}>₽</Text>}
+                  rightSection={
+                    <Text c={accentTextColor}>{indicator.symbol}</Text>
+                  }
                   rightSectionWidth={10}
                   placeholder="0"
                   thousandSeparator=" "

@@ -88,7 +88,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
       <TextInput
         label="Название"
         labelProps={{ mb: 8 }}
-        placeholder="Мой проект"
+        placeholder="Введите текст"
         styles={inputStyles}
         mb={24}
         {...form.getInputProps('name')}
@@ -96,9 +96,9 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
 
       <Textarea
         label="Описание"
+        placeholder="Введите текст"
         labelProps={{ mb: 8 }}
         mb={24}
-        placeholder="Путешествуйте между временем и жанрами, чтобы создавать свои собственные кинематографические истории в этом захватывающем приложении для смены жанров и персонажей в фильмах"
         rows={5}
         fz={14}
         styles={textareaStyles}
@@ -107,10 +107,10 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
 
       <Group grow>
         <DateTimePicker
-          valueFormat="DD.MM.YYYY HH:mm"
+          valueFormat="DD.MM.YYYY"
           label="Дата начала"
           labelProps={{ mb: 12, fz: 14 }}
-          placeholder="17.03.2024 15:30"
+          placeholder="17.03.2024"
           clearable
           size="md"
           mb={24}
@@ -121,10 +121,10 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
         />
 
         <DateTimePicker
-          valueFormat="DD.MM.YYYY HH:mm"
+          valueFormat="DD.MM.YYYY"
           label="Дата окончания"
           labelProps={{ mb: 12, fz: 14 }}
-          placeholder="20.03.2024 20:00"
+          placeholder="20.03.2024"
           styles={dateTimeStyles}
           clearable
           size="md"
