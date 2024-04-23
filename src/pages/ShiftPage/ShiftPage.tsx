@@ -1,14 +1,15 @@
-import { FC, useRef, useState } from 'react'
-// import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-import { Title, Container, Button } from '@mantine/core'
+import { FC, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { Title, Container } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
-// import { useFetch } from '@/hooks/useFetch'
-// import { useQuery } from '@/hooks/useQuery'
+import { useFetch } from '@/hooks/useFetch'
+import { useQuery } from '@/hooks/useQuery'
 import { useTheme } from '@/hooks/useTheme'
+import { useConfig } from '@/hooks/useConfig'
+import { getPureShiftData } from '@/utils/shift.ts'
 import { ShiftForm } from '@/components/Shift'
 import { ProjectName } from '@/components/Project/ProjectName'
-import { ShiftPageSkeleton, getShiftData } from './'
+import { ShiftPageSkeleton } from './'
 
 interface Props {
   isCreating?: boolean
@@ -21,45 +22,46 @@ export const ShiftPage: FC<Props> = ({
   isEditing,
   isView,
 }: Props) => {
-  useTheme()
+  const { isDev } = useConfig()
+  const { id } = useParams()
+  const query = useQuery()
 
-  const navigate = useNavigate()
-  // TODO: для тестирования пока тестовые данные, в проде раскомментировать
-  // const { id } = useParams()
-  // const query = useQuery()
-  // const { data: shift, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
-  //   params: {
-  //     projectId: query.get('projectId'),
-  //   },
-  // })
-  // TODO: убрать на релизе MVP
-  const isLoading = useRef(false)
-  const [shift] = useState<ShiftData | null>(getShiftData())
+  !isDev && useTheme()
+
+  const [shift, setShift] = useState<ShiftData | null>(null)
+
+  const { data, isLoading } = useFetch<ShiftData>(`/shifts/${id}`, {
+    params: {
+      projectId: query.get('projectId'),
+    },
+  })
+
+  useEffect(() => {
+    if (!isLoading) {
+      setShift(data)
+
+      return
+    }
+
+    isCreating && setShift(getPureShiftData())
+  }, [isCreating, data, isLoading])
 
   return (
     <div className="shift-page">
-      <Container mt="24px">
-        <Button mb={24} color="black" onClick={() => navigate('/')}>
-          Назад
-        </Button>
-
-        <Title order={5} mb="24px" fw={500}>
+      <Container mt={24} pb={24}>
+        <Title order={5} mb={24} fw={500}>
           Карточка смены
         </Title>
 
-        <ShiftPageSkeleton visible={isLoading?.current || !shift} />
-        {shift && (
-          <>
-            <ProjectName name={shift.project} />
+        <ShiftPageSkeleton visible={isLoading} />
+        {shift?.project && <ProjectName name={shift.project} />}
 
-            <ShiftForm
-              shift={shift}
-              isCreating={isCreating}
-              isEditing={isEditing}
-              isView={isView}
-            />
-          </>
-        )}
+        <ShiftForm
+          shift={shift}
+          isCreating={isCreating}
+          isEditing={isEditing}
+          isView={isView}
+        />
       </Container>
     </div>
   )

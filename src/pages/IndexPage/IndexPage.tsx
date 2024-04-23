@@ -1,9 +1,13 @@
 import { useNavigate } from 'react-router-dom'
-import { FC, CSSProperties, useRef, useState, useEffect } from 'react'
-import { Container, Group, Text, Button, Box } from '@mantine/core'
+import { FC, useRef } from 'react'
+import { Container, Group, Text, Button, Box, Image } from '@mantine/core'
+import { useInitData } from '@tma.js/sdk-react'
+import type { ProjectData } from '@/types/Project.d.ts'
 import { useFetch } from '@/hooks/useFetch'
 import { useTheme } from '@/hooks/useTheme'
-import type { ProjectData } from '@/types/Project.d.ts'
+import { useFullName } from '@/hooks/useFullName'
+import { useTelegramInfo } from '@/hooks/useTelegramInfo'
+import { useColors } from '@/hooks/useColors'
 import {
   ProjectIcon,
   ReportIcon,
@@ -11,75 +15,62 @@ import {
   UserDefaultIcon,
   ArrowIcon,
 } from '@/components/Icons'
-
-const labelStyles: CSSProperties = {
-  whiteSpace: 'wrap',
-  textAlign: 'left',
-  maxWidth: 76,
-  fontWeight: 500,
-  lineHeight: 1.55,
-  fontSize: 15,
-}
-
-const iconStyles: CSSProperties = {
-  fill: '#fff',
-}
+import { useIndexPageStyles } from './useIndexPageStyles.ts'
 
 export const IndexPage: FC = () => {
- useTheme()
+  useTheme()
+  useTelegramInfo()
+
   const navigate = useNavigate()
+  const initData = useInitData()
+  const { subtitleTextColor } = useColors()
+
+  const {
+    iconStyles,
+    reportButtonStyles,
+    buttonDefaultStyles,
+    archiveButtonStyles,
+    projectButtonStyles,
+  } = useIndexPageStyles()
 
   const user = useRef({
-    firstName: 'Admin',
-    lastName: 'Kinosmena',
-    hasProjects: true,
+    firstName: initData?.user?.firstName,
+    lastName: initData?.user?.lastName,
+    username: initData?.user?.username,
+    avatar: initData?.user?.photoUrl,
   })
 
-  const [fullName, setFullName] = useState('Личный кабинет')
+  const { fullName } = useFullName({
+    firstName: user.current.firstName,
+    lastName: user.current.lastName,
+    username: user.current.username,
+  })
+
   const { data: projects } = useFetch<ProjectData[]>('/projects', {
     withRedirect: false,
   })
 
-  useEffect(() => {
-    if (!user.current) {
-      return
-    }
-
-    const { firstName, lastName } = user.current
-
-    if (!firstName) {
-      return
-    }
-
-    if (!lastName) {
-      setFullName(firstName)
-
-      return
-    }
-
-    return setFullName(`${firstName} ${lastName}`)
-  }, [])
-
   return (
-    <Container px="24px" mt="24px">
-      <Group gap={8} mb="24px">
-        <UserDefaultIcon width={32} height={32} />
+    <Container px={24} mt={24}>
+      <Group gap={8} mb={24}>
+        {user.current.avatar ? (
+          <Image src={user.current.avatar} width={32} height={32} />
+        ) : (
+          <UserDefaultIcon width={32} height={32} />
+        )}
+
         <Text fw={500}>{fullName}</Text>
       </Group>
 
-      <Group gap="8px" wrap="nowrap">
+      <Group gap={8} wrap="nowrap">
         <Box w="50%" flex="0 0 50%">
           <Button
             w="100%"
             h={82}
             mb={8}
-            radius="24px"
+            radius={24}
             rightSection={<ProjectIcon style={iconStyles} />}
-            styles={{
-              root: { paddingInline: '24px' },
-              inner: { justifyContent: 'space-between' },
-              label: labelStyles,
-            }}
+            styles={buttonDefaultStyles}
             onClick={() => navigate('/project/create')}
           >
             Создать проект
@@ -88,13 +79,9 @@ export const IndexPage: FC = () => {
             variant="dark"
             w="100%"
             h={82}
-            radius="24px"
+            radius={24}
             rightSection={<ArchiveIcon style={iconStyles} />}
-            styles={{
-              root: { paddingInline: '24px' },
-              inner: { justifyContent: 'space-between', gap: '4px' },
-              label: labelStyles,
-            }}
+            styles={archiveButtonStyles}
             onClick={() => navigate('/archive')}
           >
             Архивные проекты
@@ -104,33 +91,31 @@ export const IndexPage: FC = () => {
           variant="dark"
           w="100%"
           h="100%"
-          miw="144px"
-          mih="172px"
-          radius="24px"
-          styles={{
-            root: { paddingInline: '24px' },
-            inner: {
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              minHeight: '116px',
-            },
-            section: {
-              alignSelf: 'flex-end',
-            },
-            label: { ...labelStyles, maxWidth: 96 },
-          }}
+          miw={144}
+          mih={172}
+          radius={24}
+          styles={reportButtonStyles}
           rightSection={<ReportIcon style={iconStyles} />}
           onClick={() => navigate('/report')}
         >
           Получить отчет
         </Button>
       </Group>
+      <Button
+        variant="dark"
+        w="100%"
+        h={82}
+        radius={24}
+        rightSection={<ReportIcon style={iconStyles} />}
+        styles={archiveButtonStyles}
+        style={{ marginTop: 12 }}
+        onClick={() => navigate('/shift/create')}
+      >
+        Форма смены
+      </Button>
 
-      <Button onClick={() => navigate('/project/5')}>Test project view</Button>
-
-      <Text my="24px">Активные проекты</Text>
-      {user.current.hasProjects ? (
+      <Text my={24}>Активные проекты</Text>
+      {projects && projects.length > 0 ? (
         <Box>
           {projects &&
             projects.length > 0 &&
@@ -138,27 +123,20 @@ export const IndexPage: FC = () => {
               <Button
                 key={idx}
                 w="100%"
-                h="48px"
+                h={48}
                 variant="dark"
                 mb={12}
-                radius="16px"
-                styles={{
-                  inner: {
-                    justifyContent: 'space-between',
-                  },
-                  label: { ...labelStyles, maxWidth: 'none' },
-                }}
+                radius={16}
+                styles={projectButtonStyles}
                 rightSection={<ArrowIcon style={iconStyles} />}
                 onClick={() => navigate(`/project/${project.id}`)}
               >
                 {project.name}
               </Button>
             ))}
-
-          {/* Здесь могут быть компоненты для отображения активных проектов */}
         </Box>
       ) : (
-        <Text c="#060B18" opacity={0.7}>
+        <Text c={subtitleTextColor} fz={14}>
           Здесь пока пусто, создайте проект
         </Text>
       )}

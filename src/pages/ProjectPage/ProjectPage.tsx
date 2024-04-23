@@ -1,10 +1,12 @@
-import { FC, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Button, Container, Title } from '@mantine/core'
+import { FC } from 'react'
+import { useParams } from 'react-router-dom'
+import { Container, Title } from '@mantine/core'
 import { ProjectData } from '@/types/Project'
-import { getProjectData, ProjectPageSkeleton } from './'
-import { ProjectView, ProjectForm } from '@/components/Project'
 import { useTheme } from '@/hooks/useTheme'
+import { useConfig } from '@/hooks/useConfig'
+import { useFetch } from '@/hooks/useFetch'
+import { ProjectView, ProjectForm } from '@/components/Project'
+import { ProjectPageSkeleton } from './'
 
 interface Props {
   isCreating?: boolean
@@ -14,41 +16,30 @@ interface Props {
 }
 
 export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
-  useTheme()
+  const { isDev } = useConfig()
+  const { id } = useParams()
 
-  const navigate = useNavigate()
+  !isDev && useTheme()
 
-  // TODO: для тестирования пока тестовые данные, в проде раскомментировать
-  // const { id } = useParams()
-  // const { data: project, isLoading } = useFetch<ProjectData>(`/projects/${id}`)
-  // TODO: убрать на релизе MVP
-  const isLoading = useRef(false)
-  const [project] = useState<ProjectData | null>(getProjectData())
+  const { data: project, isLoading } = useFetch<ProjectData>(`/projects/${id}`)
 
   return (
     <div className="project-page">
-      <Container mt={24}>
-        <Button mb={24} color="black" onClick={() => navigate('/')}>
-          Назад
-        </Button>
-
-        <Title fz="16px" fw={500} mb="24px">
+      <Container mt={24} pb={24}>
+        <Title fz={16} fw={500} mb="24px">
           Карточка проекта
         </Title>
 
-        <ProjectPageSkeleton visible={isLoading.current || !project} />
-        {project && (
-          <>
-            {isView ? (
-              <ProjectView project={project} />
-            ) : (
-              <ProjectForm
-                project={project}
-                isEditing={isEditing}
-                isCreating={isCreating}
-              />
-            )}
-          </>
+        <ProjectPageSkeleton visible={isLoading} />
+        {isView ? (
+          project && <ProjectView project={project} />
+        ) : (
+          <ProjectForm
+            project={project}
+            isView={isView}
+            isEditing={isEditing}
+            isCreating={isCreating}
+          />
         )}
       </Container>
     </div>

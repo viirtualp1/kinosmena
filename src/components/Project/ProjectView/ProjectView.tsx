@@ -2,45 +2,32 @@ import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { Box, Button, Card, Group, Text } from '@mantine/core'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useNavigate } from 'react-router-dom'
-import { BlockData, ProjectData, ShiftShortData } from '@/types/Project'
+import { ProjectData, ShiftShortData } from '@/types/Project'
 import { useDate } from '@/hooks/useDate'
 import { useTheme } from '@/hooks/useTheme'
+import { useProjectIndicators } from '@/hooks/useProjectIndicators'
+import { useConfig } from '@/hooks/useConfig'
 import { PlusIcon, CloseIcon } from '@/components/Icons'
 import { ProjectName } from '@/components/Project/ProjectName'
 import { ShiftCard } from '@/components/Project/ShiftCard'
 import { ProjectCalculatedIndicators } from '../ProjectCalculatedIndicators'
+import { useProjectStyles } from './useProjectStyles.ts'
 
 interface Props {
   project: ProjectData
 }
 
-const shiftButtonStyles = {
-  inner: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 24px',
-  },
-  label: {
-    justifySelf: 'center',
-  },
-  section: {
-    marginInlineStart: 0,
-  },
-}
-
- const shiftCardStyles = {
-  root: {
-    justifyContent: 'flex-end',
-    gap: 8,
-    borderColor: '#060B18',
-  },
-}
-
 export const ProjectView: FC<Props> = ({ project }) => {
-  useTheme()
-  const { formatDate } = useDate()
-  const navigate = useNavigate()
+  const { isDev } = useConfig()
+  !isDev && useTheme()
 
-  const firstShift = useRef<ShiftShortData | undefined>(project.shifts[0])
+  const navigate = useNavigate()
+  const { formatDate } = useDate()
+
+  const { indicators } = useProjectIndicators()
+  const { shiftButtonStyles, shiftCardStyles } = useProjectStyles()
+
+  const firstShift = useRef<ShiftShortData | null>(project.shifts[0] || null)
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
 
@@ -54,44 +41,18 @@ export const ProjectView: FC<Props> = ({ project }) => {
     [firstShift],
   )
 
-  const blocksData = useRef<BlockData[]>([
-    {
-      label: 'Продолжительность смены *',
-      value: null,
-    },
-    {
-      label: 'Шаг смены',
-      value: null,
-    },
-    {
-      label: 'Стоимость смены *',
-      value: null,
-    },
-    {
-      label: 'Стоимость переработки (час)',
-      value: null,
-    },
-    {
-      label: 'Стоимость недосыпа (час)',
-      value: null,
-    },
-    {
-      label: 'Стоимость текущего обеда',
-      value: null,
-    },
-    {
-      label: 'Стоимость позднего обеда',
-      value: null,
-    },
-    {
-      label: 'Суточные',
-      value: null,
-    },
-    {
-      label: 'Стоимость Day off (час)',
-      value: null,
-    },
-  ])
+  const Date = ({ name, date }: { name: string; date: string }) => {
+    return (
+      <Card padding="12px 8px" h={66} withBorder styles={shiftCardStyles}>
+        <Text h={17} fz={14}>
+          {name}
+        </Text>
+        <Text h={17} fz={14} opacity={0.7}>
+          {date}
+        </Text>
+      </Card>
+    )
+  }
 
   return (
     <>
@@ -120,7 +81,7 @@ export const ProjectView: FC<Props> = ({ project }) => {
         <Button
           fullWidth
           h={48}
-          mb="24px"
+          mb={24}
           rightSection={<ShiftRightSection style={{ fill: '#fff' }} />}
           styles={shiftButtonStyles}
           justify="space-between"
@@ -133,10 +94,10 @@ export const ProjectView: FC<Props> = ({ project }) => {
 
       <Card
         shadow="sm"
-        padding="12px"
+        padding={12}
         bg="#363A43"
         withBorder
-        mb="24px"
+        mb={24}
         c="#fff"
         fz={12}
         mih={100}
@@ -144,31 +105,13 @@ export const ProjectView: FC<Props> = ({ project }) => {
         {project.description}
       </Card>
 
-      <Group grow gap="8px" ta="center" mb="24px">
-        {startDate && (
-          <Card padding="12px 8px" h={66} withBorder styles={shiftCardStyles}>
-            <Text h={17} fz={14}>
-              Дата начала
-            </Text>
-            <Text h={17} fz={14} opacity={0.7}>
-              {startDate}
-            </Text>
-          </Card>
-        )}
+      <Group grow gap={8} ta="center" mb={24}>
+        {startDate && <Date name="Дата начала" date={startDate} />}
 
-        {endDate && (
-          <Card padding="12px 20px" h={66} withBorder styles={shiftCardStyles}>
-            <Text h={17} fz={14}>
-              Дата окончания
-            </Text>
-            <Text h={17} fz={14} opacity={0.7}>
-              {endDate}
-            </Text>
-          </Card>
-        )}
+        {endDate && <Date name="Дата окончания" date={endDate} />}
       </Group>
 
-      <ProjectCalculatedIndicators readonly indicators={blocksData} />
+      <ProjectCalculatedIndicators indicators={indicators} readonly />
     </>
   )
 }
