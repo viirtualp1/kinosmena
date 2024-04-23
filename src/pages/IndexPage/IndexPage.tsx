@@ -108,6 +108,7 @@ export const IndexPage: FC = () => {
         radius={24}
         rightSection={<ReportIcon style={iconStyles} />}
         styles={archiveButtonStyles}
+        style={{ marginTop: 12 }}
         onClick={() => navigate('/shift/create')}
       >
         Форма смены

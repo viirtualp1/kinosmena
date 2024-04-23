@@ -30,7 +30,7 @@ export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
           Карточка проекта
         </Title>
 
-        <ProjectPageSkeleton visible={isLoading.current} />
+        <ProjectPageSkeleton visible={isLoading} />
         {isView ? (
           project && <ProjectView project={project} />
         ) : (
