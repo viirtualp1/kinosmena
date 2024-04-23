@@ -79,13 +79,13 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
   }
 
   const Dates = () => (
-    <Group grow gap="8px" ta="center">
+    <Group grow gap={8} ta="center">
       {shift?.start_date && (
         <Card
           padding="12px 8px"
           h={66}
           fz={14}
-          mb="24px"
+          mb={24}
           withBorder
           styles={cardStyles}
         >
@@ -115,7 +115,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
         placeholder="17.03.2024 15:30"
         clearable
         size="md"
-        mb="24px"
+        mb={24}
         defaultValue={form.values.start}
         disabled={isView || isLoading.current}
         onChange={(v) => (form.values.start = v)}
@@ -128,7 +128,7 @@ export const ShiftForm: FC<Props> = ({ isView, shift, isCreating }) => {
         placeholder="20.03.2024 20:00"
         clearable
         size="md"
-        mb="24px"
+        mb={24}
         defaultValue={form.values.end}
         disabled={isView || isLoading.current}
         onChange={(v) => (form.values.end = v)}

@@ -26,7 +26,7 @@ export const ProjectPage: FC<Props> = ({ isCreating, isEditing, isView }) => {
   return (
     <div className="project-page">
       <Container mt={24} pb={24}>
-        <Title fz="16px" fw={500} mb="24px">
+        <Title fz={16} fw={500} mb="24px">
           Карточка проекта
         </Title>
 

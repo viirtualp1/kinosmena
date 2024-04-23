@@ -25,7 +25,13 @@ export const IndexPage: FC = () => {
   const initData = useInitData()
   const { subtitleTextColor } = useColors()
 
-  const { labelStyles, iconStyles } = useIndexPageStyles()
+  const {
+    iconStyles,
+    reportButtonStyles,
+    buttonDefaultStyles,
+    archiveButtonStyles,
+    projectButtonStyles,
+  } = useIndexPageStyles()
 
   const user = useRef({
     firstName: initData?.user?.firstName,
@@ -45,8 +51,8 @@ export const IndexPage: FC = () => {
   })
 
   return (
-    <Container px="24px" mt="24px">
-      <Group gap={8} mb="24px">
+    <Container px={24} mt={24}>
+      <Group gap={8} mb={24}>
         {user.current.avatar ? (
           <Image src={user.current.avatar} width={32} height={32} />
         ) : (
@@ -56,19 +62,15 @@ export const IndexPage: FC = () => {
         <Text fw={500}>{fullName}</Text>
       </Group>
 
-      <Group gap="8px" wrap="nowrap">
+      <Group gap={8} wrap="nowrap">
         <Box w="50%" flex="0 0 50%">
           <Button
             w="100%"
             h={82}
             mb={8}
-            radius="24px"
+            radius={24}
             rightSection={<ProjectIcon style={iconStyles} />}
-            styles={{
-              root: { paddingInline: 24 },
-              inner: { justifyContent: 'space-between' },
-              label: labelStyles,
-            }}
+            styles={buttonDefaultStyles}
             onClick={() => navigate('/project/create')}
           >
             Создать проект
@@ -77,13 +79,9 @@ export const IndexPage: FC = () => {
             variant="dark"
             w="100%"
             h={82}
-            radius="24px"
+            radius={24}
             rightSection={<ArchiveIcon style={iconStyles} />}
-            styles={{
-              root: { paddingInline: 24 },
-              inner: { justifyContent: 'space-between', gap: 4 },
-              label: labelStyles,
-            }}
+            styles={archiveButtonStyles}
             onClick={() => navigate('/archive')}
           >
             Архивные проекты
@@ -93,30 +91,29 @@ export const IndexPage: FC = () => {
           variant="dark"
           w="100%"
           h="100%"
-          miw="144px"
-          mih="172px"
-          radius="24px"
-          styles={{
-            root: { paddingInline: 24 },
-            inner: {
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              minHeight: 116,
-            },
-            section: {
-              alignSelf: 'flex-end',
-            },
-            label: { ...labelStyles, maxWidth: 96 },
-          }}
+          miw={144}
+          mih={172}
+          radius={24}
+          styles={reportButtonStyles}
           rightSection={<ReportIcon style={iconStyles} />}
           onClick={() => navigate('/report')}
         >
           Получить отчет
         </Button>
       </Group>
+      <Button
+        variant="dark"
+        w="100%"
+        h={82}
+        radius={24}
+        rightSection={<ReportIcon style={iconStyles} />}
+        styles={archiveButtonStyles}
+        onClick={() => navigate('/shift/create')}
+      >
+        Форма смены
+      </Button>
 
-      <Text my="24px">Активные проекты</Text>
+      <Text my={24}>Активные проекты</Text>
       {projects && projects.length > 0 ? (
         <Box>
           {projects &&
@@ -125,16 +122,11 @@ export const IndexPage: FC = () => {
               <Button
                 key={idx}
                 w="100%"
-                h="48px"
+                h={48}
                 variant="dark"
                 mb={12}
-                radius="16px"
-                styles={{
-                  inner: {
-                    justifyContent: 'space-between',
-                  },
-                  label: { ...labelStyles, maxWidth: 'none' },
-                }}
+                radius={16}
+                styles={projectButtonStyles}
                 rightSection={<ArrowIcon style={iconStyles} />}
                 onClick={() => navigate(`/project/${project.id}`)}
               >

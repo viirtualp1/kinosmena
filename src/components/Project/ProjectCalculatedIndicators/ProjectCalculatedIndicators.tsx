@@ -38,7 +38,7 @@ export const ProjectCalculatedIndicators: FC<Props> = ({
       <Button
         fullWidth
         h={48}
-        mb="4px"
+        mb={4}
         bg="#363A43"
         styles={buttonStyles}
         rightSection={<ButtonRightSection style={{ fill: '#fff' }} />}

@@ -113,7 +113,7 @@ export const ProjectForm: FC<Props> = ({ project, isCreating, isView }) => {
           placeholder="17.03.2024 15:30"
           clearable
           size="md"
-          mb="24px"
+          mb={24}
           styles={dateTimeStyles}
           defaultValue={form.values.start_date}
           disabled={isView || isLoading.current}

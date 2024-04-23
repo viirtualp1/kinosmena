@@ -81,7 +81,7 @@ export const ProjectView: FC<Props> = ({ project }) => {
         <Button
           fullWidth
           h={48}
-          mb="24px"
+          mb={24}
           rightSection={<ShiftRightSection style={{ fill: '#fff' }} />}
           styles={shiftButtonStyles}
           justify="space-between"
@@ -94,10 +94,10 @@ export const ProjectView: FC<Props> = ({ project }) => {
 
       <Card
         shadow="sm"
-        padding="12px"
+        padding={12}
         bg="#363A43"
         withBorder
-        mb="24px"
+        mb={24}
         c="#fff"
         fz={12}
         mih={100}
@@ -105,7 +105,7 @@ export const ProjectView: FC<Props> = ({ project }) => {
         {project.description}
       </Card>
 
-      <Group grow gap="8px" ta="center" mb="24px">
+      <Group grow gap={8} ta="center" mb={24}>
         {startDate && <Date name="Дата начала" date={startDate} />}
 
         {endDate && <Date name="Дата окончания" date={endDate} />}

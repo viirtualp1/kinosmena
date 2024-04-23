@@ -35,8 +35,8 @@ export const ShiftPage: FC<Props> = ({
 
   return (
     <div className="shift-page">
-      <Container mt="24px" pb={24}>
-        <Title order={5} mb="24px" fw={500}>
+      <Container mt={24} pb={24}>
+        <Title order={5} mb={24} fw={500}>
           Карточка смены
         </Title>
 

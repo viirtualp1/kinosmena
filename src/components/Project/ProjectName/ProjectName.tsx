@@ -17,11 +17,11 @@ export const ProjectName: FC<{ name: string }> = ({ name }) => {
   return (
     <Card
       shadow="sm"
-      padding="12px"
+      padding={12}
       styles={cardStyles}
       bg="#363A43"
       withBorder
-      mb="24px"
+      mb={24}
       fz={14}
     >
       <BookmarkIcon size={20} style={{ fill: '#fff' }} />
