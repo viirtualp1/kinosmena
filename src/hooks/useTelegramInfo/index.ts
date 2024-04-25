@@ -1,0 +1,1 @@
+export { useTelegramInfo } from './useTelegramInfo'

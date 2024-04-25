@@ -1,14 +1,7 @@
-import {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { get } from 'lodash'
 import { http } from '../useAxios'
+import { get } from 'lodash'
 
 interface Options {
   params?: Record<string, string | number | null | undefined>
@@ -21,17 +14,17 @@ export function useFetch<T>(
 ): {
   data: T | null
   error: unknown
-  isLoading: MutableRefObject<boolean>
+  isLoading: boolean
   setData: Dispatch<SetStateAction<T | null>>
 } {
   const navigate = useNavigate()
   const [data, setData] = useState<T | null>(null)
-  const error = useRef<unknown>()
-  const isLoading = useRef(false)
+  const [error, setError] = useState<unknown>()
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
-      isLoading.current = true
+      setIsLoading(true)
 
       try {
         setData(
@@ -42,16 +35,18 @@ export function useFetch<T>(
       } catch (err) {
         console.error(err)
 
-        alert(get(error, `data.response`, 'Ошибка при получении данных'))
+        setError(get(err, 'response.data'))
 
         if (options?.withRedirect) {
           navigate('/')
         }
+      } finally {
+        setIsLoading(false)
       }
     }
 
     fetchData()
-  }, [navigate, options?.params, url])
+  }, [navigate, url, options?.withRedirect])
 
   return {
     data,

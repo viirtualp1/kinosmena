@@ -1,0 +1,1 @@
+export { useFullName } from './useFullName'

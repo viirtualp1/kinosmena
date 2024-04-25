@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { SDKProvider } from '@tma.js/sdk-react'
 import {
@@ -68,6 +69,8 @@ export const Root: FC = () => {
           }}
         >
           <RouterProvider router={router} />
+
+          <SpeedInsights />
         </DatesProvider>
       </MantineProvider>
     </SDKProvider>
