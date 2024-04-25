@@ -1,11 +1,11 @@
 import { FC, useEffect, useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
-import { ProjectName } from '@/components/Project/ProjectName/ProjectName.tsx'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ProjectName } from '@/components/Project/ProjectName/ProjectName'
 import { useDate } from '@/hooks/useDate'
 import { Container, Card, Text, Group, Button } from '@mantine/core'
 import { ShiftData } from '@/types/Shift'
 import { useFetch } from '@/hooks/useFetch'
+import { ProjectData } from '@/types/Project'
 
 const сardStyles = {
   root: {
@@ -32,24 +32,23 @@ export const ReportPage: FC = () => {
 
   const navigate = useNavigate()
   const { formatDate } = useDate()
-  const [startDate, setStartDate] = useState<string | null>(null)
-  const [endDate, setEndDate] = useState<string | null>(null)  
+  const [startDate, setStartDate] = useState<string | undefined>(undefined)
+  const [endDate, setEndDate] = useState<string | undefined>(undefined)
   const { id } = useParams()
   const { data: report, isLoading } = useFetch<ShiftData>(`/shifts/${id}`)
+  const { data: project } = useFetch<ProjectData>(`/projects/${id}`)
 
   useEffect(() => {
-    if (report && isLoading) {
-      setStartDate(formatDate(report.start_date) || '')
-      setEndDate(formatDate(report.end_date) || '')
-    }
+    setStartDate(report?.start_date ? formatDate(report.start_date) : undefined)
+    setEndDate(report?.end_date ? formatDate(report.end_date) : undefined)
   }, [report, formatDate, isLoading])
   return (
     <div className="report-page">
       <Container>
         Report page
-        <ProjectName name="Мой проект" />
+        <ProjectName name={project?.name || 'Мой проект'} />
         <Card
-          padding="12px 8px"
+          p="12px 8px"
           h={66}
           withBorder
           styles={сardStyles}
@@ -78,18 +77,12 @@ export const ReportPage: FC = () => {
             </Group>
           ))}
         </Card>
-        <Card miw="96px" padding="0 0px" mb="24px">
+        <Card miw="96px" p="0" mb="24px">
           <Group justify="end">
-            <Card padding="0 0px">
+            <Card p="0">
               <Text fw="500">Итоговая сумма</Text>
             </Card>
-            <Card
-              mih="33px"
-              miw="37px"
-              bg="rgb(5, 148, 250)"
-              padding="8px"
-              ml="8px"
-            >
+            <Card mih="33px" miw="37px" bg="rgb(5, 148, 250)" p="8px" ml="8px">
               <Text lh="1" c="white">
                 1 &#x20bd;
               </Text>
@@ -105,7 +98,7 @@ export const ReportPage: FC = () => {
           h="41"
           mb="24px"
           fz={14}
-          onClick={() => navigate('../')}
+          onClick={() => navigate('/')}
         >
           На главную страницу
         </Button>
