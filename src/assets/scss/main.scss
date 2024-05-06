@@ -1,13 +1,14 @@
-html,
+html, #root {
+  height: 100%;
+  scrollbar-gutter: stable;
+}
+
 body {
   width: 100%;
+  height: calc(100% - 2em);
   margin: 0;
   padding: 0;
   background: var(--tg-theme-background-color, #fff);
-}
-
-#root {
-  height: 100%;
 }
 
 a {
